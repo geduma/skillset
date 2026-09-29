@@ -7,7 +7,7 @@
 #   ./install.sh                 # instala en el proyecto actual (repo local)
 #   ./install.sh --global        # instala globalmente (~/.claude, ~/.codex, etc.)
 #   ./install.sh --copy          # copia en vez de symlink (útil en Windows/WSL con problemas de symlinks)
-#   ./install.sh license-guardian  # instala solo esa skill (por defecto instala todas)
+#   ./install.sh base-legal-license  # instala solo esa skill (por defecto instala todas)
 #
 # Filosofía: skills/ en este repo es la ÚNICA fuente de verdad.
 # Este script solo crea enlaces hacia ella — nunca dupliques contenido a mano.

@@ -1,5 +1,5 @@
 ---
-name: license-guardian
+name: base-legal-license
 description: Use this skill whenever the user wants to add, choose, or fix a LICENSE file, protect their code/project from being exploited commercially without credit, set up copyright notices, or asks things like "protect my project", "I want to add a license", "I don't want anyone profiting off my code", "make this repo like [another project]", "add a LICENSE", or wants a repo prepared for public release/open-sourcing. Also trigger when the user references replicating licensing/legal setup done on a previous or sibling project. Always ask the user for the copyright holder name and the specific license before writing anything — never assume either.
 ---
 
