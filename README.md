@@ -9,8 +9,8 @@ Personal collection of *skills* (`SKILL.md`) for AI coding agents — Claude Cod
 ```
 skillset/
 ├── skills/
-│   ├── skill-creator/       (meta-skill: how to build new skills for this repo)
-│   ├── license-guardian/
+│   ├── base-skill-creator/       (meta-skill: how to build new skills for this repo)
+│   ├── base-legal-license/
 │   │   ├── SKILL.md
 │   │   ├── references/
 │   │   └── assets/
@@ -50,7 +50,7 @@ Other useful variants:
 
 ```bash
 ./install.sh                        # project-only, for the repo you're currently in
-./install.sh --global license-guardian   # install just one skill
+./install.sh --global base-legal-license   # install just one skill
 ./install.sh --global --copy        # copy instead of symlink (Windows/WSL symlink issues)
 ```
 
@@ -70,7 +70,7 @@ So the day-to-day loop is: edit or `git pull` → commit/push if you made local 
 
 This is the core design of the `SKILL.md` standard, not something you configure: skills are **model-invoked**, not manually invoked. Once installed, your coding agent reads only the short `name` + `description` of every installed skill at the start of a session (a few dozen tokens each). When you give it a task, it compares that task against every available description and loads the full skill only if one matches — automatically, without you naming the skill.
 
-This means the entire mechanism lives in how well each skill's `description` is written. A skill with a vague description ("helps with licensing") may not fire reliably; one written with concrete trigger phrases ("Use this whenever the user wants to add a LICENSE file, protect their code from commercial exploitation, or asks 'add a license to this repo'") fires exactly when it should. The `skill-creator` meta-skill in this repo exists specifically to keep this discipline consistent every time you add a new one — see `skills/skill-creator/SKILL.md`.
+This means the entire mechanism lives in how well each skill's `description` is written. A skill with a vague description ("helps with licensing") may not fire reliably; one written with concrete trigger phrases ("Use this whenever the user wants to add a LICENSE file, protect their code from commercial exploitation, or asks 'add a license to this repo'") fires exactly when it should. The `skill-creator` meta-skill in this repo exists specifically to keep this discipline consistent every time you add a new one — see `skills/base-skill-creator/SKILL.md`.
 
 If a skill never seems to trigger on its own, the fix is almost always to rewrite its `description` with more specific, realistic trigger phrasing — not to start manually reminding the agent to use it every time.
 
@@ -78,7 +78,7 @@ If a skill never seems to trigger on its own, the fix is almost always to rewrit
 
 ## Adding a new skill
 
-Don't do this from scratch — use the meta-skill itself: tell your agent something like *"use the skill-creator skill to help me create a new skill for X"*, and it will follow the rules and workflow documented in `skills/skill-creator/SKILL.md` (one responsibility per skill, English content, project-agnostic, proper frontmatter, validation, registration).
+Don't do this from scratch — use the meta-skill itself: tell your agent something like *"use the skill-creator skill to help me create a new skill for X"*, and it will follow the rules and workflow documented in `skills/base-skill-creator/SKILL.md` (one responsibility per skill, English content, project-agnostic, proper frontmatter, validation, registration).
 
 Manual summary:
 
@@ -93,25 +93,26 @@ Manual summary:
 Terminal/IDE agents (Claude Code, Codex, OpenCode, Cursor) read the **raw folder** directly via `install.sh` — no packaging needed. But claude.ai's web interface and the Skills API expect a `.skill` file (a `.zip` with specific validation rules):
 
 ```bash
-./scripts/package_skill.sh skills/license-guardian
-# → dist/license-guardian.skill
+./scripts/package_skill.sh skills/base-legal-license
+# → dist/base-legal-license.skill
 ```
 
 The script validates before packaging (no dependency on any Anthropic-internal tooling — just `python3` + `pyyaml` + `zip`):
 
 - Exactly one `SKILL.md`, with no other `SKILL.md` nested inside.
 - Valid YAML frontmatter, with only these keys allowed: `name`, `description`, `license`, `allowed-tools`, `metadata`, `compatibility`.
-- `name` in kebab-case, max 64 characters.
+- `name` in kebab-case, max 64 characters, following `base-<domain>-<topic>` (`sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`).
 - `description` with no `<` or `>`, max 1024 characters.
+- Token budget (hard): `SKILL.md` body max 100 lines / 1500 words (target ≤60 / ~800); each `references/*.md` max 200 lines / 2000 words. Detail goes to `references/`, never inlined.
 
 ## Skills included
 
 | Skill | What it does |
 |---|---|
-| `skill-creator` | Meta-skill: teaches the agent the rules and workflow for creating new skills in this repo. |
-| `license-guardian` | Analyzes a project, asks for the copyright holder and desired license (with a decision menu), and generates LICENSE, copyright notice, and updates the README/manifest. |
+| `base-skill-creator` | Meta-skill: teaches the agent the rules and workflow for creating new skills in this repo. |
+| `base-legal-license` | Analyzes a project, asks for the copyright holder and desired license (with a decision menu), and generates LICENSE, copyright notice, and updates the README/manifest. |
 
 ## Personal roadmap
 
-- [ ] `code-style-preferences` — syntax, naming conventions, folder structure, and preferred linters per language.
+- [ ] `base-dev-style` — syntax, naming conventions, folder structure, and preferred linters per language.
 - [ ] *(add here as new ones are created)*
