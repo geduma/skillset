@@ -116,6 +116,7 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 | `skillset-seo-technical` | Handles technical SEO: robots.txt, sitemaps and GSC, URLs, indexation including paginated paths, image naming/alt, FAQ/LocalBusiness schema, LLMS.txt, GA4/GSC wiring. |
 | `skillset-sec-appsec` | Applies preventive AppSec baseline to apps, APIs, and backends: secrets, DB/RLS, auth/sessions, validation/XSS/uploads, rate limiting, headers, TLS, dependencies. |
 | `skillset-sec-audit` | Runs structured security audits with coverage ledger, isolated hunting, adversarial validation, and verified findings plus reports. |
+| `skillset-design-system` | Designs Apple HIG / Liquid Glass web UI for desktop and mobile: foundations, glass layer, typography, motion, accessibility, and components. |
 
 ## Personal roadmap
 
