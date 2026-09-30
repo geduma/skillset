@@ -122,6 +122,7 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 | `skillset-dev-backend` | Backend API design: noun resources, method semantics, status codes, RFC 9457 errors, pagination/filtering, versioning and OpenAPI contracts. |
 | `skillset-dev-testing` | Test strategy and debugging: pyramid mix, AAA hermetic tests, reproduce-bisect-regress, de-flaking and CI enforcement. |
 | `skillset-docs-project` | Project docs: runnable README, Nygard ADRs, Keep a Changelog + SemVer, why-not-what comments. |
+| `skillset-docs-discovery` | Discovery interview: turns vague ideas into committable decisions via rounds before any spec or docs. |
 
 ## Personal roadmap
 
@@ -136,3 +137,4 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 - [x] `skillset-dev-backend` — REST resources, methods, errors, pagination, versioning.
 - [x] `skillset-dev-testing` — pyramid, AAA tests, debugging, suite hygiene.
 - [x] `skillset-docs-project` — README, ADRs, changelog, comments.
+- [x] `skillset-docs-discovery` — vague-idea interview, rounds, talk-vs-build split.

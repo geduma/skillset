@@ -1,6 +1,6 @@
 ---
 name: skillset-docs-project
-description: Use this when writing, reviewing, or fixing project documentation such as README quickstarts, Architecture Decision Records, CHANGELOG entries, CONTRIBUTING guides, or code comments and API docstrings. Also use when the user says document this, write an ADR, update the changelog, or onboard new contributors. Do not use for code style or tests - use skillset-dev-style or skillset-dev-testing. Do not use for commit message format - use skillset-git-workflow.
+description: Use this when writing, reviewing, or fixing project documentation such as README quickstarts, Architecture Decision Records, CHANGELOG entries, CONTRIBUTING guides, or code comments and API docstrings. Also use when the user says document this, write an ADR, update the changelog, or onboard new contributors. Do not use for vague pre-spec idea shaping - use skillset-docs-discovery. Do not use for code style or tests - use skillset-dev-style or skillset-dev-testing. Do not use for commit message format - use skillset-git-workflow.
 ---
 
 # Project Docs
@@ -15,6 +15,7 @@ This skill is project-agnostic. It adapts to the repo's language and layout and 
 - A new dependency, API, or architecture choice needs recording.
 - A release needs notes or an onboarding path needs checking.
 - Code comments or docstrings are missing, stale, or noisy.
+- If the idea is still vague, run `skillset-docs-discovery` first; this skill records decided outcomes only.
 
 ## Non-negotiable principles
 

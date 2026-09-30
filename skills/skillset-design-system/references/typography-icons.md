@@ -1,13 +1,13 @@
 # Typography and Icons
 
-SF family behavior plus web fallbacks and SF Symbols usage. Sources: https://developer.apple.com/fonts/ and https://developer.apple.com/sf-symbols/
+System type behavior plus web fallbacks and symbol usage.
 
 ## 1. Typeface
 
-- Primary is SF Pro (neutral sans, 9 weights, 150+ languages). HIG guide: https://developer.apple.com/design/human-interface-guidelines/typography
-- Variants: SF Pro Rounded for friendly headers, SF Compact for small sizes, SF Mono for code, New York serif as alternative display.
-- On web SF is rarely installed. Stack: `-apple-system, BlinkMacSystemFont, SF Pro Text, Inter, Segoe UI, sans-serif`. Never force a download; adapt to system fonts.
-- 2025 direction: bolder body for clarity, left-aligned type in alerts and onboarding.
+- Primary is a neutral sans with wide weight and language coverage.
+- Variants: rounded sans for friendly headers, compact cut for small sizes, mono for code, serif as alternative display.
+- On web system fonts are rarely guaranteed. Stack: system sans fallbacks ending in generic sans-serif. Never force a download; adapt to system fonts.
+- Direction: bolder body for clarity, left-aligned type in alerts and onboarding.
 
 ## 2. Scale
 
@@ -22,11 +22,21 @@ SF family behavior plus web fallbacks and SF Symbols usage. Sources: https://dev
 - Stay distinctive. Banned defaults: Inter-only, Roboto, Arial, system-only stacks, purple-on-white clichés.
 - Buttons, labels, inputs, and errors each get one consistent style across desktop and mobile.
 - Minimum body on mobile is effectively 17px equivalent; never shrink critical text to fit.
+- Use a single ellipsis character, never three dots; prefer curly quotes over straight quotes.
+- Keep units and shortcuts non-breaking: amount plus unit, modifier plus key, brand names.
+- Loading states end with an ellipsis: Saving, Loading, and similar.
+- Use tabular numerals for columns and comparisons; balance or pretty-wrap headings to avoid widows.
 
-## 4. Icons with SF Symbols
+## 4. Copy voice
 
-- Library of 7000+ symbols: https://developer.apple.com/sf-symbols/ HIG: https://developer.apple.com/design/human-interface-guidelines/icons
-- Four render modes: Monochrome, Hierarchical, Palette, Multicolor. Default to Monochrome; use Hierarchical for subtle emphasis.
+- Active voice with the user as subject; specific button labels naming the outcome, not Continue.
+- Title Case for headings and buttons; numerals for counts, not spelled-out numbers.
+- Error messages include the fix or next step, not only the problem.
+- Avoid first person; prefer compact conjunctions where space is tight.
+
+## 5. Icons
+
+- Default to monochrome; use hierarchical emphasis sparingly.
 - On web use inline SVG with matching stroke weight to text. Never use emoji as icons.
 - Icons inherit text color and size. Keep 4px grid, consistent 1.5-2px stroke.
 - Prefer shared glyphs for common actions (share, search, settings) so users recognize them instantly.

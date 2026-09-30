@@ -15,6 +15,9 @@ Framework-agnostic component rules. Adapt syntax to the detected stack.
 - **Client state:** UI-only — selection, filters in URL when shareable, dialog open, draft input. Keep it local first.
 - **Global store:** only for complex client state shared app-wide. Default to local state plus URL.
 - URL holds shareable view state: page, filter, sort, selected tab. Everything else stays in memory.
+- Reflect filters, tabs, pagination, and expanded panels in the URL so views are deep-linkable and shareable.
+- Use real links for navigation to preserve open-in-new-tab and assistive tech behavior.
+- Destructive actions need confirmation or an undo window, never immediate execution.
 
 ## 3. Data flow rules
 
