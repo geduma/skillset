@@ -36,3 +36,9 @@ type(optional scope): description
 
 - Use `revert: <original subject>` with `Refs:` to the reverted SHA(s).
 - A reverted `feat` is not a `fix` unless it also patches behavior going forward.
+
+## 5. Automation boundary
+
+- Default: never `commit` or `push` without an explicit user request. Leave changes in the working tree, show `git diff --stat` plus proposed messages, and wait.
+- Explicit request means: `commit this`, `push`, `commit and push`, or a session instruction allowing it.
+- Consumer override: a repo may opt out locally (e.g. `AGENTS.md`: `auto-commit allowed on topic/*`) or per turn; an explicit local instruction wins without editing this skill.

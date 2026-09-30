@@ -27,6 +27,7 @@ This skill is project-agnostic. It adapts to the repo's default branch and host 
 3. **Small PRs win.** One intent per PR, linked issue, green checks before merge. See `references/pull-requests.md`.
 4. **Never rewrite published history silently.** Rebase only local commits; revert instead of force-pushing shared branches. See `references/history-safety.md`.
 5. **Confirm before destructive git.** Force-push, reset hard, history rewrite, branch deletion: summarize first, wait for approval.
+6. **No auto-commit/push.** Default: never `commit`/`push` without an explicit request; propose the diff and wait. Override: see `references/commits.md` section 5.
 
 ## Workflow (summary)
 
