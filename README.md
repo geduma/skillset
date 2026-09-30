@@ -68,6 +68,14 @@ Because `install.sh` creates **symlinks**, not copies, the discovery paths alway
 
 So the day-to-day loop is: edit or `git pull` → commit/push if you made local changes → `./install.sh --global` only when a new skill folder was added.
 
+## 2b. Pinning versions across workstations
+
+This repo is a **base library shared by every machine**, not a per-project dependency. A `description` change alters agent behavior in all your projects at once. Treat updates accordingly:
+
+- **Pin stable machines:** `git checkout v1.1.0` inside `~/skillset` keeps a workstation on a known-good pack. `git checkout main && git pull` moves it forward when you decide.
+- **Trial on one machine first:** pull `main` on a single workstation, work a full day, then propagate to the rest. Never roll an untested pack to all machines at once.
+- **Bump on behavior change:** any `description`, routing, or principle change requires a `VERSION` bump and a `CHANGELOG.md` entry — cosmetic doc fixes don't.
+
 ## 3. Automatic use — no need to ask per task
 
 This is the core design of the `SKILL.md` standard, not something you configure: skills are **model-invoked**, not manually invoked. Once installed, your coding agent reads only the short `name` + `description` of every installed skill at the start of a session (a few dozen tokens each). When you give it a task, it compares that task against every available description and loads the full skill only if one matches — automatically, without you naming the skill.

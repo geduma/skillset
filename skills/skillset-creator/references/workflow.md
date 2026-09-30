@@ -10,6 +10,7 @@
 6. **Register it**: add a row to the "Skills included" table in the repo's root `README.md`.
 7. **Activate it locally**: run `./install.sh` again (idempotent — safe to rerun anytime) so the new skill's symlink gets created in every agent's discovery path. Some agents only scan for new skills at session startup — restart the coding agent's session afterward if it doesn't show up immediately.
 8. **Route and evaluate**: link `docs/ROUTING.md` in the body, add `evals/trigger-tests.md` (5 should-trigger + should-NOT-trigger), set `metadata.version` to `VERSION`, then run `python3 scripts/validate-pack.py`.
+9. **Roll out as a base library**: this pack ships to every workstation via `git pull`. Bump `VERSION` + `CHANGELOG.md` on any behavior change (`description`, routing, principles), trial on one machine first, then propagate. Never auto-commit or auto-push — commits are manual, by the human.
 
 ## 2. Self-check before considering a skill done
 
@@ -21,3 +22,4 @@
 - Would a stranger who has never seen this repo understand when and how to use it, just from SKILL.md?
 - Does `scripts/package_skill.sh` validate it cleanly?
 - Does `python3 scripts/validate-pack.py` pass (version, evals, routing pointer)?
+- Is `VERSION`/`CHANGELOG.md` bumped for behavior changes, and is the rollout trial-first?
