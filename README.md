@@ -123,6 +123,7 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 | `skillset-dev-testing` | Test strategy and debugging: pyramid mix, AAA hermetic tests, reproduce-bisect-regress, de-flaking and CI enforcement. |
 | `skillset-docs-project` | Project docs: runnable README, Nygard ADRs, Keep a Changelog + SemVer, why-not-what comments. |
 | `skillset-docs-discovery` | Discovery interview: turns vague ideas into committable decisions via rounds before any spec or docs. |
+| `skillset-dev-feature` | Feature spec and plan: light SDD spec, validated plan, ordered tasks under docs/features, mandatory docs-sync task. |
 
 ## Personal roadmap
 
@@ -138,3 +139,4 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 - [x] `skillset-dev-testing` — pyramid, AAA tests, debugging, suite hygiene.
 - [x] `skillset-docs-project` — README, ADRs, changelog, comments.
 - [x] `skillset-docs-discovery` — vague-idea interview, rounds, talk-vs-build split.
+- [x] `skillset-dev-feature` — light feature spec, validated plan, tasks, docs-sync.
