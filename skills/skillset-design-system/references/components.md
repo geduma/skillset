@@ -30,7 +30,9 @@ Apply foundations and glass to common web patterns, with desktop and mobile vari
 ## 5. Pre-delivery checklist
 
 - Visual: one accent, consistent radii, no emoji icons, borders visible in both modes.
+- Theming: dark themes set a dark color scheme on root, match browser chrome color, and give native controls explicit colors.
 - Glass: single layer, legible text, solid fallback present.
 - Responsive: no horizontal scroll at 360px, no hover-only actions on mobile, sidebar collapses correctly on desktop.
+- Layout: full-bleed sections respect display safe areas; prefer flex or grid over measured layout.
 - Type: two families max, roles consistent, 17px-equivalent minimum for mobile body.
 - Motion and a11y: transitions 150-300ms, reduced-motion path works, contrast passes, focus visible, inputs labeled.

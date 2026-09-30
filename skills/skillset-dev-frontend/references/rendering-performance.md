@@ -22,6 +22,11 @@ Applies to CSR, SSR, SSG, RSC, islands, or mobile webviews. Use the project rend
 - Memoize expensive derived values; split large components so typing does not re-render tables or charts.
 - Debounce search input (150-300ms); throttle scroll and resize handlers.
 - Images: explicit width and height, lazy below fold, modern format, responsive sizes.
+- Critical above-fold images load with high priority; prefer compressed video over animated images with a still fallback.
+- Large lists over about 50 items need virtualization or equivalent content-visibility handling.
+- Never read layout measurements during render; batch reads and writes without interleaving.
+- Prefer uncontrolled inputs; keep controlled inputs cheap per keystroke.
+- Preconnect to asset domains; preload critical fonts with swap display.
 
 ## 4. Budgets and checks
 
