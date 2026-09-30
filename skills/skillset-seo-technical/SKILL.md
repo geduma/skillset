@@ -1,6 +1,6 @@
 ---
 name: skillset-seo-technical
-description: Use this when handling technical SEO such as robots.txt crawl rules, XML sitemaps and Search Console submission, SEO-friendly URL design, indexation control including paginated page paths, image file naming and alt text, FAQ and LocalBusiness structured data in JSON-LD, LLMS.txt for AI discoverability, or wiring Google Analytics GA4 and Google Search Console. Also use when pages are not crawled or indexed, rich results fail validation, or LLM crawlers cannot read the site.
+description: Use this when handling technical SEO such as robots.txt crawl rules, XML sitemaps and Search Console submission, SEO-friendly URL design, indexation control including paginated page paths, image file naming and alt text, FAQ and LocalBusiness structured data in JSON-LD, LLMS.txt for AI discoverability, or wiring Google Analytics GA4 and Google Search Console. Also use when pages are not crawled or indexed, rich results fail validation, or LLM crawlers cannot read the site. Do not use for titles, headings, intent matching, TLDR, FAQ copy, internal linking, or CTA placement - use skillset-seo-content.
 ---
 
 # Technical SEO

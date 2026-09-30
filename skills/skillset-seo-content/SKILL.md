@@ -1,6 +1,6 @@
 ---
 name: skillset-seo-content
-description: Use this when writing, reviewing, or auditing on-page SEO content such as meta titles, meta descriptions, single H1 and H2/H3 hierarchy, title versus H1 differentiation, search intent matching, TLDR or key takeaways, table of contents placement, scannable formatting with tables and lists, FAQ sections for query targeting, internal linking and topic clusters, or CTA and share-button placement on content pages. Also use when CTR is low, featured snippets are missed, or headings are duplicated or flat.
+description: Use this when writing, reviewing, or auditing on-page SEO content such as meta titles, meta descriptions, single H1 and H2/H3 hierarchy, title versus H1 differentiation, search intent matching, TLDR or key takeaways, table of contents placement, scannable formatting with tables and lists, FAQ sections for query targeting, internal linking and topic clusters, or CTA and share-button placement on content pages. Also use when CTR is low, featured snippets are missed, or headings are duplicated or flat. Do not use for robots.txt, sitemaps, canonicals, URLs, schema JSON-LD, LLMS.txt, or GA4/GSC wiring - use skillset-seo-technical.
 ---
 
 # SEO Content

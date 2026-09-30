@@ -118,9 +118,21 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 | `skillset-sec-audit` | Runs structured security audits with coverage ledger, isolated hunting, adversarial validation, and verified findings plus reports. |
 | `skillset-design-system` | Apple HIG-based web UI foundations with optional Liquid Glass, plus intentional craft (intent, signature, anti-generic checks): foundations, glass, typography, motion, accessibility, components. |
 | `skillset-dev-frontend` | Framework-agnostic frontend engineering: components, server vs client state, rendering and performance, forms and data, a11y and testing, security-compatible patterns. |
+| `skillset-git-workflow` | Branch-based workflow: topic branches, Conventional Commits, small PRs, review and merge policy, conflict and history safety. |
+| `skillset-dev-backend` | Backend API design: noun resources, method semantics, status codes, RFC 9457 errors, pagination/filtering, versioning and OpenAPI contracts. |
+| `skillset-dev-testing` | Test strategy and debugging: pyramid mix, AAA hermetic tests, reproduce-bisect-regress, de-flaking and CI enforcement. |
+| `skillset-docs-project` | Project docs: runnable README, Nygard ADRs, Keep a Changelog + SemVer, why-not-what comments. |
 
 ## Personal roadmap
 
 - [x] `skillset-dev-style` — naming, structure, quality gates, and safeguards (language-agnostic).
 - [x] `skillset-seo-content` — on-page SEO and content optimization.
 - [x] `skillset-seo-technical` — crawlability, indexation, schema, LLMS.txt, and measurement.
+- [x] `skillset-sec-appsec` — preventive AppSec baseline.
+- [x] `skillset-sec-audit` — structured security audit harness.
+- [x] `skillset-design-system` — Apple HIG foundations plus craft.
+- [x] `skillset-dev-frontend` — frontend application engineering.
+- [x] `skillset-git-workflow` — branches, Conventional Commits, PRs, history safety.
+- [x] `skillset-dev-backend` — REST resources, methods, errors, pagination, versioning.
+- [x] `skillset-dev-testing` — pyramid, AAA tests, debugging, suite hygiene.
+- [x] `skillset-docs-project` — README, ADRs, changelog, comments.

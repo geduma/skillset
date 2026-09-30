@@ -62,7 +62,7 @@ if not re.match(r'^[a-z0-9-]+$', name) or name.startswith('-') or name.endswith(
 if len(name) > 64:
     sys.exit("❌ 'name' supera 64 caracteres")
 # Collision-safe namespace: skillset-<domain>-<topic>, salvo la meta-skill.
-allowed_domains = {"sec", "design", "dev", "git", "docs", "ops", "legal", "skill", "seo"}
+allowed_domains = {"sec", "design", "dev", "git", "docs", "ops", "legal", "seo"}
 m = re.match(r'^skillset-([a-z0-9]+)-([a-z0-9]+(?:-[a-z0-9]+)*)$', name)
 legacy_meta = {"skillset-creator"}
 if name in legacy_meta:
