@@ -6,7 +6,7 @@
 # Claude Code / Codex / OpenCode.
 #
 # Uso:
-#   ./scripts/package_skill.sh skills/base-legal-license
+#   ./scripts/package_skill.sh skills/skillset-legal-license
 #
 # Salida: dist/<nombre-skill>.skill en la raíz del repo.
 
@@ -61,14 +61,14 @@ if not re.match(r'^[a-z0-9-]+$', name) or name.startswith('-') or name.endswith(
     sys.exit(f"❌ 'name' debe ser kebab-case: {name}")
 if len(name) > 64:
     sys.exit("❌ 'name' supera 64 caracteres")
-# Collision-safe namespace: base-<domain>-<topic>, salvo la meta-skill histórica.
+# Collision-safe namespace: skillset-<domain>-<topic>, salvo la meta-skill.
 allowed_domains = {"sec", "design", "dev", "git", "docs", "ops", "legal", "skill", "seo"}
-m = re.match(r'^base-([a-z0-9]+)-([a-z0-9]+(?:-[a-z0-9]+)*)$', name)
-legacy_meta = {"skill-creator"}
+m = re.match(r'^skillset-([a-z0-9]+)-([a-z0-9]+(?:-[a-z0-9]+)*)$', name)
+legacy_meta = {"skillset-creator"}
 if name in legacy_meta:
-    print("⚠️  Nombre legacy permitido solo para la meta-skill (renombrar a base-skill-creator recomendado)")
+    print("✅ Meta-skill skillset-creator")
 elif not m:
-    sys.exit(f"❌ 'name' debe seguir base-<dominio>-<tema>: {name}")
+    sys.exit(f"❌ 'name' debe seguir skillset-<dominio>-<tema>: {name}")
 elif m.group(1) not in allowed_domains:
     sys.exit(f"❌ Dominio no permitido '{m.group(1)}', usa uno de: {sorted(allowed_domains)}")
 

@@ -7,7 +7,7 @@
 #   ./install.sh                 # instala en el proyecto actual (repo local)
 #   ./install.sh --global        # instala globalmente (~/.claude, ~/.codex, etc.)
 #   ./install.sh --copy          # copia en vez de symlink (útil en Windows/WSL con problemas de symlinks)
-#   ./install.sh base-legal-license  # instala solo esa skill (por defecto instala todas)
+#   ./install.sh skillset-legal-license  # instala solo esa skill (por defecto instala todas)
 #
 # Filosofía: skills/ en este repo es la ÚNICA fuente de verdad.
 # Este script solo crea enlaces hacia ella — nunca dupliques contenido a mano.
@@ -34,7 +34,10 @@ for arg in "$@"; do
 done
 
 if [ ${#SELECTED_SKILLS[@]} -eq 0 ]; then
-  mapfile -t SELECTED_SKILLS < <(find "$SKILLS_SRC" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+  SELECTED_SKILLS=()
+  for d in "$SKILLS_SRC"/*/; do
+    SELECTED_SKILLS+=("$(basename "$d")")
+  done
 fi
 
 if [ "$MODE" = "global" ]; then

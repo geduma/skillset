@@ -1,6 +1,6 @@
 ---
-name: base-sec-audit
-description: Use this when the user asks for a security audit, vulnerability hunt, penetration test of code, find security vulnerabilities, review this codebase for exploits, or wants findings with REPORT.md and findings.json. For preventive hardening without a formal audit, use base-sec-appsec instead.
+name: skillset-sec-audit
+description: Use this when the user asks for a security audit, vulnerability hunt, penetration test of code, find security vulnerabilities, review this codebase for exploits, or wants findings with REPORT.md and findings.json. For preventive hardening without a formal audit, use skillset-sec-appsec instead.
 ---
 
 # Security Audit

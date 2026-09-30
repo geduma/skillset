@@ -1,5 +1,5 @@
 ---
-name: base-skill-creator
+name: skillset-creator
 description: Use this when the user wants to create a new skill for this repository, add a reusable instruction set for a recurring task, turn a one-off explanation into something the agent will apply automatically next time, or asks to "make a skill for X". Also use when reviewing or fixing an existing skill's structure, naming, trigger description, or when a skill is too long, token-heavy, or loads unnecessary context on every call.
 ---
 
@@ -15,7 +15,7 @@ This skill is itself project-agnostic. It contains no assumptions about any spec
 
 2. **The `description` field is the entire trigger mechanism.** Nothing else in the skill is visible to the agent until the description matches. Spend most of your effort here, not on the body. Write it as: what the skill does + concrete situations/phrases that should trigger it. Vague descriptions ("helps with code style") rarely fire; specific ones ("Use when writing or reviewing Python code: naming conventions, import ordering, docstring format, error handling") do.
 
-3. **Never assume what the user hasn't stated.** If a new skill needs a fact that varies per user, per project, or per run (a name, a preference, a target environment), the skill's instructions must tell the agent to ask — not hardcode a default silently. Look at how `base-legal-license` in this repo handles this: it never assumes the copyright holder's name or the chosen license, it asks every time.
+3. **Never assume what the user hasn't stated.** If a new skill needs a fact that varies per user, per project, or per run (a name, a preference, a target environment), the skill's instructions must tell the agent to ask — not hardcode a default silently. Look at how `skillset-legal-license` in this repo handles this: it never assumes the copyright holder's name or the chosen license, it asks every time.
 
 4. **Write skill content in English**, regardless of what language the person creating it speaks in conversation. This keeps skills portable and consistent across a mixed-language team or across agents that behave more reliably with English instructions. Exception: if a skill's entire purpose is to produce output in a specific non-English language, that's a legitimate design choice — state it explicitly in the skill, don't leave it implicit.
 
@@ -41,7 +41,7 @@ skills/<skill-name>/
 | Each `references/*.md` | **max 200 lines / 2000 words**; one topic per file | Decision tables, style guides, templates, detailed steps. Split the file if it exceeds this. |
 | `assets/`, `scripts/` | not counted | Verbatim content (license texts) and code. Never inline these into `SKILL.md`. |
 
-What stays vs. what moves: `SKILL.md` answers *when to fire* and *what to do first*; `references/` answers *how, exactly, for this edge case*. Pattern to copy: `base-legal-license` in this repo (51-line `SKILL.md`, detail in `references/license-menu.md` + `references/workflow.md`, verbatim text in `assets/`).
+What stays vs. what moves: `SKILL.md` answers *when to fire* and *what to do first*; `references/` answers *how, exactly, for this edge case*. Pattern to copy: `skillset-legal-license` in this repo (51-line `SKILL.md`, detail in `references/license-menu.md` + `references/workflow.md`, verbatim text in `assets/`).
 
 Banned in `SKILL.md`: decision tables, full API/config dumps, duplicated examples, troubleshooting catalogs, prose paragraphs restating what a linked file already says. If a section is only needed for some activations, it belongs in `references/`.
 
@@ -56,21 +56,21 @@ description: What it does and when to use it. Written for the agent, not for hum
 
 Only these keys are recognized by the shared standard: `name`, `description`, `license`, `allowed-tools`, `metadata`, `compatibility`. Anything else gets ignored or rejected depending on the host tool — don't invent custom frontmatter fields.
 
-**`name`** — must follow the collection namespace `base-<domain>-<topic>`: lowercase letters/digits/hyphens only, no leading/trailing hyphen, no double hyphens, max 64 characters. Must match the folder name exactly. `<domain>` must be one of: `sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`, `seo`. The only exception is the meta-skill itself (`base-skill-creator`), which is allowed to keep the `skill-creator` topic name because it defines this convention.
+**`name`** — must follow the collection namespace `skillset-<domain>-<topic>`: lowercase letters/digits/hyphens only, no leading/trailing hyphen, no double hyphens, max 64 characters. Must match the folder name exactly. `<domain>` must be one of: `sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`, `seo`. The only exception is the meta-skill itself (`skillset-creator`), which is allowed to keep the short name because it defines this convention.
 
 **`description`** — max 1024 characters, no `<` or `>` characters. Third person, active: "Use this when...", not "I can help you...".
 
 ## Naming convention (collision-safe)
 
-Every skill in this collection **must** be named `base-<domain>-<topic>` so it coexists with skills from other environments, repos, or teammates without collisions.
+Every skill in this collection **must** be named `skillset-<domain>-<topic>` so it coexists with skills from other environments, repos, or teammates without collisions.
 
-- `base-` is the reserved collection prefix. Never omit it, never use another collection's prefix.
+- `skillset-` is the reserved collection prefix. Never omit it, never use another collection's prefix.
 - `<domain>` is one of: `sec` (security), `design`, `dev` (coding conventions), `git` (version control), `docs` (documentation), `ops` (deployment/infra), `legal` (licenses).
 - `<topic>` is 1-3 kebab-case words describing the single responsibility: `auth`, `api-review`, `commits`, `license`, `content`, `technical`.
-- Good: `base-sec-auth`, `base-design-api`, `base-dev-commits`, `base-legal-license`.
-- Bad: `security` (no prefix, collides), `dev-commits` (missing collection prefix), `base-auth` (missing domain), `base-dev-coding-and-commits` (two responsibilities, split it).
+- Good: `skillset-sec-auth`, `skillset-design-api`, `skillset-dev-commits`, `skillset-legal-license`.
+- Bad: `security` (no prefix, collides), `dev-commits` (missing collection prefix), `skillset-auth` (missing domain), `skillset-dev-coding-and-commits` (two responsibilities, split it).
 - Single-word or prefix-less names are never allowed, even while the repo is small — the cost of a later rename across every installed agent outweighs any short-term convenience.
-- Why: agents merge `~/.claude/skills/`, project `.claude/skills/`, `.agents/skills/`, etc. from all sources. A generic name like `security` or `skill-creator` from two sources collides and one silently shadows the other. `base-` makes ownership obvious in flat listings and in the model-visible `name` field.
+- Why: agents merge `~/.claude/skills/`, project `.claude/skills/`, `.agents/skills/`, etc. from all sources. A generic name like `security` or `skill-creator` from two sources collides and one silently shadows the other. `skillset-` makes ownership obvious in flat listings and in the model-visible `name` field.
 
 ## Workflow for creating a new skill
 
@@ -84,7 +84,7 @@ Every skill in this collection **must** be named `base-<domain>-<topic>` so it c
 
 ## Self-check before considering a skill done
 
-- Does the `name` follow `base-<domain>-<topic>` and match the folder name exactly?
+- Does the `name` follow `skillset-<domain>-<topic>` and match the folder name exactly?
 - Does the `description` name concrete trigger situations, not just a topic label?
 - Does the skill avoid hardcoding anything the user should be asked instead?
 - Is the body free of assumptions specific to one project?

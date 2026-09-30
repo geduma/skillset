@@ -1,6 +1,6 @@
 ---
-name: base-sec-appsec
-description: Use this when hardening or reviewing application, API, or backend code for secrets exposure, auth, database access, input handling, file uploads, rate limiting, security headers, TLS, or dependency risks, or when the user asks harden this app, secure this API, check OWASP Top 10, review backend security, or fix a security finding. Does not run a full pentest audit; for that use base-sec-audit.
+name: skillset-sec-appsec
+description: Use this when hardening or reviewing application, API, or backend code for secrets exposure, auth, database access, input handling, file uploads, rate limiting, security headers, TLS, or dependency risks, or when the user asks harden this app, secure this API, check OWASP Top 10, review backend security, or fix a security finding. Does not run a full pentest audit; for that use skillset-sec-audit.
 ---
 
 # AppSec Baseline
@@ -28,6 +28,6 @@ This skill is project-agnostic. It adapts examples to the detected language and 
 1. **Map the surface** — detect stack, env handling, auth/session, DB access, inputs/uploads, API/headers/TLS/deps. Ask only for what you cannot infer.
 2. **Check against the baseline** — run the five checklists in order: `references/secrets-git.md`, `references/data-db.md`, `references/auth-session.md`, `references/input-output.md`, `references/api-transport.md`. Mark each as pass, hardening note, or vulnerability.
 3. **Propose minimal fixes** — smallest project-native change per failing check, with exact file and snippet. Confirm before writing if keys rotate or many files change.
-4. **Verify** — rerun the project's own tests and linters. Report what passed, what remains, and what needs a full audit via base-sec-audit.
+4. **Verify** — rerun the project's own tests and linters. Report what passed, what remains, and what needs a full audit via skillset-sec-audit.
 
 See `references/secrets-git.md`, `references/data-db.md`, `references/auth-session.md`, `references/input-output.md`, `references/api-transport.md` for detail.
