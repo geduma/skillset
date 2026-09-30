@@ -1,0 +1,27 @@
+name: skillset-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python3 scripts/validate-pack.py --strict
+      - name: Package every skill
+        run: |
+          for d in skills/*/; do
+            ./scripts/package_skill.sh "$d"
+          done
+      - name: Shell checks smoke test
+        run: |
+          echo "feat(api): add pagination" | ./scripts/checks/check-conventional-commit.sh
+          if echo "bad message" | ./scripts/checks/check-conventional-commit.sh; then
+            echo "commit check should have failed"; exit 1
+          fi
