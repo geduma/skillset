@@ -1,5 +1,5 @@
 ---
-name: base-dev-style
+name: skillset-dev-style
 description: Use this when writing new code, reviewing a diff or pull request, scaffolding files or folders, adding or fixing lint, strict type-checking, formatting, testing, logging, validation, or project structure, or when the user asks about naming, code style, clean code, folder layout, or says follow my style, review this code, organize this project, or enforce quality gates. Do not use for choosing a programming language or framework, for commit messages, for licensing, or for deployment.
 ---
 
