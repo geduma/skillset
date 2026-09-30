@@ -1,6 +1,10 @@
 ---
 name: skillset-sec-audit
 description: Use this when the user asks for a security audit, vulnerability hunt, penetration test of code, find security vulnerabilities, review this codebase for exploits, or wants findings with REPORT.md and findings.json. For preventive hardening without a formal audit, use skillset-sec-appsec instead.
+license: MIT
+allowed-tools: Read Glob Grep Shell
+metadata:
+  version: 1.1.0
 ---
 
 # Security Audit
@@ -31,4 +35,4 @@ This skill is project-agnostic and language-agnostic. It never executes untruste
 4. **Validate and report** — disprove candidates, write verified records, derive reports. Run `scripts/validate-coverage-ledger.cjs` and `scripts/validate-findings.cjs` after each update. See `references/validation-reporting.md`.
 5. **Confirm output dir** before writing outside the target; default is an ignored audit folder.
 
-See `references/reconnaissance.md`, `references/hunting.md`, `references/attack-classes-app-api.md`, `references/validation-reporting.md` for detail.
+See `references/reconnaissance.md`, `references/hunting.md`, `references/attack-classes-app-api.md`, `references/validation-reporting.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

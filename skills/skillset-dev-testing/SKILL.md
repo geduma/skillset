@@ -1,6 +1,10 @@
 ---
 name: skillset-dev-testing
 description: Use this when planning test strategy, writing or fixing unit integration contract or end-to-end tests, choosing what to mock, fighting flaky or slow tests, reproducing a bug, or setting up test naming and layout. Also use when the user says test this, add coverage, debug this failure, or why is this test flaky. Do not use for lint, typecheck, or formatting gates - use skillset-dev-style. Do not use for security audits - use skillset-sec-audit.
+license: MIT
+allowed-tools: Read Edit Write Glob Grep Shell
+metadata:
+  version: 1.1.0
 ---
 
 # Testing and Debugging
@@ -32,4 +36,4 @@ This skill is project-agnostic. It uses the project's existing runner and layout
 3. **Debug the failure** — investigate root cause, test one hypothesis, fix, lock with regression test per `references/debugging.md` and `references/red-flags.md`.
 4. **Keep the suite green** — de-flake, speed up, enforce in CI per `references/suite-hygiene.md`.
 
-See `references/strategy-pyramid.md`, `references/writing-tests.md`, `references/debugging.md`, `references/red-flags.md`, `references/suite-hygiene.md` for detail.
+See `references/strategy-pyramid.md`, `references/writing-tests.md`, `references/debugging.md`, `references/red-flags.md`, `references/suite-hygiene.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

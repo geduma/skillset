@@ -9,6 +9,7 @@
 5. **Validate** with `scripts/package_skill.sh skills/<name>` (from the repo root) — it checks frontmatter, naming, and token-budget limits. If it fails on size, move content to `references/`, never just trim meaning.
 6. **Register it**: add a row to the "Skills included" table in the repo's root `README.md`.
 7. **Activate it locally**: run `./install.sh` again (idempotent — safe to rerun anytime) so the new skill's symlink gets created in every agent's discovery path. Some agents only scan for new skills at session startup — restart the coding agent's session afterward if it doesn't show up immediately.
+8. **Route and evaluate**: link `docs/ROUTING.md` in the body, add `evals/trigger-tests.md` (5 should-trigger + should-NOT-trigger), set `metadata.version` to `VERSION`, then run `python3 scripts/validate-pack.py`.
 
 ## 2. Self-check before considering a skill done
 
@@ -19,3 +20,4 @@
 - Is `SKILL.md` within budget (target ≤60 lines, max 100) with detail pushed to `references/` and linked, not inlined?
 - Would a stranger who has never seen this repo understand when and how to use it, just from SKILL.md?
 - Does `scripts/package_skill.sh` validate it cleanly?
+- Does `python3 scripts/validate-pack.py` pass (version, evals, routing pointer)?

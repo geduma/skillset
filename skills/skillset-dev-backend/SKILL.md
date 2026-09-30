@@ -1,6 +1,10 @@
 ---
 name: skillset-dev-backend
 description: Use this when designing, building, or reviewing backend or API code such as REST resources and URIs, HTTP methods and status codes, error envelopes, pagination filtering sorting, versioning, idempotency, async operations, or OpenAPI contracts. Also use when the user says design this API, review my endpoint, fix my status codes, or version this API. Do not use for auth hardening, secrets, or OWASP checks - use skillset-sec-appsec. Do not use for frontend state or fetching logic - use skillset-dev-frontend.
+license: MIT
+allowed-tools: Read Edit Write Glob Grep Shell
+metadata:
+  version: 1.1.0
 ---
 
 # Backend API
@@ -31,4 +35,4 @@ This skill is project-agnostic. It adapts examples to the detected language and 
 3. **Shape errors and lists** — envelope plus pagination/filter/sort per `references/errors-pagination.md`.
 4. **Contract and evolve** — OpenAPI, versioning, idempotency, async per `references/versioning-contracts.md`.
 
-See `references/resource-design.md`, `references/methods-status.md`, `references/errors-pagination.md`, `references/versioning-contracts.md` for detail.
+See `references/resource-design.md`, `references/methods-status.md`, `references/errors-pagination.md`, `references/versioning-contracts.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

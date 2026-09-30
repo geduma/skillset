@@ -1,6 +1,10 @@
 ---
 name: skillset-seo-content
 description: Use this when writing, reviewing, or auditing on-page SEO content such as meta titles, meta descriptions, single H1 and H2/H3 hierarchy, title versus H1 differentiation, search intent matching, TLDR or key takeaways, table of contents placement, scannable formatting with tables and lists, FAQ sections for query targeting, internal linking and topic clusters, or CTA and share-button placement on content pages. Also use when CTR is low, featured snippets are missed, or headings are duplicated or flat. Do not use for robots.txt, sitemaps, canonicals, URLs, schema JSON-LD, LLMS.txt, or GA4/GSC wiring - use skillset-seo-technical.
+license: MIT
+allowed-tools: Read Write Edit Glob Grep
+metadata:
+  version: 1.1.0
 ---
 
 # SEO Content
@@ -29,4 +33,4 @@ Audits and improves on-page SEO content so each page matches intent, earns the c
 3. **Restructure blocks** — add TLDR, TOC, tables, lists, FAQ, and CTA placement. See `references/content-blocks.md`.
 4. **Wire the cluster** — add internal links with descriptive anchors and confirm crawl depth. See `references/internal-linking.md`.
 
-See `references/meta-tags.md`, `references/headings-intent.md`, `references/content-blocks.md`, `references/internal-linking.md` for detail.
+See `references/meta-tags.md`, `references/headings-intent.md`, `references/content-blocks.md`, `references/internal-linking.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

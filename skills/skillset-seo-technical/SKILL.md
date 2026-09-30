@@ -1,6 +1,10 @@
 ---
 name: skillset-seo-technical
 description: Use this when handling technical SEO such as robots.txt crawl rules, XML sitemaps and Search Console submission, SEO-friendly URL design, indexation control including paginated page paths, image file naming and alt text, FAQ and LocalBusiness structured data in JSON-LD, LLMS.txt for AI discoverability, or wiring Google Analytics GA4 and Google Search Console. Also use when pages are not crawled or indexed, rich results fail validation, or LLM crawlers cannot read the site. Do not use for titles, headings, intent matching, TLDR, FAQ copy, internal linking, or CTA placement - use skillset-seo-content.
+license: MIT
+allowed-tools: Read Write Edit Glob Grep Shell
+metadata:
+  version: 1.1.0
 ---
 
 # Technical SEO
@@ -29,4 +33,4 @@ Keeps the site crawlable, indexable, fast to parse, and measurable for both sear
 3. **Add structured data and AI surface** — ship FAQ and LocalBusiness JSON-LD, then LLMS.txt. See `references/structured-data.md` and `references/ai-analytics.md` section 1.
 4. **Wire measurement** — verify GA4 and GSC, submit sitemaps, monitor. See `references/ai-analytics.md` section 2.
 
-See `references/crawl-index.md`, `references/urls-images.md`, `references/structured-data.md`, `references/ai-analytics.md` for detail.
+See `references/crawl-index.md`, `references/urls-images.md`, `references/structured-data.md`, `references/ai-analytics.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

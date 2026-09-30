@@ -2,6 +2,8 @@
 
 Personal collection of *skills* (`SKILL.md`) for AI coding agents — Claude Code, Codex CLI, OpenCode, Cursor, VSCode/Copilot, and any other tool that supports the open `SKILL.md` standard.
 
+Version `1.1.0` (see `VERSION` and `CHANGELOG.md`). Every skill carries `metadata.version`, `allowed-tools`, trigger evals in `evals/`, and a routing pointer to `docs/ROUTING.md`. Validate with `python3 scripts/validate-pack.py`.
+
 ## Why this repo exists
 
 `SKILL.md` is an open format: a folder of instructions an agent loads only when the current task needs it (this avoids bloating every conversation with rules that don't apply). Each agent looks for it in a different path, but the content itself is identical and portable without changes. This repo keeps **a single source of truth** per skill under `skills/`, and uses symlinks so it shows up automatically wherever each agent expects to find it.
@@ -124,6 +126,7 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 | `skillset-docs-project` | Project docs: runnable README, Nygard ADRs, Keep a Changelog + SemVer, why-not-what comments. |
 | `skillset-docs-discovery` | Discovery interview: turns vague ideas into committable decisions via rounds before any spec or docs. |
 | `skillset-dev-feature` | Feature spec and plan: light SDD spec, validated plan, ordered tasks under docs/features, mandatory docs-sync task. |
+| `skillset-dev-orchestrator` | Pipeline router: classifies multi-phase work, sequences discovery → feature → code → tests → security → docs → ship per `docs/ROUTING.md`. |
 
 ## Personal roadmap
 

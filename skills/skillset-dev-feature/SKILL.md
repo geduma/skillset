@@ -1,6 +1,10 @@
 ---
 name: skillset-dev-feature
 description: Use this when creating a new feature, endpoint, user story, or functional change from a vague or clear request. Use when the user says new feature, add functionality, plan implementation, write spec, break down tasks, clarify requirements, or estimate scope. Do not use for bug fixes or vague pre-spec idea shaping - use systematic debugging or skillset-docs-discovery. Do not use for recording decided docs - use skillset-docs-project.
+license: MIT
+allowed-tools: Read Edit Write Glob Grep
+metadata:
+  version: 1.1.0
 ---
 
 # Feature Spec and Plan
@@ -31,4 +35,4 @@ This skill defines process only. It writes planning artifacts under `docs/` and 
 3. **Plan and validate** — write `how` plus read-only consistency check per `references/validation-gates.md`.
 4. **Break down and gate** — ordered tasks, checkpoints, and mandatory docs-sync task per `references/task-breakdown.md` and `references/docs-sync.md`. Stop for human approval before implementation.
 
-See `references/spec-template.md`, `references/validation-gates.md`, `references/task-breakdown.md`, `references/docs-sync.md` for detail.
+See `references/spec-template.md`, `references/validation-gates.md`, `references/task-breakdown.md`, `references/docs-sync.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

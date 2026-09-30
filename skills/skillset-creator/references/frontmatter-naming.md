@@ -6,6 +6,10 @@
 ---
 name: kebab-case-name
 description: What it does and when to use it. Written for the agent, not for humans browsing a catalog.
+license: MIT
+allowed-tools: Read Glob Grep
+metadata:
+  version: 1.1.0
 ---
 ```
 
@@ -14,6 +18,12 @@ Only these keys are recognized by the shared standard: `name`, `description`, `l
 **`name`** — must follow the collection namespace `skillset-<domain>-<topic>`: lowercase letters/digits/hyphens only, no leading/trailing hyphen, no double hyphens, max 64 characters. Must match the folder name exactly. `<domain>` must be one of: `sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`, `seo`. The only exception is the meta-skill itself (`skillset-creator`), which is allowed to keep the short name because it defines this convention.
 
 **`description`** — max 1024 characters, no `<` or `>` characters. Third person, active: "Use this when...", not "I can help you...".
+
+**`license`** — SPDX identifier, `MIT` for this pack unless the skill bundles third-party text.
+
+**`allowed-tools`** — minimum tool set the skill needs (e.g. `Read Glob Grep` for routing-only, add `Edit Write` for generating skills, add `Shell` for running gates). Never grant more than the workflow requires.
+
+**`metadata.version`** — semver matching the repo `VERSION` file. Bump together; `scripts/validate-pack.py` fails on drift.
 
 ## 2. Naming convention (collision-safe)
 

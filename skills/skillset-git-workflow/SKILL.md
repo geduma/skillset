@@ -1,6 +1,10 @@
 ---
 name: skillset-git-workflow
 description: Use this when creating branches, writing commit messages, following Conventional Commits, opening or reviewing pull requests, resolving merge conflicts, choosing merge versus squash versus rebase, or setting up branch protection. Also use when the user says commit this, open a PR, review my PR, or fix my git history. Do not use for code style, lint, or formatting gates - use skillset-dev-style.
+license: MIT
+allowed-tools: Read Shell Glob Grep
+metadata:
+  version: 1.1.0
 ---
 
 # Git Workflow
@@ -31,4 +35,4 @@ This skill is project-agnostic. It adapts to the repo's default branch and host 
 3. **Open PR** — small scope, template body, request review, keep checks green per `references/pull-requests.md`.
 4. **Merge safely** — resolve conflicts, pick merge strategy, delete branch after merge per `references/history-safety.md`.
 
-See `references/branches.md`, `references/commits.md`, `references/pull-requests.md`, `references/history-safety.md` for detail.
+See `references/branches.md`, `references/commits.md`, `references/pull-requests.md`, `references/history-safety.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

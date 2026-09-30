@@ -1,6 +1,10 @@
 ---
 name: skillset-dev-frontend
 description: "Use this when building, refactoring, or reviewing frontend application code in any framework - components, client state, server state, data fetching, forms, routing, rendering CSR SSR RSC, loading error empty states, or frontend performance and correctness, or when user says fix UI bug, wire API to view, optimize re-renders, add form validation. Do not use for visual craft, tokens, or Apple-style look - use skillset-design-system. Do not use for generic naming, lint, or formatting gates - use skillset-dev-style."
+license: MIT
+allowed-tools: Read Edit Write Glob Grep Shell
+metadata:
+  version: 1.1.0
 ---
 
 # Frontend Engineering
@@ -33,4 +37,4 @@ This skill is framework-agnostic. It detects the current framework and adapts pa
 3. **Harden rendering and access** — performance plus security-compatible patterns per `references/rendering-performance.md` and `references/frontend-security.md`.
 4. **Verify** — run the project's own tests, typecheck, and lint; check a11y and states per `references/a11y-testing.md`. Report what ran and what failed.
 
-See `references/components-state.md`, `references/rendering-performance.md`, `references/forms-data.md`, `references/a11y-testing.md`, `references/frontend-security.md` for detail.
+See `references/components-state.md`, `references/rendering-performance.md`, `references/forms-data.md`, `references/a11y-testing.md`, `references/frontend-security.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

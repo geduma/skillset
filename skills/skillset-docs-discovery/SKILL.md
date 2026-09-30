@@ -1,6 +1,10 @@
 ---
 name: skillset-docs-discovery
 description: Use this when shaping a vague or loose idea before any spec or code exists - feature direction, product call, business decision, scope choice - or when the user says grill this idea, sharpen the scope, challenge my assumptions, help me decide what to build, or interview me until it is committable. Do not use for recording decided docs - use skillset-docs-project.
+license: MIT
+allowed-tools: Read Glob Grep
+metadata:
+  version: 1.1.0
 ---
 
 # Discovery Interview
@@ -32,4 +36,4 @@ This skill is project-agnostic. It writes no files; decisions stay in the conver
 3. **Watch scope signals** — split, pause, or close per `references/scope-signals.md`.
 4. **Close defensibly** — user can defend each choice; hand the same conversation to spec or `skillset-docs-project` only on approval.
 
-See `references/interview-rounds.md`, `references/grillable.md`, `references/scope-signals.md` for detail.
+See `references/interview-rounds.md`, `references/grillable.md`, `references/scope-signals.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

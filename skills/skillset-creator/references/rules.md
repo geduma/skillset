@@ -1,6 +1,6 @@
 # Non-negotiable Rules
 
-The seven rules every skill in this collection must follow. The `SKILL.md` lists them in one line each; this file is the normative detail.
+The nine rules every skill in this collection must follow. The `SKILL.md` lists them in one line each; this file is the normative detail.
 
 ## 1. One skill, one responsibility
 
@@ -29,3 +29,11 @@ Overwriting existing files, force-pushing, deleting data — a skill's instructi
 ## 7. Token budget is a hard constraint, not a style preference
 
 `SKILL.md` loads in full on every activation. Every sentence must justify its cost on every call. Target ≤60 body lines / ~800 words; hard max 100 body lines / 1500 words (enforced by `scripts/package_skill.sh`). Anything else goes to `references/` — nothing is deleted, it is moved behind a link so the agent loads it only when needed.
+
+## 8. Every skill is versioned, scoped, and routed
+
+Frontmatter must carry `license`, `allowed-tools` (minimum tools the skill needs), and `metadata.version` matching the repo `VERSION` file (semver). Body must link `docs/ROUTING.md` as the conflict tiebreaker. Multi-phase work routes via `skillset-dev-orchestrator`, never by absorbing other skills' jobs.
+
+## 9. Every skill ships trigger evals
+
+`evals/trigger-tests.md` with at least 5 should-trigger prompts and a should-NOT-trigger section routing elsewhere. Run `scripts/validate-pack.py` before considering a skill done; it enforces rules 7–9 at pack level.

@@ -100,6 +100,21 @@ if ref_dir.is_dir():
         if rwords > 2000:
             sys.exit(f"❌ references/{ref.name} tiene {rwords} palabras (máx 2000). Divídelo por tema.")
 
+import re as _re
+ver = (fm.get("metadata") or {}).get("version") if isinstance(fm.get("metadata"), dict) else None
+if not ver:
+    print("⚠️  Falta 'metadata.version' — añade metadata:\n  version: \"<semver>\" (debe coincidir con VERSION).")
+elif not _re.match(r'^\d+\.\d+\.\d+$', str(ver)):
+    sys.exit(f"❌ 'metadata.version' debe ser semver: {ver}")
+if "allowed-tools" not in fm:
+    print("⚠️  Falta 'allowed-tools' — declara las herramientas mínimas que la skill necesita.")
+if "license" not in fm:
+    print("⚠️  Falta 'license' en el frontmatter.")
+if not (skill_path / "evals" / "trigger-tests.md").exists():
+    print("⚠️  Falta evals/trigger-tests.md (5 should-trigger + should-NOT-trigger).")
+if "docs/ROUTING.md" not in body:
+    print("⚠️  SKILL.md no enlaza a docs/ROUTING.md como desempate de routing.")
+
 print("✅ Skill válida")
 PYEOF
 

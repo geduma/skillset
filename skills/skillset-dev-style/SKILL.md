@@ -1,6 +1,10 @@
 ---
 name: skillset-dev-style
 description: Use this when writing new code, reviewing a diff or pull request, scaffolding files or folders, adding or fixing lint, strict type-checking, formatting, testing, logging, validation, or project structure, or when the user asks about naming, code style, clean code, folder layout, or says follow my style, review this code, organize this project, or enforce quality gates. Do not use for choosing a programming language or framework, for commit messages, for licensing, or for deployment.
+license: MIT
+allowed-tools: Read Edit Write Glob Grep Shell
+metadata:
+  version: 1.1.0
 ---
 
 # Dev Style
@@ -33,4 +37,4 @@ This skill is language-agnostic. It never recommends a language or framework. It
 3. **Enforce gates and safeguards** — wire lint, strict checks, format, tests, logging, validation per `references/quality-gates.md` and `references/safeguards.md`. Use `assets/` templates as starting points, adapted to the stack.
 4. **Verify** — run the project's own gates. If a gate is missing, ask before inventing one. Report what ran and what failed.
 
-See `references/naming.md`, `references/structure.md`, `references/quality-gates.md`, `references/safeguards.md` for detail.
+See `references/naming.md`, `references/structure.md`, `references/quality-gates.md`, `references/safeguards.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
