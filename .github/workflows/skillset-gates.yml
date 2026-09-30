@@ -8,8 +8,8 @@ name: skillset-gates
 # and scripts/validate-pack.py already covers frontmatter, naming, and budgets.
 
 on:
-  push:
   pull_request:
+    branches: [main]
 
 jobs:
   validate-pack:
