@@ -2,6 +2,8 @@
 
 Personal collection of *skills* (`SKILL.md`) for AI coding agents — Claude Code, Codex CLI, OpenCode, Cursor, VSCode/Copilot, and any other tool that supports the open `SKILL.md` standard.
 
+Version `1.1.0` (see `VERSION` and `CHANGELOG.md`). Every skill carries `metadata.version`, `allowed-tools`, trigger evals in `evals/`, and a routing pointer to `docs/ROUTING.md`. Validate with `python3 scripts/validate-pack.py`.
+
 ## Why this repo exists
 
 `SKILL.md` is an open format: a folder of instructions an agent loads only when the current task needs it (this avoids bloating every conversation with rules that don't apply). Each agent looks for it in a different path, but the content itself is identical and portable without changes. This repo keeps **a single source of truth** per skill under `skills/`, and uses symlinks so it shows up automatically wherever each agent expects to find it.
@@ -9,8 +11,8 @@ Personal collection of *skills* (`SKILL.md`) for AI coding agents — Claude Cod
 ```
 skillset/
 ├── skills/
-│   ├── skill-creator/       (meta-skill: how to build new skills for this repo)
-│   ├── license-guardian/
+│   ├── skillset-creator/       (meta-skill: how to build new skills for this repo)
+│   ├── skillset-legal-license/
 │   │   ├── SKILL.md
 │   │   ├── references/
 │   │   └── assets/
@@ -50,7 +52,7 @@ Other useful variants:
 
 ```bash
 ./install.sh                        # project-only, for the repo you're currently in
-./install.sh --global license-guardian   # install just one skill
+./install.sh --global skillset-legal-license   # install just one skill
 ./install.sh --global --copy        # copy instead of symlink (Windows/WSL symlink issues)
 ```
 
@@ -66,11 +68,19 @@ Because `install.sh` creates **symlinks**, not copies, the discovery paths alway
 
 So the day-to-day loop is: edit or `git pull` → commit/push if you made local changes → `./install.sh --global` only when a new skill folder was added.
 
+## 2b. Pinning versions across workstations
+
+This repo is a **base library shared by every machine**, not a per-project dependency. A `description` change alters agent behavior in all your projects at once. Treat updates accordingly:
+
+- **Pin stable machines:** `git checkout v1.1.0` inside `~/skillset` keeps a workstation on a known-good pack. `git checkout main && git pull` moves it forward when you decide.
+- **Trial on one machine first:** pull `main` on a single workstation, work a full day, then propagate to the rest. Never roll an untested pack to all machines at once.
+- **Bump on behavior change:** any `description`, routing, or principle change requires a `VERSION` bump and a `CHANGELOG.md` entry — cosmetic doc fixes don't.
+
 ## 3. Automatic use — no need to ask per task
 
 This is the core design of the `SKILL.md` standard, not something you configure: skills are **model-invoked**, not manually invoked. Once installed, your coding agent reads only the short `name` + `description` of every installed skill at the start of a session (a few dozen tokens each). When you give it a task, it compares that task against every available description and loads the full skill only if one matches — automatically, without you naming the skill.
 
-This means the entire mechanism lives in how well each skill's `description` is written. A skill with a vague description ("helps with licensing") may not fire reliably; one written with concrete trigger phrases ("Use this whenever the user wants to add a LICENSE file, protect their code from commercial exploitation, or asks 'add a license to this repo'") fires exactly when it should. The `skill-creator` meta-skill in this repo exists specifically to keep this discipline consistent every time you add a new one — see `skills/skill-creator/SKILL.md`.
+This means the entire mechanism lives in how well each skill's `description` is written. A skill with a vague description ("helps with licensing") may not fire reliably; one written with concrete trigger phrases ("Use this whenever the user wants to add a LICENSE file, protect their code from commercial exploitation, or asks 'add a license to this repo'") fires exactly when it should. The `skillset-creator` meta-skill in this repo exists specifically to keep this discipline consistent every time you add a new one — see `skills/skillset-creator/SKILL.md`.
 
 If a skill never seems to trigger on its own, the fix is almost always to rewrite its `description` with more specific, realistic trigger phrasing — not to start manually reminding the agent to use it every time.
 
@@ -78,7 +88,7 @@ If a skill never seems to trigger on its own, the fix is almost always to rewrit
 
 ## Adding a new skill
 
-Don't do this from scratch — use the meta-skill itself: tell your agent something like *"use the skill-creator skill to help me create a new skill for X"*, and it will follow the rules and workflow documented in `skills/skill-creator/SKILL.md` (one responsibility per skill, English content, project-agnostic, proper frontmatter, validation, registration).
+Don't do this from scratch — use the meta-skill itself: tell your agent something like *"use the skillset-creator skill to help me create a new skill for X"*, and it will follow the rules and workflow documented in `skills/skillset-creator/SKILL.md` (one responsibility per skill, English content, project-agnostic, proper frontmatter, validation, registration).
 
 Manual summary:
 
@@ -93,25 +103,51 @@ Manual summary:
 Terminal/IDE agents (Claude Code, Codex, OpenCode, Cursor) read the **raw folder** directly via `install.sh` — no packaging needed. But claude.ai's web interface and the Skills API expect a `.skill` file (a `.zip` with specific validation rules):
 
 ```bash
-./scripts/package_skill.sh skills/license-guardian
-# → dist/license-guardian.skill
+./scripts/package_skill.sh skills/skillset-legal-license
+# → dist/skillset-legal-license.skill
 ```
 
 The script validates before packaging (no dependency on any Anthropic-internal tooling — just `python3` + `pyyaml` + `zip`):
 
 - Exactly one `SKILL.md`, with no other `SKILL.md` nested inside.
 - Valid YAML frontmatter, with only these keys allowed: `name`, `description`, `license`, `allowed-tools`, `metadata`, `compatibility`.
-- `name` in kebab-case, max 64 characters.
+- `name` in kebab-case, max 64 characters, following `skillset-<domain>-<topic>` (`sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`, `seo`).
 - `description` with no `<` or `>`, max 1024 characters.
+- Token budget (hard): `SKILL.md` body max 100 lines / 1500 words (target ≤60 / ~800); each `references/*.md` max 200 lines / 2000 words. Detail goes to `references/`, never inlined.
 
 ## Skills included
 
 | Skill | What it does |
 |---|---|
-| `skill-creator` | Meta-skill: teaches the agent the rules and workflow for creating new skills in this repo. |
-| `license-guardian` | Analyzes a project, asks for the copyright holder and desired license (with a decision menu), and generates LICENSE, copyright notice, and updates the README/manifest. |
+| `skillset-creator` | Meta-skill: teaches the agent the rules and workflow for creating new skills in this repo. |
+| `skillset-legal-license` | Analyzes a project, asks for the copyright holder and desired license (with a decision menu), and generates LICENSE, copyright notice, and updates the README/manifest. |
+| `skillset-dev-style` | Applies language-agnostic dev style: intent-first naming, predictable structure, strict lint/type/format/test gates, and fail-fast safeguards. Never switches languages. |
+| `skillset-seo-content` | Audits on-page SEO content: meta titles/descriptions, H1/H2/H3, search intent, TLDR, TOC, tables/lists, FAQ, internal linking and topic clusters, CTA placement. |
+| `skillset-seo-technical` | Handles technical SEO: robots.txt, sitemaps and GSC, URLs, indexation including paginated paths, image naming/alt, FAQ/LocalBusiness schema, LLMS.txt, GA4/GSC wiring. |
+| `skillset-sec-appsec` | Applies preventive AppSec baseline to apps, APIs, and backends: secrets, DB/RLS, auth/sessions, validation/XSS/uploads, rate limiting, headers, TLS, dependencies. |
+| `skillset-sec-audit` | Runs structured security audits with coverage ledger, isolated hunting, adversarial validation, and verified findings plus reports. |
+| `skillset-design-system` | Apple HIG-based web UI foundations with optional Liquid Glass, plus intentional craft (intent, signature, anti-generic checks): foundations, glass, typography, motion, accessibility, components. |
+| `skillset-dev-frontend` | Framework-agnostic frontend engineering: components, server vs client state, rendering and performance, forms and data, a11y and testing, security-compatible patterns. |
+| `skillset-git-workflow` | Branch-based workflow: topic branches, Conventional Commits, small PRs, review and merge policy, conflict and history safety. |
+| `skillset-dev-backend` | Backend API design: noun resources, method semantics, status codes, RFC 9457 errors, pagination/filtering, versioning and OpenAPI contracts. |
+| `skillset-dev-testing` | Test strategy and debugging: pyramid mix, AAA hermetic tests, reproduce-bisect-regress, de-flaking and CI enforcement. |
+| `skillset-docs-project` | Project docs: runnable README, Nygard ADRs, Keep a Changelog + SemVer, why-not-what comments. |
+| `skillset-docs-discovery` | Discovery interview: turns vague ideas into committable decisions via rounds before any spec or docs. |
+| `skillset-dev-feature` | Feature spec and plan: light SDD spec, validated plan, ordered tasks under docs/features, mandatory docs-sync task. |
+| `skillset-dev-orchestrator` | Pipeline router: classifies multi-phase work, sequences discovery → feature → code → tests → security → docs → ship per `docs/ROUTING.md`. |
 
 ## Personal roadmap
 
-- [ ] `code-style-preferences` — syntax, naming conventions, folder structure, and preferred linters per language.
-- [ ] *(add here as new ones are created)*
+- [x] `skillset-dev-style` — naming, structure, quality gates, and safeguards (language-agnostic).
+- [x] `skillset-seo-content` — on-page SEO and content optimization.
+- [x] `skillset-seo-technical` — crawlability, indexation, schema, LLMS.txt, and measurement.
+- [x] `skillset-sec-appsec` — preventive AppSec baseline.
+- [x] `skillset-sec-audit` — structured security audit harness.
+- [x] `skillset-design-system` — Apple HIG foundations plus craft.
+- [x] `skillset-dev-frontend` — frontend application engineering.
+- [x] `skillset-git-workflow` — branches, Conventional Commits, PRs, history safety.
+- [x] `skillset-dev-backend` — REST resources, methods, errors, pagination, versioning.
+- [x] `skillset-dev-testing` — pyramid, AAA tests, debugging, suite hygiene.
+- [x] `skillset-docs-project` — README, ADRs, changelog, comments.
+- [x] `skillset-docs-discovery` — vague-idea interview, rounds, talk-vs-build split.
+- [x] `skillset-dev-feature` — light feature spec, validated plan, tasks, docs-sync.

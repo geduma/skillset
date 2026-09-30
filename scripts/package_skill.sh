@@ -6,7 +6,7 @@
 # Claude Code / Codex / OpenCode.
 #
 # Uso:
-#   ./scripts/package_skill.sh skills/license-guardian
+#   ./scripts/package_skill.sh skills/skillset-legal-license
 #
 # Salida: dist/<nombre-skill>.skill en la raíz del repo.
 
@@ -61,12 +61,59 @@ if not re.match(r'^[a-z0-9-]+$', name) or name.startswith('-') or name.endswith(
     sys.exit(f"❌ 'name' debe ser kebab-case: {name}")
 if len(name) > 64:
     sys.exit("❌ 'name' supera 64 caracteres")
+# Collision-safe namespace: skillset-<domain>-<topic>, salvo la meta-skill.
+allowed_domains = {"sec", "design", "dev", "git", "docs", "ops", "legal", "seo"}
+m = re.match(r'^skillset-([a-z0-9]+)-([a-z0-9]+(?:-[a-z0-9]+)*)$', name)
+legacy_meta = {"skillset-creator"}
+if name in legacy_meta:
+    print("✅ Meta-skill skillset-creator")
+elif not m:
+    sys.exit(f"❌ 'name' debe seguir skillset-<dominio>-<tema>: {name}")
+elif m.group(1) not in allowed_domains:
+    sys.exit(f"❌ Dominio no permitido '{m.group(1)}', usa uno de: {sorted(allowed_domains)}")
 
 desc = fm["description"].strip()
 if '<' in desc or '>' in desc:
     sys.exit("❌ 'description' no puede contener < o >")
 if len(desc) > 1024:
     sys.exit("❌ 'description' supera 1024 caracteres")
+
+# Token budget: SKILL.md loads fully on every activation — keep it lean,
+# push detail to references/ (progressive disclosure, nothing is deleted).
+body = content[match.end():].strip()
+body_lines = len(body.splitlines())
+body_words = len(body.split())
+if body_lines > 100:
+    sys.exit(f"❌ SKILL.md body tiene {body_lines} líneas (máx 100). Mueve detalle a references/ y linkéalo.")
+if body_words > 1500:
+    sys.exit(f"❌ SKILL.md body tiene {body_words} palabras (máx 1500). Mueve detalle a references/ y linkéalo.")
+elif body_lines > 60 or body_words > 800:
+    print(f"⚠️  SKILL.md body en {body_lines} líneas / {body_words} palabras (objetivo ≤60 / ~800). Considera mover más a references/.")
+
+ref_dir = skill_path / "references"
+if ref_dir.is_dir():
+    for ref in sorted(ref_dir.rglob("*.md")):
+        rlines = len(ref.read_text().splitlines())
+        rwords = len(ref.read_text().split())
+        if rlines > 200:
+            sys.exit(f"❌ references/{ref.name} tiene {rlines} líneas (máx 200). Divídelo por tema.")
+        if rwords > 2000:
+            sys.exit(f"❌ references/{ref.name} tiene {rwords} palabras (máx 2000). Divídelo por tema.")
+
+import re as _re
+ver = (fm.get("metadata") or {}).get("version") if isinstance(fm.get("metadata"), dict) else None
+if not ver:
+    print("⚠️  Falta 'metadata.version' — añade metadata:\n  version: \"<semver>\" (debe coincidir con VERSION).")
+elif not _re.match(r'^\d+\.\d+\.\d+$', str(ver)):
+    sys.exit(f"❌ 'metadata.version' debe ser semver: {ver}")
+if "allowed-tools" not in fm:
+    print("⚠️  Falta 'allowed-tools' — declara las herramientas mínimas que la skill necesita.")
+if "license" not in fm:
+    print("⚠️  Falta 'license' en el frontmatter.")
+if not (skill_path / "evals" / "trigger-tests.md").exists():
+    print("⚠️  Falta evals/trigger-tests.md (5 should-trigger + should-NOT-trigger).")
+if "docs/ROUTING.md" not in body:
+    print("⚠️  SKILL.md no enlaza a docs/ROUTING.md como desempate de routing.")
 
 print("✅ Skill válida")
 PYEOF

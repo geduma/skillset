@@ -1,0 +1,42 @@
+name: skillset-gates
+
+# Validation-only CI for the base knowledge library.
+# There is nothing to deploy here: this repo is cloned per workstation and
+# installed via ./install.sh --global. This workflow only guards pack health
+# so a broken skill never propagates via `git pull` to every machine.
+# Packaging (dist/*.skill) is intentionally NOT run: dist/ is git-ignored,
+# and scripts/validate-pack.py already covers frontmatter, naming, and budgets.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python3 scripts/validate-pack.py --strict
+      - name: Shell checks smoke test
+        run: |
+          echo "feat(api): add pagination" | ./scripts/checks/check-conventional-commit.sh
+          if echo "bad message" | ./scripts/checks/check-conventional-commit.sh; then
+            echo "commit check should have failed"; exit 1
+          fi
+
+  install-smoke-test:
+    # Simulates a fresh workstation: clone, global install, symlinks resolve.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: HOME="$RUNNER_TEMP/fakehome" ./install.sh --global
+      - run: |
+          for base in .claude/skills .codex/skills .config/opencode/skills .agents/skills .cursor/skills; do
+            [ -L "$RUNNER_TEMP/fakehome/$base/skillset-dev-orchestrator" ] \
+              || { echo "missing symlink in $base"; exit 1; }
+          done
+          echo "install smoke test passed"
