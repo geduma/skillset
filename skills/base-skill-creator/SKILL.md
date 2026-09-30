@@ -56,7 +56,7 @@ description: What it does and when to use it. Written for the agent, not for hum
 
 Only these keys are recognized by the shared standard: `name`, `description`, `license`, `allowed-tools`, `metadata`, `compatibility`. Anything else gets ignored or rejected depending on the host tool — don't invent custom frontmatter fields.
 
-**`name`** — must follow the collection namespace `base-<domain>-<topic>`: lowercase letters/digits/hyphens only, no leading/trailing hyphen, no double hyphens, max 64 characters. Must match the folder name exactly. `<domain>` must be one of: `sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`. The only exception is the meta-skill itself (`base-skill-creator`), which is allowed to keep the `skill-creator` topic name because it defines this convention.
+**`name`** — must follow the collection namespace `base-<domain>-<topic>`: lowercase letters/digits/hyphens only, no leading/trailing hyphen, no double hyphens, max 64 characters. Must match the folder name exactly. `<domain>` must be one of: `sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`, `seo`. The only exception is the meta-skill itself (`base-skill-creator`), which is allowed to keep the `skill-creator` topic name because it defines this convention.
 
 **`description`** — max 1024 characters, no `<` or `>` characters. Third person, active: "Use this when...", not "I can help you...".
 
@@ -66,7 +66,7 @@ Every skill in this collection **must** be named `base-<domain>-<topic>` so it c
 
 - `base-` is the reserved collection prefix. Never omit it, never use another collection's prefix.
 - `<domain>` is one of: `sec` (security), `design`, `dev` (coding conventions), `git` (version control), `docs` (documentation), `ops` (deployment/infra), `legal` (licenses).
-- `<topic>` is 1-3 kebab-case words describing the single responsibility: `auth`, `api-review`, `commits`, `license`.
+- `<topic>` is 1-3 kebab-case words describing the single responsibility: `auth`, `api-review`, `commits`, `license`, `content`, `technical`.
 - Good: `base-sec-auth`, `base-design-api`, `base-dev-commits`, `base-legal-license`.
 - Bad: `security` (no prefix, collides), `dev-commits` (missing collection prefix), `base-auth` (missing domain), `base-dev-coding-and-commits` (two responsibilities, split it).
 - Single-word or prefix-less names are never allowed, even while the repo is small — the cost of a later rename across every installed agent outweighs any short-term convenience.

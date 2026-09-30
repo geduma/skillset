@@ -101,7 +101,7 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 
 - Exactly one `SKILL.md`, with no other `SKILL.md` nested inside.
 - Valid YAML frontmatter, with only these keys allowed: `name`, `description`, `license`, `allowed-tools`, `metadata`, `compatibility`.
-- `name` in kebab-case, max 64 characters, following `base-<domain>-<topic>` (`sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`).
+- `name` in kebab-case, max 64 characters, following `base-<domain>-<topic>` (`sec`, `design`, `dev`, `git`, `docs`, `ops`, `legal`, `seo`).
 - `description` with no `<` or `>`, max 1024 characters.
 - Token budget (hard): `SKILL.md` body max 100 lines / 1500 words (target ≤60 / ~800); each `references/*.md` max 200 lines / 2000 words. Detail goes to `references/`, never inlined.
 
@@ -111,8 +111,14 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 |---|---|
 | `base-skill-creator` | Meta-skill: teaches the agent the rules and workflow for creating new skills in this repo. |
 | `base-legal-license` | Analyzes a project, asks for the copyright holder and desired license (with a decision menu), and generates LICENSE, copyright notice, and updates the README/manifest. |
+| `base-dev-style` | Applies language-agnostic dev style: intent-first naming, predictable structure, strict lint/type/format/test gates, and fail-fast safeguards. Never switches languages. |
+| `base-seo-content` | Audits on-page SEO content: meta titles/descriptions, H1/H2/H3, search intent, TLDR, TOC, tables/lists, FAQ, internal linking and topic clusters, CTA placement. |
+| `base-seo-technical` | Handles technical SEO: robots.txt, sitemaps and GSC, URLs, indexation including paginated paths, image naming/alt, FAQ/LocalBusiness schema, LLMS.txt, GA4/GSC wiring. |
+| `base-sec-appsec` | Applies preventive AppSec baseline to apps, APIs, and backends: secrets, DB/RLS, auth/sessions, validation/XSS/uploads, rate limiting, headers, TLS, dependencies. |
+| `base-sec-audit` | Runs structured security audits with coverage ledger, isolated hunting, adversarial validation, and verified findings plus reports. |
 
 ## Personal roadmap
 
-- [ ] `base-dev-style` — syntax, naming conventions, folder structure, and preferred linters per language.
-- [ ] *(add here as new ones are created)*
+- [x] `base-dev-style` — naming, structure, quality gates, and safeguards (language-agnostic).
+- [x] `base-seo-content` — on-page SEO and content optimization.
+- [x] `base-seo-technical` — crawlability, indexation, schema, LLMS.txt, and measurement.
