@@ -111,7 +111,7 @@ if "allowed-tools" not in fm:
 if "license" not in fm:
     print("⚠️  Falta 'license' en el frontmatter.")
 if not (skill_path / "evals" / "trigger-tests.md").exists():
-    print("⚠️  Falta evals/trigger-tests.md (5 should-trigger + should-NOT-trigger).")
+    print("⚠️  Falta evals/trigger-tests.md (5 should-trigger + 3 should-NOT-trigger; 5+5 con incidentales para skills de alto riesgo).")
 if "docs/ROUTING.md" not in body:
     print("⚠️  SKILL.md no enlaza a docs/ROUTING.md como desempate de routing.")
 

@@ -12,6 +12,9 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
    - Components, state split, fetching, forms, routing, rendering perf → `skillset-dev-frontend`.
    - Pixels, hierarchy, tokens, visual identity → `skillset-design-system`.
 4. Tests failing, flaky, or missing? → `skillset-dev-testing`.
+   Bug reports needing reproduce → bisect → fix → regression test also route here
+   until `skillset-dev-debugging` exists (P1). `skillset-dev-feature` explicitly
+   rejects bugfixing; do not send bugs there.
 5. Security question?
    - Preventive hardening checklist → `skillset-sec-appsec`.
    - Formal hunt with `findings.json` + `REPORT.md` → `skillset-sec-audit`.
@@ -33,6 +36,7 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
 | `dev-backend` vs `sec-appsec` | resource modeling, status codes, pagination, versioning, contracts | secrets, auth/session, DB/RLS, input validation, rate limits, headers, TLS |
 | `sec-appsec` vs `sec-audit` | preventive baseline, no formal report artifacts | user asked for audit/pentest/hunt, `findings.json` + reports required |
 | `docs-discovery` vs `dev-feature` | no committable goal yet, needs interview rounds | goal exists, needs spec + plan + tasks under `docs/` |
+| `dev-feature` vs `dev-testing` | new functionality needing spec + plan + tasks | bug report needing reproduce-bisect-fix-regress, even without existing tests |
 | `dev-feature` vs `docs-project` | planning a change before code | recording a decided outcome (ADR, changelog, README) |
 | `docs-project` vs `git-workflow` | README/ADR/changelog/comments content | commit message shape, PR process |
 | `seo-content` vs `seo-technical` | words on the page (titles, headings, FAQ copy, links) | crawlability (robots, sitemaps, canonicals, schema, LLMS.txt, analytics) |
@@ -41,3 +45,22 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
 ## Pipeline order (orchestrator default)
 
 `docs-discovery` → `dev-feature` → `dev-style` + `dev-backend`/`dev-frontend`/`design-system` → `dev-testing` → `sec-appsec` (`sec-audit` only on request) → `docs-project` → `git-workflow`. `legal-license` and `seo-*` run on demand, outside the core loop.
+
+## Incidental guards (no auto-trigger)
+
+Vague acknowledgements never activate a skill on their own:
+
+- "procede", "sigue", "continua", "haz lo que creas", "adelante" → continue the
+  current phase under the already-active skill. Do NOT load `skillset-git-workflow`
+  and do NOT `commit`/`push`. Commits require an explicit request per
+  `skillset-git-workflow` principle 6 (`commit this`, `push`, session opt-in).
+- Code review comments like "se ve bien" → no skill switch, no commit.
+- Deploy, ops, or environment questions (Docker, systemd, healthchecks, env parity)
+  have no owning skill yet (P1 `skillset-ops-deploy`); do not force them into
+  `dev-style` or `git-workflow`. Handle inline and flag as unowned.
+
+## Reserved (P1, not yet created)
+
+- `skillset-dev-debugging`: owns reproduce → bisect → fix → regression test.
+  Until then, `skillset-dev-testing` is the interim owner.
+- `skillset-ops-deploy`: owns native/docker/service deploys, healthchecks, env parity.

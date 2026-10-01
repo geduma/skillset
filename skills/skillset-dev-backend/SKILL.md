@@ -4,7 +4,7 @@ description: Use this when designing, building, or reviewing backend or API code
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # Backend API

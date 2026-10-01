@@ -4,7 +4,7 @@ description: Use this when the user wants to create a new skill for this reposit
 license: MIT
 allowed-tools: Read Write Edit Glob
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # Skill Creator
@@ -28,7 +28,7 @@ This skill is itself project-agnostic. It contains no assumptions about any spec
 6. **Token budget is hard.** Target ≤60 body lines / ~800 words; max 100 / 1500. See `references/structure-budgets.md` section 2.
 7. **Naming is collision-safe.** `skillset-<domain>-<topic>` matching the folder. See `references/frontmatter-naming.md` section 2.
 8. **Versioned, scoped, routed.** `license`, `allowed-tools`, `metadata.version` (= `VERSION`); body links `docs/ROUTING.md`. See `references/rules.md` section 8.
-9. **Trigger evals required.** `evals/trigger-tests.md` with 5 should-trigger + should-NOT-trigger. See `references/rules.md` section 9.
+9. **Trigger evals required.** `evals/trigger-tests.md` with 5 should-trigger + 3 should-NOT-trigger (5+5 with incidentals for high-risk skills). See `references/rules.md` section 9.
 
 ## Workflow (summary)
 

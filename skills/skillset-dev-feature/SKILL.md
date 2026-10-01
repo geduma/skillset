@@ -1,10 +1,10 @@
 ---
 name: skillset-dev-feature
-description: Use this when creating a new feature, endpoint, user story, or functional change from a vague or clear request. Use when the user says new feature, add functionality, plan implementation, write spec, break down tasks, clarify requirements, or estimate scope. Do not use for bug fixes or vague pre-spec idea shaping - use systematic debugging or skillset-docs-discovery. Do not use for recording decided docs - use skillset-docs-project.
+description: Use this when creating a new feature, endpoint, user story, or functional change from a vague or clear request. Use when the user says new feature, add functionality, plan implementation, write spec, break down tasks, clarify requirements, or estimate scope. Do not use for bug fixes or vague pre-spec idea shaping - use skillset-dev-testing or skillset-docs-discovery. Do not use for recording decided docs - use skillset-docs-project.
 license: MIT
 allowed-tools: Read Edit Write Glob Grep
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # Feature Spec and Plan

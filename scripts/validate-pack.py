@@ -7,7 +7,7 @@ Checks every skill under skills/:
   - description length / forbidden chars
   - SKILL.md token budgets (<=100 lines / <=1500 words body)
   - references budgets (<=200 lines / <=2000 words each)
-  - evals/trigger-tests.md present with >=5 should-trigger and >=3 should-not-trigger
+  - evals/trigger-tests.md present with >=5 should-trigger and >=3 should-NOT-trigger
   - routing pointer to docs/ROUTING.md
   - metadata.version matches VERSION file and is semver
 
@@ -122,8 +122,8 @@ for skill_dir in sorted(p for p in SKILLS.iterdir() if p.is_dir()):
         not_triggers = et.lower().count("should-not-trigger")
         if triggers < 5:
             errors.append(f"{name}: evals need >=5 should-trigger cases (found ~{triggers})")
-        if not_triggers < 1:
-            errors.append(f"{name}: evals need a should-NOT-trigger section")
+        if not_triggers < 4:
+            errors.append(f"{name}: evals need >=3 should-NOT-trigger cases (found ~{max(0, not_triggers - 2)} cases + headers)")
 
     if "docs/ROUTING.md" not in body:
         errors.append(f"{name}: SKILL.md missing routing pointer to docs/ROUTING.md")

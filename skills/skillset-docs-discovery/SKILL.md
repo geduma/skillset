@@ -4,7 +4,7 @@ description: Use this when shaping a vague or loose idea before any spec or code
 license: MIT
 allowed-tools: Read Glob Grep
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # Discovery Interview

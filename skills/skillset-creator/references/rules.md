@@ -36,4 +36,4 @@ Frontmatter must carry `license`, `allowed-tools` (minimum tools the skill needs
 
 ## 9. Every skill ships trigger evals
 
-`evals/trigger-tests.md` with at least 5 should-trigger prompts and a should-NOT-trigger section routing elsewhere. Run `scripts/validate-pack.py` before considering a skill done; it enforces rules 7–9 at pack level.
+`evals/trigger-tests.md` with at least 5 should-trigger prompts and at least 3 should-NOT-trigger prompts routing elsewhere (5+5 with incidental cases for high-risk skills like `skillset-git-workflow`). Run `scripts/validate-pack.py` before considering a skill done; it enforces rules 7–9 at pack level.

@@ -2,6 +2,19 @@
 
 All notable changes to this skill pack follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-10-01
+
+### Fixed
+
+- `skillset-dev-feature` description no longer points at non-existent "systematic debugging"; bugfixing routes to `skillset-dev-testing` (interim owner until P1 `skillset-dev-debugging`).
+- `skillset-git-workflow` evals completed to 5 should-trigger + 5 should-NOT-trigger, including 2 incidental cases ("procede", vague continuation) locking principle 6 (no auto-commit/push).
+
+### Changed
+
+- `docs/ROUTING.md`: bugfix ownership clarified (interim `dev-testing`), `dev-feature` vs `dev-testing` overlap row added, new "Incidental guards" section (vague acknowledgements never auto-trigger `git-workflow`), P1 placeholders for `skillset-dev-debugging` / `skillset-ops-deploy`.
+- `skillset-dev-orchestrator` pipeline: phase 4 notes interim bugfix ownership, phase 7 requires explicit request (never on incidental "procede"), P1 reservations listed.
+- Eval standard fixed across `skillset-creator` (SKILL + `rules.md` + `workflow.md`), `scripts/package_skill.sh`, `scripts/validate-pack.py`: minimum 5+3, 5+5 with incidentals for high-risk skills; validator now enforces >=3 should-NOT-trigger cases.
+
 ## [1.1.0] - 2026-09-30
 
 ### Added

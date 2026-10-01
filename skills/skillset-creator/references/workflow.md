@@ -9,7 +9,7 @@
 5. **Validate** with `scripts/package_skill.sh skills/<name>` (from the repo root) — it checks frontmatter, naming, and token-budget limits. If it fails on size, move content to `references/`, never just trim meaning.
 6. **Register it**: add a row to the "Skills included" table in the repo's root `README.md`.
 7. **Activate it locally**: run `./install.sh` again (idempotent — safe to rerun anytime) so the new skill's symlink gets created in every agent's discovery path. Some agents only scan for new skills at session startup — restart the coding agent's session afterward if it doesn't show up immediately.
-8. **Route and evaluate**: link `docs/ROUTING.md` in the body, add `evals/trigger-tests.md` (5 should-trigger + should-NOT-trigger), set `metadata.version` to `VERSION`, then run `python3 scripts/validate-pack.py`.
+8. **Route and evaluate**: link `docs/ROUTING.md` in the body, add `evals/trigger-tests.md` (5 should-trigger + 3 should-NOT-trigger; 5+5 with incidentals for high-risk skills), set `metadata.version` to `VERSION`, then run `python3 scripts/validate-pack.py`.
 9. **Roll out as a base library**: this pack ships to every workstation via `git pull`. Bump `VERSION` + `CHANGELOG.md` on any behavior change (`description`, routing, principles), trial on one machine first, then propagate. Never auto-commit or auto-push — commits are manual, by the human.
 
 ## 2. Self-check before considering a skill done

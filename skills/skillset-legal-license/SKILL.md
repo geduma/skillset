@@ -4,7 +4,7 @@ description: Use this skill whenever the user wants to add, choose, or fix a LIC
 license: MIT
 allowed-tools: Read Write Edit Glob WebFetch
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # License Guardian

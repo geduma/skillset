@@ -10,12 +10,12 @@
 | 3a | Backend | `skillset-dev-backend` | plan | resources, methods, errors, contracts | OpenAPI consistent |
 | 3b | Frontend | `skillset-dev-frontend` | plan | components, state, forms, fetching | tests + a11y pass |
 | 3c | Visual | `skillset-design-system` | plan | tokens, hierarchy, components styling | craft self-checks pass |
-| 4 | Tests | `skillset-dev-testing` | code | pyramid tests + regression locks | suite green, flakes quarantined |
+| 4 | Tests | `skillset-dev-testing` (interim bugfix owner until `skillset-dev-debugging` exists) | code / bug report | pyramid tests + regression locks | suite green, flakes quarantined |
 | 5 | Security | `skillset-sec-appsec` (`sec-audit` only on explicit audit request) | code + tests | hardening notes or `findings.json` + reports | `validate-findings.cjs` passes for audits |
 | 6 | Docs | `skillset-docs-project` | code + decisions | README/ADR/changelog/comments | entry point verified |
-| 7 | Ship | `skillset-git-workflow` | everything above | branch + Conventional Commits + PR | `check-conventional-commit.sh` passes |
+| 7 | Ship | `skillset-git-workflow` (explicit request only, never on incidental "procede") | everything above | branch + Conventional Commits + PR | `check-conventional-commit.sh` passes |
 
-Off-pipeline: `skillset-legal-license` (release prep), `skillset-seo-content` / `skillset-seo-technical` (search visibility), `skillset-creator` (new skill).
+Off-pipeline: `skillset-legal-license` (release prep), `skillset-seo-content` / `skillset-seo-technical` (search visibility), `skillset-creator` (new skill). Reserved P1: `skillset-dev-debugging`, `skillset-ops-deploy` (see `docs/ROUTING.md`).
 
 ## 2. Rules
 

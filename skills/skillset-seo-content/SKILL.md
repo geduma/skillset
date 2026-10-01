@@ -4,7 +4,7 @@ description: Use this when writing, reviewing, or auditing on-page SEO content s
 license: MIT
 allowed-tools: Read Write Edit Glob Grep
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # SEO Content
