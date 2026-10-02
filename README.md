@@ -1,8 +1,8 @@
 # skillset
 
-Personal collection of *skills* (`SKILL.md`) for AI coding agents — Claude Code, Codex CLI, OpenCode, Cursor, VSCode/Copilot, and any other tool that supports the open `SKILL.md` standard.
+Personal collection of *skills* (`SKILL.md`) and *agents* (`agents/*.md`) for AI coding agents — Claude Code, Codex CLI, OpenCode, Cursor, VSCode/Copilot, and any other tool that supports these open formats.
 
-Version `1.1.0` (see `VERSION` and `CHANGELOG.md`). Every skill carries `metadata.version`, `allowed-tools`, trigger evals in `evals/`, and a routing pointer to `docs/ROUTING.md`. Validate with `python3 scripts/validate-pack.py`.
+Version `1.3.0` (see `VERSION` and `CHANGELOG.md`). Every skill carries `metadata.version`, `allowed-tools`, trigger evals in `evals/`, and a routing pointer to `docs/ROUTING.md`. Validate with `python3 scripts/validate-pack.py`.
 
 ## Why this repo exists
 
@@ -17,13 +17,18 @@ skillset/
 │   │   ├── references/
 │   │   └── assets/
 │   └── <future skills>/
+├── agents/               (tool-agnostic source of truth: skillset, skillset-spec/code/verify/ship)
+├── docs/
+│   └── ROUTING.md        (canonical routing matrix for all skills and agents)
 ├── scripts/
 │   └── package_skill.sh
 ├── dist/              (generated — packaged .skill files, git-ignored)
-├── install.sh
+├── install.sh         (links skills/ + agents/ into every tool's discovery paths)
 ├── uninstall.sh
 └── README.md
 ```
+
+`agents/` mirrors the `skills/` philosophy: one tool-agnostic source of truth, symlinked by `install.sh` into each tool's agent discovery path. `skillset-creator` is excluded from the multiagent workflow — it builds skills, never runs inside product delivery.
 
 All skill content (SKILL.md, references, assets) is written in **English**, regardless of the language used to develop this repo or talk to the agent day to day — this keeps skills portable across agents and consistent if this repo is ever shared. Individual skills may of course produce project-specific output in another language when that's literally their job (e.g. a skill whose purpose is generating Spanish-language documentation) — but the skill's own instructions stay in English.
 
@@ -37,26 +42,33 @@ cd ~/skillset
 ./install.sh --global
 ```
 
-`install.sh` creates symlinks from `skills/<name>/` into every coding agent's discovery path:
+`install.sh` creates symlinks from `skills/<name>/` and `agents/<name>.md` into every coding agent's discovery path:
 
-| Agent | Project path | Global path |
-|---|---|---|
-| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
-| Codex CLI | `.codex/skills/` | `~/.codex/skills/` |
-| OpenCode | `.opencode/skills/` | `~/.config/opencode/skills/` |
-| Shared standard (also read by Codex and OpenCode) | `.agents/skills/` | `~/.agents/skills/` |
-| Cursor | `.cursor/skills/` | `~/.cursor/skills/` |
-| VSCode/Copilot | `.github/skills/` | *(no global support)* |
+| Agent | Project skills | Global skills | Project agents | Global agents |
+|---|---|---|---|---|
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` | `.claude/agents/` | `~/.claude/agents/` |
+| Codex CLI | `.codex/skills/` | `~/.codex/skills/` | `.codex/agents/` | `~/.codex/agents/` |
+| OpenCode | `.opencode/skills/` | `~/.config/opencode/skills/` | `.opencode/agents/` | `~/.config/opencode/agents/` |
+| Shared standard (also read by Codex and OpenCode) | `.agents/skills/` | `~/.agents/skills/` | `.agents/agents/` | `~/.agents/agents/` |
+| Cursor | `.cursor/skills/` | `~/.cursor/skills/` | `.cursor/agents/` | `~/.cursor/agents/` |
+| VSCode/Copilot | `.github/skills/` | *(no global support)* | `.github/agents/` | *(no global support)* |
 
 Other useful variants:
 
 ```bash
-./install.sh                        # project-only, for the repo you're currently in
+./install.sh                        # project-only skills + agents, for the repo you're currently in
 ./install.sh --global skillset-legal-license   # install just one skill
+./install.sh --global skillset      # install just one agent
+./install.sh --global --skills-only # only skills
+./install.sh --global --agents-only # only agents
 ./install.sh --global --copy        # copy instead of symlink (Windows/WSL symlink issues)
+./install.sh --global --prune       # also prune stale LEGOS symlinks (opt-in, never default)
+./install.sh --global --copy --force # replace real files/dirs with fresh copies (explicit, may overwrite manual edits)
 ```
 
 Run this once per machine. After that, every project you open with any of these agents sees all your skills without any per-project setup.
+
+To work a feature end to end, select the `skillset` agent and say `implementar feature X` — it classifies the request per `docs/ROUTING.md` and delegates each pipeline phase to `skillset-spec`, `skillset-code`, `skillset-verify` and `skillset-ship` (see "Agents included" below).
 
 ## 2. Updating skills when you update the repo
 
@@ -64,6 +76,8 @@ Because `install.sh` creates **symlinks**, not copies, the discovery paths alway
 
 - **Editing an existing skill** (yours, or pulled from a teammate/another machine): just `git pull` inside `~/skillset`. The symlinks already exist and point at those files — there's nothing else to run, the change is live in your next agent session immediately.
 - **Adding a brand-new skill** (a new folder under `skills/`): after `git pull`, run `./install.sh --global` again. It's idempotent and safe to rerun anytime — it only creates symlinks that don't already exist, it won't touch or duplicate the ones that do.
+- **Removing a deleted skill** (folder removed from `skills/` or `agents/`): run `./install.sh --global --prune`. Without `--prune` stale symlinks are kept; with `--prune` only LEGOS symlinks whose source no longer exists are removed — manual or third-party content is untouched.
+- **Refreshing `--copy` installs**: plain `--copy` never overwrites a real file/dir (skip protector). Add `--force` (`--copy --force`) to explicitly replace managed destinations — it may overwrite manual edits, so it is never default.
 - **Agent session freshness**: some agents only scan their skills directory at session startup. If a newly installed or updated skill doesn't seem to be recognized, start a new session (restart Claude Code / Codex / OpenCode) to force a rescan.
 
 So the day-to-day loop is: edit or `git pull` → commit/push if you made local changes → `./install.sh --global` only when a new skill folder was added.
@@ -72,7 +86,7 @@ So the day-to-day loop is: edit or `git pull` → commit/push if you made local 
 
 This repo is a **base library shared by every machine**, not a per-project dependency. A `description` change alters agent behavior in all your projects at once. Treat updates accordingly:
 
-- **Pin stable machines:** `git checkout v1.1.0` inside `~/skillset` keeps a workstation on a known-good pack. `git checkout main && git pull` moves it forward when you decide.
+- **Pin stable machines:** `git checkout v1.2.0` inside `~/skillset` keeps a workstation on a known-good pack. `git checkout main && git pull` moves it forward when you decide.
 - **Trial on one machine first:** pull `main` on a single workstation, work a full day, then propagate to the rest. Never roll an untested pack to all machines at once.
 - **Bump on behavior change:** any `description`, routing, or principle change requires a `VERSION` bump and a `CHANGELOG.md` entry — cosmetic doc fixes don't.
 
@@ -135,6 +149,18 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 | `skillset-docs-discovery` | Discovery interview: turns vague ideas into committable decisions via rounds before any spec or docs. |
 | `skillset-dev-feature` | Feature spec and plan: light SDD spec, validated plan, ordered tasks under docs/features, mandatory docs-sync task. |
 | `skillset-dev-orchestrator` | Pipeline router: classifies multi-phase work, sequences discovery → feature → code → tests → security → docs → ship per `docs/ROUTING.md`. |
+
+## Agents included
+
+Tool-agnostic source of truth under `agents/`, linked by `install.sh` into each tool's agent path. One primary + four subagents; every agent sees the full skill library via `docs/ROUTING.md` (affinity is not exclusivity — out-of-phase work escalates to `skillset`). `skillset-creator` is excluded from this workflow.
+
+| Agent | Mode | Affinity |
+|---|---|---|
+| `skillset` | primary | Entry point: `implementar feature X` → classify, sequence, delegate, verify gates. |
+| `skillset-spec` | subagent | `docs-discovery` + `dev-feature`. Read-only except `docs/**`, no shell. |
+| `skillset-code` | subagent | `dev-style` + `dev-backend`/`dev-frontend` + `design-system`. No `git push`. |
+| `skillset-verify` | subagent | `dev-testing` + `sec-appsec` (+ `sec-audit` only on explicit audit request). |
+| `skillset-ship` | subagent | `docs-project` + conditional `seo-*`/`legal-license` + `git-workflow` (explicit `commit/push/PR` only). |
 
 ## Personal roadmap
 

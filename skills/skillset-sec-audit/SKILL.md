@@ -4,7 +4,7 @@ description: Use this when the user asks for a security audit, vulnerability hun
 license: MIT
 allowed-tools: Read Glob Grep Shell
 metadata:
-  version: 1.1.0
+  version: 1.3.0
 ---
 
 # Security Audit

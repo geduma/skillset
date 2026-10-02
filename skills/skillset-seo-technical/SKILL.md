@@ -4,7 +4,7 @@ description: Use this when handling technical SEO such as robots.txt crawl rules
 license: MIT
 allowed-tools: Read Write Edit Glob Grep Shell
 metadata:
-  version: 1.1.0
+  version: 1.3.0
 ---
 
 # Technical SEO

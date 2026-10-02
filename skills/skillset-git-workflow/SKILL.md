@@ -4,7 +4,7 @@ description: Use this when creating branches, writing commit messages, following
 license: MIT
 allowed-tools: Read Shell Glob Grep
 metadata:
-  version: 1.1.0
+  version: 1.3.0
 ---
 
 # Git Workflow

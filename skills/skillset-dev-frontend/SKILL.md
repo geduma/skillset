@@ -4,7 +4,7 @@ description: "Use this when building, refactoring, or reviewing frontend applica
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.1.0
+  version: 1.3.0
 ---
 
 # Frontend Engineering
