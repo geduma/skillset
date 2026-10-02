@@ -62,6 +62,8 @@ Other useful variants:
 ./install.sh --global --skills-only # only skills
 ./install.sh --global --agents-only # only agents
 ./install.sh --global --copy        # copy instead of symlink (Windows/WSL symlink issues)
+./install.sh --global --prune       # also prune stale LEGOS symlinks (opt-in, never default)
+./install.sh --global --copy --force # replace real files/dirs with fresh copies (explicit, may overwrite manual edits)
 ```
 
 Run this once per machine. After that, every project you open with any of these agents sees all your skills without any per-project setup.
@@ -74,6 +76,8 @@ Because `install.sh` creates **symlinks**, not copies, the discovery paths alway
 
 - **Editing an existing skill** (yours, or pulled from a teammate/another machine): just `git pull` inside `~/skillset`. The symlinks already exist and point at those files — there's nothing else to run, the change is live in your next agent session immediately.
 - **Adding a brand-new skill** (a new folder under `skills/`): after `git pull`, run `./install.sh --global` again. It's idempotent and safe to rerun anytime — it only creates symlinks that don't already exist, it won't touch or duplicate the ones that do.
+- **Removing a deleted skill** (folder removed from `skills/` or `agents/`): run `./install.sh --global --prune`. Without `--prune` stale symlinks are kept; with `--prune` only LEGOS symlinks whose source no longer exists are removed — manual or third-party content is untouched.
+- **Refreshing `--copy` installs**: plain `--copy` never overwrites a real file/dir (skip protector). Add `--force` (`--copy --force`) to explicitly replace managed destinations — it may overwrite manual edits, so it is never default.
 - **Agent session freshness**: some agents only scan their skills directory at session startup. If a newly installed or updated skill doesn't seem to be recognized, start a new session (restart Claude Code / Codex / OpenCode) to force a rescan.
 
 So the day-to-day loop is: edit or `git pull` → commit/push if you made local changes → `./install.sh --global` only when a new skill folder was added.

@@ -4,6 +4,11 @@ All notable changes to this skill pack follow [Keep a Changelog](https://keepach
 
 ## [Unreleased]
 
+### Added
+
+- `install.sh --prune` (opt-in): prunes stale LEGOS symlinks pointing inside the repo whose source no longer exists; leaves manual/third-party links untouched. Portable bash 3.2 (loop + `readlink` + `test -e`, no `find -xtype` / `readlink -f`).
+- `install.sh --force` (explicit, `--copy` refresh): replaces managed real files/dirs with fresh copies; without it the skip protector is kept. Warns it may overwrite manual edits, never default.
+
 ### Fixed
 
 - SDD spec gate: `agents/skillset.md` exige Fase 1 con `spec.md + plan.md + tasks.md` antes de código y prohíbe pedir aprobación sin artefactos presentados (paths + resumen en chat). `agents/skillset-spec.md` define workflow mandatorio load → inventory → escribir → presentar + gate. Documentado en `docs/features/002-sdd-spec-gate/`.

@@ -7,6 +7,8 @@
 #   ./install.sh                 # install into the current project (local repo)
 #   ./install.sh --global        # install globally (~/.claude, ~/.codex, etc.)
 #   ./install.sh --copy          # copy instead of symlink (useful on Windows/WSL with symlink issues)
+#   ./install.sh --prune         # also remove LEGOS symlinks whose source no longer exists (opt-in)
+#   ./install.sh --copy --force  # in --copy mode, replace real files/dirs with fresh copies (explicit, may overwrite manual edits)
 #   ./install.sh --skills-only   # skills only
 #   ./install.sh --agents-only   # agents only
 #   ./install.sh skillset-legal-license  # install just that item (skill or agent)
@@ -22,6 +24,8 @@ AGENTS_SRC="$REPO_DIR/agents"
 
 MODE="project"
 LINK_MODE="symlink"
+PRUNE=0
+FORCE=0
 INSTALL_GROUPS=()
 SELECTED_ITEMS=()
 
@@ -29,6 +33,8 @@ for arg in "$@"; do
   case "$arg" in
     --global) MODE="global" ;;
     --copy) LINK_MODE="copy" ;;
+    --prune) PRUNE=1 ;;
+    --force) FORCE=1 ;;
     --skills-only) INSTALL_GROUPS=("skills") ;;
     --agents-only) INSTALL_GROUPS=("agents") ;;
     --help|-h)
@@ -113,6 +119,9 @@ link_item() {
     if [ -e "$dest" ] || [ -L "$dest" ]; then
       if [ -L "$dest" ]; then
         rm "$dest"
+      elif [ "$FORCE" = "1" ]; then
+        echo "⚠️  $dest exists as real file/dir. --force: removing and replacing (may overwrite manual edits)."
+        rm -rf "$dest"
       else
         echo "⚠️  $dest already exists and is NOT a symlink managed by this script. Skipping to avoid overwriting manual content."
         continue
@@ -134,8 +143,27 @@ link_item() {
 }
 
 echo "📦 Installing from: $SKILLS_SRC + $AGENTS_SRC"
-echo "🎯 Mode: $MODE ($LINK_MODE) [${INSTALL_GROUPS[*]}]"
+echo "🎯 Mode: $MODE ($LINK_MODE) [${INSTALL_GROUPS[*]}] prune=$PRUNE force=$FORCE"
 echo ""
+
+prune_stale_links() {
+  for target_base in "$@"; do
+    [ -d "$target_base" ] || continue
+    for dest in "$target_base"/*; do
+      [ -e "$dest" ] || [ -L "$dest" ] || continue
+      [ -L "$dest" ] || continue
+      link="$(readlink "$dest")"
+      case "$link" in
+        "$REPO_DIR/skills/"*|"$REPO_DIR/agents/"*)
+          if [ ! -e "$dest" ]; then
+            rm "$dest"
+            echo "🗑️  Pruned stale link: $dest -> $link"
+          fi
+          ;;
+      esac
+    done
+  done
+}
 
 for item in "${SELECTED_ITEMS[@]}"; do
   if [ -d "$SKILLS_SRC/$item" ]; then
@@ -149,4 +177,9 @@ for item in "${SELECTED_ITEMS[@]}"; do
 done
 
 echo ""
+if [ "$PRUNE" = "1" ]; then
+  echo "🧹 Pruning stale LEGOS links..."
+  prune_stale_links "${SKILL_TARGETS[@]}" "${AGENT_TARGETS[@]}"
+  echo ""
+fi
 echo "✅ Done. Always edit content in skills/<name>/ and agents/<name>.md — links update automatically."
