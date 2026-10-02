@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 #
-# install.sh — enlaza las skills y los agentes de este repo a las rutas que buscan
-# Claude Code, Codex CLI, OpenCode, Cursor y VSCode/Copilot.
+# install.sh — links this repo's skills and agents to the paths searched by
+# Claude Code, Codex CLI, OpenCode, Cursor, and VSCode/Copilot.
 #
-# Uso:
-#   ./install.sh                 # instala en el proyecto actual (repo local)
-#   ./install.sh --global        # instala globalmente (~/.claude, ~/.codex, etc.)
-#   ./install.sh --copy          # copia en vez de symlink (útil en Windows/WSL con problemas de symlinks)
-#   ./install.sh --skills-only   # solo skills
-#   ./install.sh --agents-only   # solo agentes
-#   ./install.sh skillset-legal-license  # instala solo ese item (skill o agente)
+# Usage:
+#   ./install.sh                 # install into the current project (local repo)
+#   ./install.sh --global        # install globally (~/.claude, ~/.codex, etc.)
+#   ./install.sh --copy          # copy instead of symlink (useful on Windows/WSL with symlink issues)
+#   ./install.sh --skills-only   # skills only
+#   ./install.sh --agents-only   # agents only
+#   ./install.sh skillset-legal-license  # install just that item (skill or agent)
 #
-# Filosofía: skills/ y agents/ en este repo son la ÚNICA fuente de verdad.
-# Este script solo crea enlaces hacia ellas — nunca dupliques contenido a mano.
+# Philosophy: skills/ and agents/ in this repo are the SINGLE source of truth.
+# This script only creates links to them — never duplicate content by hand.
 
 set -euo pipefail
 
@@ -114,7 +114,7 @@ link_item() {
       if [ -L "$dest" ]; then
         rm "$dest"
       else
-        echo "⚠️  $dest ya existe y NO es un symlink gestionado por este script. Saltando para no sobrescribir contenido manual."
+        echo "⚠️  $dest already exists and is NOT a symlink managed by this script. Skipping to avoid overwriting manual content."
         continue
       fi
     fi
@@ -128,13 +128,13 @@ link_item() {
       else
         cp "$src" "$dest"
       fi
-      echo "📄 Copiado a $dest"
+      echo "📄 Copied to $dest"
     fi
   done
 }
 
-echo "📦 Instalando de: $SKILLS_SRC + $AGENTS_SRC"
-echo "🎯 Modo: $MODE ($LINK_MODE) [${INSTALL_GROUPS[*]}]"
+echo "📦 Installing from: $SKILLS_SRC + $AGENTS_SRC"
+echo "🎯 Mode: $MODE ($LINK_MODE) [${INSTALL_GROUPS[*]}]"
 echo ""
 
 for item in "${SELECTED_ITEMS[@]}"; do
@@ -143,10 +143,10 @@ for item in "${SELECTED_ITEMS[@]}"; do
   elif [ -f "$AGENTS_SRC/$item.md" ]; then
     link_item "$AGENTS_SRC/$item.md" file "${AGENT_TARGETS[@]}"
   else
-    echo "⚠️  Item '$item' no encontrado en $SKILLS_SRC ni en $AGENTS_SRC, saltando."
+    echo "⚠️  Item '$item' not found in $SKILLS_SRC or $AGENTS_SRC, skipping."
     continue
   fi
 done
 
 echo ""
-echo "✅ Listo. Edita siempre el contenido en skills/<nombre>/ y agents/<nombre>.md — los enlaces se actualizan solos."
+echo "✅ Done. Always edit content in skills/<name>/ and agents/<name>.md — links update automatically."

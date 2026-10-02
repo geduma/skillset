@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# uninstall.sh — elimina los symlinks creados por install.sh (skills + agentes).
-# Nunca borra contenido copiado (--copy) ni carpetas que no sean symlinks,
-# para no destruir nada que el usuario haya editado a mano.
+# uninstall.sh — removes the symlinks created by install.sh (skills + agents).
+# Never deletes copied content (--copy) or folders that are not symlinks,
+# so nothing the user edited by hand is destroyed.
 #
-# Uso:
-#   ./uninstall.sh            # del proyecto actual
-#   ./uninstall.sh --global   # de las rutas globales
+# Usage:
+#   ./uninstall.sh            # from the current project
+#   ./uninstall.sh --global   # from the global paths
 #   ./uninstall.sh --skills-only
 #   ./uninstall.sh --agents-only
 
@@ -67,7 +67,7 @@ for skill_dir in "$SKILLS_SRC"/*/; do
     dest="$target_base/$skill"
     if [ -L "$dest" ]; then
       rm "$dest"
-      echo "🗑️  Eliminado symlink: $dest"
+      echo "🗑️  Removed symlink: $dest"
     fi
   done
 done
@@ -81,10 +81,10 @@ for agent_file in "$AGENTS_SRC"/*.md; do
     dest="$target_base/$agent.md"
     if [ -L "$dest" ]; then
       rm "$dest"
-      echo "🗑️  Eliminado symlink: $dest"
+      echo "🗑️  Removed symlink: $dest"
     fi
   done
 done
 fi
 
-echo "✅ Listo."
+echo "✅ Done."
