@@ -2,6 +2,16 @@
 
 All notable changes to this skill pack follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- SDD spec gate: `agents/skillset.md` exige Fase 1 con `spec.md + plan.md + tasks.md` antes de código y prohíbe pedir aprobación sin artefactos presentados (paths + resumen en chat). `agents/skillset-spec.md` define workflow mandatorio load → inventory → escribir → presentar + gate. Documentado en `docs/features/002-sdd-spec-gate/`.
+
+### Changed
+
+- Progreso visible por fase: `skillset.md`, `skillset-code/verify/ship.md` y `pipeline.md` exigen abrir con `Fase X/Y · [skill] · Gate: pending/approved · Artefactos:` y cerrar con evidencia + aprobación explícita.
+
 ## [1.3.0] - 2026-10-01
 
 ### Added

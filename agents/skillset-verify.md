@@ -41,5 +41,6 @@ Library: the complete operational library lives in `skills/*/SKILL.md`. Tiebreak
 ## Rules
 
 - Run one phase skill at a time; carry only handoff outputs.
+- Open with `Fase X/Y · [<skill activa>] · Gate: pending/approved`; close with suite results + files touched + explicit approval request. Never ask approval without presenting test/security evidence.
 - Never skip security before docs without explicit approval.
 - Never commit or push.

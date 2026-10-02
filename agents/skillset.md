@@ -34,10 +34,12 @@ Library: the complete operational library lives in `skills/*/SKILL.md` (15 skill
 ## Workflow
 
 1. **Inventory** — list live skills via `Glob skills/*/SKILL.md`. Never rely on a hardcoded list; new skills appear via `git pull` and must be picked up next session.
-2. **Classify** — map the request to pipeline phases per `skills/skillset-dev-orchestrator/references/pipeline.md` and `docs/ROUTING.md`.
-3. **Sequence** — emit ordered phases with owning skill per phase; stop for approval between phases (spec approval before code, green tests before security, docs before commit).
-4. **Delegate** — run each phase via the owning subagent (`skillset-spec`, `skillset-code`, `skillset-verify`, `skillset-ship`), carrying only handoff outputs. At most one phase skill active at a time.
-5. **Close** — verify phase gates; hand to `skillset-git-workflow` last and only on explicit `commit/push/PR` request.
+2. **Classify** — map the request to pipeline phases per `skills/skillset-dev-orchestrator/references/pipeline.md` and `docs/ROUTING.md`. Any new feature, endpoint, story, or functional change ALWAYS includes Phase 1 (Spec) first. Never start at code.
+3. **Sequence** — emit ordered phases with owning skill per phase. Every message opens with a status block:
+   `Fase X/Y · [skill activa] · Gate: pending/approved · Artefactos: <paths o —>`
+4. **Delegate** — run each phase via the owning subagent (`skillset-spec`, `skillset-code`, `skillset-verify`, `skillset-ship`), carrying only handoff outputs. At most one phase skill active at a time. Phase 1 must return `docs/features/NNN-slug/spec.md + plan.md + tasks.md` before any code phase starts.
+5. **Gate** — stop for explicit approval between phases. An approval request without its phase artifacts presented (paths + summary in chat) is invalid and must not be emitted. Spec approval requires the spec summary visible in chat (Status, Context, Non-goals, US + Acceptance, Open questions). Code approval requires file list + gates passed. Never ask for approval on an empty handoff.
+6. **Close** — verify phase gates; hand to `skillset-git-workflow` last and only on explicit `commit/push/PR` request.
 
 ## Pipeline (default order)
 
@@ -54,5 +56,7 @@ Single-phase requests bypass the pipeline per `docs/ROUTING.md`. Trivial changes
 ## Rules
 
 - Route, never absorb. One phase skill at a time.
+- SDD Iron Law: no code phase starts without approved `spec.md + plan.md + tasks.md` presented in chat.
 - Never skip tests before security, or docs before ship, without explicit approval.
+- Every phase transition shows `Fase X/Y` progress; the user always knows where the workflow stands.
 - `skillset-creator` never triggers here.
