@@ -15,7 +15,7 @@
 | 6 | Docs | `skillset-docs-project` | code + decisions | README/ADR/changelog/comments | entry point verified |
 | 7 | Ship | `skillset-git-workflow` (explicit request only, never on incidental "procede") | everything above | branch + Conventional Commits + PR | `check-conventional-commit.sh` passes |
 
-Off-pipeline: `skillset-legal-license` (release prep), `skillset-seo-content` / `skillset-seo-technical` (search visibility), `skillset-creator` (new skill). Reserved P1: `skillset-dev-debugging`, `skillset-ops-deploy` (see `docs/ROUTING.md`).
+Off-pipeline: `skillset-legal-license` (conditional — auto-add on public release), `skillset-seo-content` / `skillset-seo-technical` (conditional — auto-add on web-facing changes). `skillset-creator` is excluded from this workflow (meta-skill for building skills, never runs inside product delivery). Reserved P1: `skillset-dev-debugging`, `skillset-ops-deploy` (see `docs/ROUTING.md`).
 
 ## 2. Rules
 

@@ -4,7 +4,7 @@ description: Use this when designing, building, or reviewing web interfaces need
 license: MIT
 allowed-tools: Read Edit Write Glob
 metadata:
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # Design System

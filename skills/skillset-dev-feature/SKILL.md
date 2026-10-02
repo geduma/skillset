@@ -4,7 +4,7 @@ description: Use this when creating a new feature, endpoint, user story, or func
 license: MIT
 allowed-tools: Read Edit Write Glob Grep
 metadata:
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # Feature Spec and Plan

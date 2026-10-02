@@ -44,7 +44,7 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
 
 ## Pipeline order (orchestrator default)
 
-`docs-discovery` → `dev-feature` → `dev-style` + `dev-backend`/`dev-frontend`/`design-system` → `dev-testing` → `sec-appsec` (`sec-audit` only on request) → `docs-project` → `git-workflow`. `legal-license` and `seo-*` run on demand, outside the core loop.
+`docs-discovery` → `dev-feature` → `dev-style` + `dev-backend`/`dev-frontend`/`design-system` → `dev-testing` → `sec-appsec` (`sec-audit` only on request) → `docs-project` → `git-workflow`. Conditional auto-add (not explicit-only): `legal-license` on public release, `seo-*` on web-facing changes. `skillset-creator` is excluded from this workflow.
 
 ## Incidental guards (no auto-trigger)
 

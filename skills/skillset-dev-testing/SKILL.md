@@ -4,7 +4,7 @@ description: Use this when planning test strategy, writing or fixing unit integr
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # Testing and Debugging

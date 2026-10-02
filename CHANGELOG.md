@@ -2,6 +2,18 @@
 
 All notable changes to this skill pack follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-10-01
+
+### Added
+
+- Tool-agnostic `agents/` source of truth: `skillset` (primary) + `skillset-spec`, `skillset-code`, `skillset-verify`, `skillset-ship` (subagents). Every agent sees the full skill library via `docs/ROUTING.md`; affinity is not exclusivity. `skillset-creator` excluded from the workflow.
+- `install.sh` / `uninstall.sh` now link both `skills/` and `agents/` into each tool's discovery paths (Claude Code, Codex CLI, OpenCode, shared `.agents`, Cursor, VSCode/Copilot), with `--skills-only` / `--agents-only` and single-item install. Fixed `GROUPS` name collision with bash's reserved group-list variable (renamed to `INSTALL_GROUPS`).
+
+### Changed
+
+- `docs/ROUTING.md` pipeline order: `legal-license` (public release) and `seo-*` (web-facing changes) are conditional auto-add phases, no longer explicit-only. `skillset-creator` marked excluded.
+- `skillset-dev-orchestrator` pipeline reference updated to match (conditional phases + creator exclusion).
+
 ## [1.2.0] - 2026-10-01
 
 ### Fixed

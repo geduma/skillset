@@ -4,7 +4,7 @@ description: Use this when writing new code, reviewing a diff or pull request, s
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # Dev Style

@@ -4,7 +4,7 @@ description: Use this when the user wants to create a new skill for this reposit
 license: MIT
 allowed-tools: Read Write Edit Glob
 metadata:
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # Skill Creator

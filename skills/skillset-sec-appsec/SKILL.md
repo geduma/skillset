@@ -4,7 +4,7 @@ description: Use this when hardening or reviewing application, API, or backend c
 license: MIT
 allowed-tools: Read Glob Grep Shell
 metadata:
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # AppSec Baseline

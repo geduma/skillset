@@ -4,7 +4,7 @@ description: Use this when a task spans multiple phases of software delivery - v
 license: MIT
 allowed-tools: Read Glob Grep
 metadata:
-  version: 1.2.0
+  version: 1.3.0
 ---
 
 # Dev Orchestrator
