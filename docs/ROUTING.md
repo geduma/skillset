@@ -50,11 +50,11 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
 
 Vague acknowledgements never activate a skill on their own:
 
-- "procede", "sigue", "continua", "haz lo que creas", "adelante" → continue the
+- "proceed", "go on", "continue", "do what you think is best", "go ahead" → continue the
   current phase under the already-active skill. Do NOT load `skillset-git-workflow`
   and do NOT `commit`/`push`. Commits require an explicit request per
   `skillset-git-workflow` principle 6 (`commit this`, `push`, session opt-in).
-- Code review comments like "se ve bien" → no skill switch, no commit.
+- Code review comments like "looks good" → no skill switch, no commit.
 - Deploy, ops, or environment questions (Docker, systemd, healthchecks, env parity)
   have no owning skill yet (P1 `skillset-ops-deploy`); do not force them into
   `dev-style` or `git-workflow`. Handle inline and flag as unowned.

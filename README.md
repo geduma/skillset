@@ -30,7 +30,7 @@ skillset/
 
 `agents/` mirrors the `skills/` philosophy: one tool-agnostic source of truth, symlinked by `install.sh` into each tool's agent discovery path. `skillset-creator` is excluded from the multiagent workflow — it builds skills, never runs inside product delivery.
 
-All skill content (SKILL.md, references, assets) is written in **English**, regardless of the language used to develop this repo or talk to the agent day to day — this keeps skills portable across agents and consistent if this repo is ever shared. Individual skills may of course produce project-specific output in another language when that's literally their job (e.g. a skill whose purpose is generating Spanish-language documentation) — but the skill's own instructions stay in English.
+All skill content (SKILL.md, references, assets) is written in **English**, regardless of the language used to develop this repo or talk to the agent day to day — this keeps skills portable across agents and consistent if this repo is ever shared. The same rule applies to every Markdown file skillset generates in any project (`docs/features/*/spec.md`, `plan.md`, `tasks.md`, `README.md`, `CHANGELOG.md`, ADRs, comments): file content is always English. Chat explanations, summaries, and questions follow the user's conversation language (e.g. Spanish) — files never do. Individual skills may of course produce project-specific output in another language when that's literally their job (e.g. a skill whose purpose is generating Spanish-language documentation) — but the skill's own instructions stay in English.
 
 ---
 
@@ -68,7 +68,7 @@ Other useful variants:
 
 Run this once per machine. After that, every project you open with any of these agents sees all your skills without any per-project setup.
 
-To work a feature end to end, select the `skillset` agent and say `implementar feature X` — it classifies the request per `docs/ROUTING.md` and delegates each pipeline phase to `skillset-spec`, `skillset-code`, `skillset-verify` and `skillset-ship` (see "Agents included" below).
+To work a feature end to end, select the `skillset` agent and say `implement feature X` — it classifies the request per `docs/ROUTING.md` and delegates each pipeline phase to `skillset-spec`, `skillset-code`, `skillset-verify` and `skillset-ship` (see "Agents included" below).
 
 ## 2. Updating skills when you update the repo
 
@@ -156,7 +156,7 @@ Tool-agnostic source of truth under `agents/`, linked by `install.sh` into each 
 
 | Agent | Mode | Affinity |
 |---|---|---|
-| `skillset` | primary | Entry point: `implementar feature X` → classify, sequence, delegate, verify gates. |
+| `skillset` | primary | Entry point: `implement feature X` → classify, sequence, delegate, verify gates. |
 | `skillset-spec` | subagent | `docs-discovery` + `dev-feature`. Read-only except `docs/**`, no shell. |
 | `skillset-code` | subagent | `dev-style` + `dev-backend`/`dev-frontend` + `design-system`. No `git push`. |
 | `skillset-verify` | subagent | `dev-testing` + `sec-appsec` (+ `sec-audit` only on explicit audit request). |

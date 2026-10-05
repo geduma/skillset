@@ -42,6 +42,6 @@ Library: the complete operational library lives in `skills/*/SKILL.md`. Tiebreak
 
 ## Rules
 
-- Incidental acknowledgements (`procede`, `sigue`, `continua`, `adelante`, `se ve bien`) never trigger a commit or push. Continue the current phase instead.
+- Incidental acknowledgements (`proceed`, `go on`, `continue`, `go ahead`, `looks good`) never trigger a commit or push. Continue the current phase instead.
 - Run one phase skill at a time; carry only handoff outputs.
-- Open with `Fase X/Y · [<skill activa>] · Gate: pending/approved`; close with docs/branch/PR evidence + explicit approval request. Never ask approval without presenting the artifact.
+- Open with `Phase X/Y · [active skill] · Gate: pending/approved`; close with docs/branch/PR evidence + explicit approval request. Never ask approval without presenting the artifact.

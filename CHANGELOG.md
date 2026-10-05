@@ -11,11 +11,12 @@ All notable changes to this skill pack follow [Keep a Changelog](https://keepach
 
 ### Fixed
 
-- SDD spec gate: `agents/skillset.md` exige Fase 1 con `spec.md + plan.md + tasks.md` antes de código y prohíbe pedir aprobación sin artefactos presentados (paths + resumen en chat). `agents/skillset-spec.md` define workflow mandatorio load → inventory → escribir → presentar + gate. Documentado en `docs/features/002-sdd-spec-gate/`.
+- SDD spec gate: `agents/skillset.md` requires Phase 1 with `spec.md + plan.md + tasks.md` before any code and forbids approval requests without presented artifacts (paths + summary in chat). `agents/skillset-spec.md` defines a mandatory load → inventory → write → present + gate workflow. Documented in `docs/features/002-sdd-spec-gate/`.
 
 ### Changed
 
-- Progreso visible por fase: `skillset.md`, `skillset-code/verify/ship.md` y `pipeline.md` exigen abrir con `Fase X/Y · [skill] · Gate: pending/approved · Artefactos:` y cerrar con evidencia + aprobación explícita.
+- Documentation language rule: every Markdown file skillset generates in any project is always English; chat explanations follow the user's conversation language. Clarified in `README.md`; fixed mixed-language entries in this changelog.
+- Visible per-phase progress: `skillset.md`, `skillset-code/verify/ship.md` and `pipeline.md` require opening with `Phase X/Y · [skill] · Gate: pending/approved · Artifacts:` and closing with evidence + explicit approval.
 
 ## [1.3.0] - 2026-10-01
 
@@ -34,12 +35,12 @@ All notable changes to this skill pack follow [Keep a Changelog](https://keepach
 ### Fixed
 
 - `skillset-dev-feature` description no longer points at non-existent "systematic debugging"; bugfixing routes to `skillset-dev-testing` (interim owner until P1 `skillset-dev-debugging`).
-- `skillset-git-workflow` evals completed to 5 should-trigger + 5 should-NOT-trigger, including 2 incidental cases ("procede", vague continuation) locking principle 6 (no auto-commit/push).
+- `skillset-git-workflow` evals completed to 5 should-trigger + 5 should-NOT-trigger, including 2 incidental cases ("proceed", vague continuation) locking principle 6 (no auto-commit/push).
 
 ### Changed
 
 - `docs/ROUTING.md`: bugfix ownership clarified (interim `dev-testing`), `dev-feature` vs `dev-testing` overlap row added, new "Incidental guards" section (vague acknowledgements never auto-trigger `git-workflow`), P1 placeholders for `skillset-dev-debugging` / `skillset-ops-deploy`.
-- `skillset-dev-orchestrator` pipeline: phase 4 notes interim bugfix ownership, phase 7 requires explicit request (never on incidental "procede"), P1 reservations listed.
+- `skillset-dev-orchestrator` pipeline: phase 4 notes interim bugfix ownership, phase 7 requires explicit request (never on incidental "proceed"), P1 reservations listed.
 - Eval standard fixed across `skillset-creator` (SKILL + `rules.md` + `workflow.md`), `scripts/package_skill.sh`, `scripts/validate-pack.py`: minimum 5+3, 5+5 with incidentals for high-risk skills; validator now enforces >=3 should-NOT-trigger cases.
 
 ## [1.1.0] - 2026-09-30
