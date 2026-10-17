@@ -19,6 +19,10 @@ This skill is project-agnostic. It adapts to the detected framework and CSS setu
 - The user names Material 3, Fluent, brand tokens, or asks to avoid Apple look.
 - The user wants a distinctive visual identity and to avoid generic AI output.
 - A diff needs a visual-design pass for hierarchy, spacing, or desktop/mobile behavior.
+- The interface needs UI polish: hover states, shadows, borders, micro-interactions, optical alignment, anti-slop guards.
+- Motion systems are needed: purposeful animation, physics-based "feel", staggered entrances, reduced-motion variants.
+- Color tokens need definition: OKLCH workspace, palette generation, contrast, dark mode, gamut.
+- UX writing needs review: labels, errors, empty states, confirmation copy, product voice consistency.
 
 ## Non-negotiable principles
 
@@ -35,7 +39,9 @@ This skill is project-agnostic. It adapts to the detected framework and CSS setu
 1. **Detect context** — desktop, mobile, or both; light, dark, contrast needs; existing stack and tokens. Ask only for what you cannot infer.
 2. **Define intent and direction** — audience, task, feel, domain concepts, color world, signature, rejected defaults; propose and confirm. See `references/craft.md` section 1.
 3. **Apply foundations via adapter** — pick HIG, Material, Fluent, or brand tokens per `references/adapters.md`, then hierarchy, spacing, shapes, color, layout per `references/foundations.md` and `references/typography-icons.md`.
-4. **Layer glass and components** — use `references/liquid-glass.md` and `references/components.md`, desktop variant vs mobile variant. Glass only when it serves content.
-5. **Verify** — run craft self-checks in `references/craft.md` section 3 plus pre-delivery checklist in `references/components.md`, report findings as `file:line`, and recheck motion and accessibility per `references/motion-accessibility.md`.
+4. **Apply UI polish and motion** — hover, shadows, borders, micro-interactions, optical alignment per `references/ui-polish.md`; motion systems, durations, physics-based feel per `references/motion-systems.md`.
+5. **Define color tokens and copy** — OKLCH palette, contrast, dark mode, component tokens per `references/color-tokens.md`; labels, errors, empty states, voice per `references/ux-writing.md`.
+6. **Layer glass and components** — use `references/liquid-glass.md` and `references/components.md`, desktop variant vs mobile variant. Glass only when it serves content.
+7. **Verify** — run craft self-checks in `references/craft.md` section 3, ui-polish self-checks in `references/ui-polish.md` section 8, plus pre-delivery checklist in `references/components.md`, report findings as `file:line`, and recheck motion and accessibility per `references/motion-accessibility.md`.
 
-See `references/foundations.md`, `references/craft.md`, `references/adapters.md`, `references/liquid-glass.md`, `references/typography-icons.md`, `references/motion-accessibility.md`, `references/components.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
+See `references/foundations.md`, `references/craft.md`, `references/adapters.md`, `references/liquid-glass.md`, `references/typography-icons.md`, `references/motion-accessibility.md`, `references/components.md`, `references/ui-polish.md`, `references/motion-systems.md`, `references/color-tokens.md`, `references/ux-writing.md` for detail. Routing conflicts: see `docs/ROUTING.md`.

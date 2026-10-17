@@ -25,11 +25,22 @@ This skill writes no product code. It produces a phase plan, delegates each phas
 2. **Tiebreak via routing matrix.** Ambiguous tasks resolve per `docs/ROUTING.md`, never by guessing.
 3. **Gate between phases.** Spec approval before code, green tests before security pass, docs before commit. See `references/pipeline.md`.
 4. **Confirm before phase jumps.** Skipping discovery, tests, or docs needs explicit approval.
+5. **No git without explicit permission.** No agent in this pack may commit, create a branch, push, open a PR, or merge without an explicit user request (`commit this`, `push`, `open a PR`). Incidental acknowledgments ("proceed", "go on", "continue", "go ahead") never authorize git actions. See `skillset-git-workflow` principle 6 and `docs/ROUTING.md` incidental guards.
+6. **Language rule: chat in user language, artifacts always in English.** Respond in the chat in the same language the user writes (e.g. Spanish if they write in Spanish). Every created artifact — source code, inline comments, docs, commit messages, PR descriptions — must be in English only. Never write code comments or documentation in the user's chat language, and never mix languages inside deliverables.
 
 ## Workflow (summary)
 
 1. **Classify** — map the request to pipeline phases per `references/pipeline.md` and `docs/ROUTING.md`.
 2. **Sequence** — emit ordered phases with owning skill per phase; stop for approval.
+   - Spec: `skillset-dev-feature` (four gated phases: Specify → Plan → Tasks → Implement)
+   - Style: `skillset-dev-style`
+   - Backend/Frontend/Visual: `skillset-dev-backend` / `skillset-dev-frontend` / `skillset-design-system`
+   - Tests (TDD): `skillset-dev-tdd`
+   - Review: `skillset-dev-code-review`
+   - Security: `skillset-sec-appsec` (or `skillset-sec-audit` on explicit audit request)
+   - Docs: `skillset-docs-project`
+   - Ship: `skillset-git-workflow` (explicit request only)
+   - Incremental discipline (`skillset-dev-incremental`) runs inside code phases, not as a standalone phase.
 3. **Delegate** — run each phase under its skill, carrying only its handoff outputs.
 4. **Close** — verify each phase's gate via `scripts/validate-pack.py` where applicable; hand to `skillset-git-workflow` last.
 

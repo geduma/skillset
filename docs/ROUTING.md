@@ -11,17 +11,20 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
    - REST URIs, methods, status codes, errors, pagination, versioning, OpenAPI → `skillset-dev-backend`.
    - Components, state split, fetching, forms, routing, rendering perf → `skillset-dev-frontend`.
    - Pixels, hierarchy, tokens, visual identity → `skillset-design-system`.
-4. Tests failing, flaky, or missing? → `skillset-dev-testing`.
-   Bug reports needing reproduce → bisect → fix → regression test also route here
+4. Writing or fixing tests? → `skillset-dev-tdd` for test-first development (red-green-refactor, Prove-It pattern).
+   → `skillset-dev-testing` for test strategy, flaky/slow tests, bug reproduction, debugging, coverage.
+   Bug reports needing reproduce → bisect → fix → regression test route to `skillset-dev-testing`
    until `skillset-dev-debugging` exists (P1). `skillset-dev-feature` explicitly
    rejects bugfixing; do not send bugs there.
-5. Security question?
+5. Reviewing code before merge? → `skillset-dev-code-review` for five-axis review (correctness, readability, architecture, security, performance).
+6. Security question?
    - Preventive hardening checklist → `skillset-sec-appsec`.
    - Formal hunt with `findings.json` + `REPORT.md` → `skillset-sec-audit`.
 6. Recording a decided outcome (README, ADR, changelog, comments)? → `skillset-docs-project`.
-7. Branch, commit, PR, merge, history? → `skillset-git-workflow`.
-8. License file, copyright notice, public release? → `skillset-legal-license`.
-9. Search visibility?
+7. Implementing a feature incrementally? → `skillset-dev-incremental` for thin vertical slices (implement → test → verify → commit).
+8. Branch, commit, PR, merge, history? → `skillset-git-workflow`.
+9. License file, copyright notice, public release? → `skillset-legal-license`.
+10. Search visibility?
    - Titles, headings, intent, TLDR, FAQ copy, internal links → `skillset-seo-content`.
    - robots.txt, sitemaps, URLs, schema JSON-LD, LLMS.txt, GA4/GSC → `skillset-seo-technical`.
 10. New reusable instruction set for this repo? → `skillset-creator`.
@@ -39,12 +42,16 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
 | `dev-feature` vs `dev-testing` | new functionality needing spec + plan + tasks | bug report needing reproduce-bisect-fix-regress, even without existing tests |
 | `dev-feature` vs `docs-project` | planning a change before code | recording a decided outcome (ADR, changelog, README) |
 | `docs-project` vs `git-workflow` | README/ADR/changelog/comments content | commit message shape, PR process |
+| `dev-tdd` vs `dev-testing` | write a failing test first, red-green-refactor loop | test strategy, flaky/slow tests, bug reproduction, debugging, coverage |
+| `dev-code-review` vs `dev-style` | five-axis pre-merge review (correctness, readability, architecture, security, performance) | lint, typecheck, format, naming, structure, quality gates inside files |
+| `dev-incremental` vs `dev-backend`/`dev-frontend` | slicing strategy and increment cycle for multi-file changes | backend API design or frontend component logic within a slice |
 | `seo-content` vs `seo-technical` | words on the page (titles, headings, FAQ copy, links) | crawlability (robots, sitemaps, canonicals, schema, LLMS.txt, analytics) |
+| `design-system` vs `dev-code-review` | visual identity, craft, UI polish, motion, color tokens, copy, tokens | five-axis pre-merge review: correctness, readability, architecture, security, performance |
 | `legal-license` vs everything | LICENSE file, copyright holder, license choice | all other concerns defer; license skill never decides architecture |
 
 ## Pipeline order (orchestrator default)
 
-`docs-discovery` → `dev-feature` → `dev-style` + `dev-backend`/`dev-frontend`/`design-system` → `dev-testing` → `sec-appsec` (`sec-audit` only on request) → `docs-project` → `git-workflow`. Conditional auto-add (not explicit-only): `legal-license` on public release, `seo-*` on web-facing changes. `skillset-creator` is excluded from this workflow.
+`docs-discovery` → `dev-feature` → `dev-style` + `dev-backend`/`dev-frontend`/`design-system` → `dev-tdd` → `dev-code-review` → `sec-appsec` (`sec-audit` only on request) → `docs-project` → `git-workflow`. Conditional auto-add (not explicit-only): `legal-license` on public release, `seo-*` on web-facing changes. `skillset-creator` is excluded from this workflow. `skillset-dev-incremental` runs inside code phases as the implementation discipline (not a standalone pipeline phase).
 
 ## Incidental guards (no auto-trigger)
 
@@ -64,3 +71,11 @@ Vague acknowledgements never activate a skill on their own:
 - `skillset-dev-debugging`: owns reproduce → bisect → fix → regression test.
   Until then, `skillset-dev-testing` is the interim owner.
 - `skillset-ops-deploy`: owns native/docker/service deploys, healthchecks, env parity.
+
+## Global Operating Rules (apply to every skill in the pack)
+
+| Rule | Requirement |
+|------|-------------|
+| Chat language | Respond to the user in the same language they write (Spanish, English, etc.). |
+| Artifact language | All created artifacts — source code, inline comments, docs, commit messages, PR descriptions — must be in English only. Never write code comments or documentation in the user's chat language. Never mix languages inside a deliverable. |
+| No git without permission | No commit, branch, push, or PR without an explicit user request. Incidental acknowledgments ("proceed", "go on", "continue", "go ahead") never authorize git actions. |
