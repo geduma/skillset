@@ -37,9 +37,9 @@ This skill writes no product code. It produces a phase plan, delegates each phas
    - Backend/Frontend/Visual: `skillset-dev-backend` / `skillset-dev-frontend` / `skillset-design-system`
    - Tests (TDD): `skillset-dev-tdd`
    - Review: `skillset-dev-code-review`
-   - Security: `skillset-dev-sec-appsec` (or `skillset-dev-sec-audit` on explicit audit request)
-   - Docs: `skillset-dev-docs-project`
-   - Ship: `skillset-dev-git-workflow` (explicit request only)
+   - Security: `skillset-sec-appsec` (or `skillset-sec-audit` on explicit audit request)
+   - Docs: `skillset-docs-project`
+   - Ship: `skillset-git-workflow` (explicit request only)
    - Incremental discipline (`skillset-dev-incremental`) runs inside code phases, not as a standalone phase.
 3. **Delegate** — run each phase under its skill, carrying only its handoff outputs.
 4. **Close** — verify each phase's gate via `scripts/validate-pack.py` where applicable; hand to `skillset-git-workflow` last.

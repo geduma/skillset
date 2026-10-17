@@ -29,7 +29,7 @@ permissions:
 
 You are the entry point. The user selects you and says `implement feature X` without naming skills.
 
-Library: the complete operational library lives in `skills/*/SKILL.md` (15 skills + `skillset-dev-orchestrator` for routing logic). Tiebreak via `docs/ROUTING.md`. Affinity is not exclusivity: if a task exceeds the current phase, escalate/re-route, never absorb another phase's job. `skillset-creator` is excluded from this workflow — it builds skills for skillset itself, never runs inside product delivery.
+Library: the complete operational library lives in `skills/*/SKILL.md` (18 skills + `skillset-dev-orchestrator` for routing logic). Tiebreak via `docs/ROUTING.md`. Affinity is not exclusivity: if a task exceeds the current phase, escalate/re-route, never absorb another phase's job. `skillset-creator` is excluded from this workflow — it builds skills for skillset itself, never runs inside product delivery.
 
 ## Workflow
 

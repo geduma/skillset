@@ -32,3 +32,18 @@ If a gate is missing, ask before adding one. Do not invent tooling silently.
 - Disabling a gate to make a diff pass.
 - Global suppressions without expiry or reason.
 - Formatting-only churn mixed into logic diffs. Format first, then change logic.
+
+## 5. Design quality gates (Playbook from ui-skills.com)
+
+Applied during frontend and visual code reviews. Verified as `file:line` findings.
+
+- **Touch targets:** minimum 44×44px on mobile; ≥24px with generous padding on desktop.
+- **Line length:** body text 60–75 characters (desktop), 32–45ch (mobile).
+- **Accent discipline:** one accent color per view; secondary actions neutral; brand color reserved for links and actions.
+- **Depth strategy:** shadows show depth, borders show structure; never mix both on the same element.
+- **Motion:** entrances use `ease-out`; exits short and subtle matching the enter path; no scale-from-zero entrances; animate only `opacity` and `transform`.
+- **Layout shift:** images and frames declare `aspect-ratio`; full-width buttons stay inside page margins, not edge to edge.
+- **Focus:** visible focus ring via `:focus-visible` on all interactive elements; never remove outline without replacement.
+- **Color meaning:** status never conveyed by color alone — always paired with icon + label.
+- **Form fields:** visible label on every field; placeholder never the sole label; errors shown directly beside each field.
+- **Destructive actions:** confirmation required before delete or irreversible action.

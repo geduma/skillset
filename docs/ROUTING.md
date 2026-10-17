@@ -46,6 +46,7 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
 | `dev-code-review` vs `dev-style` | five-axis pre-merge review (correctness, readability, architecture, security, performance) | lint, typecheck, format, naming, structure, quality gates inside files |
 | `dev-incremental` vs `dev-backend`/`dev-frontend` | slicing strategy and increment cycle for multi-file changes | backend API design or frontend component logic within a slice |
 | `seo-content` vs `seo-technical` | words on the page (titles, headings, FAQ copy, links) | crawlability (robots, sitemaps, canonicals, schema, LLMS.txt, analytics) |
+| `design-system` vs `dev-code-review` | visual identity, craft, UI polish, motion, color tokens, copy, tokens | five-axis pre-merge review: correctness, readability, architecture, security, performance |
 | `legal-license` vs everything | LICENSE file, copyright holder, license choice | all other concerns defer; license skill never decides architecture |
 
 ## Pipeline order (orchestrator default)

@@ -130,7 +130,7 @@ With the validated spec, generate a technical implementation plan:
 
 Save to `docs/features/NNN-slug/plan.md`. The plan should be reviewable: the human reads it and says "yes" or "change X."
 
-Follow `skillset-planning-and-task-breakdown` for dependency-graph mapping and vertical-slicing mechanics; if bullets diverge, that skill takes precedence.
+Follow `references/task-breakdown.md` for dependency-graph mapping and vertical-slicing mechanics; if bullets diverge, that reference takes precedence.
 
 ### Phase 3: Tasks
 
@@ -161,7 +161,7 @@ Estimated scope: <S | M | L>
 
 ### Phase 4: Implement
 
-Execute tasks one at a time following `skillset-dev-incremental` and `skillset-dev-tdd`. Use `skillset-dev-context-engineering` to load the right spec sections and source files at each step rather than flooding the agent with the entire spec. Downstream code skills own implementation; this skill stops at the gate.
+Execute tasks one at a time following `skillset-dev-incremental` and `skillset-dev-tdd`. Use the spec sections and source files directly to load the right context at each step rather than flooding the agent with the entire spec. Downstream code skills own implementation; this skill stops at the gate.
 
 ## Keeping the Spec Alive
 
