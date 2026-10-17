@@ -27,7 +27,7 @@ This skill is project-agnostic. It adapts to the repo's default branch and host 
 3. **Small PRs win.** One intent per PR, linked issue, green checks before merge. See `references/pull-requests.md`.
 4. **Never rewrite published history silently.** Rebase only local commits; revert instead of force-pushing shared branches. See `references/history-safety.md`.
 5. **Confirm before destructive git.** Force-push, reset hard, history rewrite, branch deletion: summarize first, wait for approval.
-6. **No auto-commit/push.** Default: never `commit`/`push` without an explicit request; propose the diff and wait. Override: see `references/commits.md` section 5.
+6. **No git without explicit permission.** Default: never `commit`/`push`/create a branch/open a PR without an explicit user request (`commit this`, `push`, `open a PR`); propose the diff and wait. Incidental acknowledgments ("proceed", "go on", "continue", "go ahead") never authorize any git action. This rule applies to every skill in the pack, not only this one. Override: see `references/commits.md` section 5.
 
 ## Workflow (summary)
 
