@@ -1,10 +1,10 @@
 ---
 name: skillset-design-system
-description: Use this when designing, building, or reviewing web interfaces needing a distinctive visual identity - Apple HIG, Material 3, Fluent, or brand tokens - or when the user asks for page design, layout, visual hierarchy, domain-driven tokens, avoiding generic AI look, or says design this page, review my UI, or make it feel native and intentional. Apple-style, Liquid Glass, and iOS/macOS-like UI are supported via the default HIG adapter. Do not use for frontend application logic, state, or performance; use skillset-dev-frontend.
+description: "Use this when designing, building, or reviewing web interfaces needing a distinctive visual identity - Apple HIG, Material 3, Fluent, or brand tokens - or when the user asks for page design, layout, visual hierarchy, domain-driven tokens, avoiding generic AI look, or says design this page, review my UI, or make it feel native and intentional. Apple-style, Liquid Glass, and iOS/macOS-like UI are supported via the default HIG adapter. Do not use for frontend application logic, state, or performance; use skillset-dev-frontend."
 license: MIT
 allowed-tools: Read Edit Write Glob
 metadata:
-  version: 1.3.0
+  version: 1.5.0
 ---
 
 # Design System
@@ -44,4 +44,4 @@ This skill is project-agnostic. It adapts to the detected framework and CSS setu
 6. **Layer glass and components** — use `references/liquid-glass.md` and `references/components.md`, desktop variant vs mobile variant. Glass only when it serves content.
 7. **Verify** — run craft self-checks in `references/craft.md` section 3, ui-polish self-checks in `references/ui-polish.md` section 8, plus pre-delivery checklist in `references/components.md`, report findings as `file:line`, and recheck motion and accessibility per `references/motion-accessibility.md`.
 
-See `references/foundations.md`, `references/craft.md`, `references/adapters.md`, `references/liquid-glass.md`, `references/typography-icons.md`, `references/motion-accessibility.md`, `references/components.md`, `references/ui-polish.md`, `references/motion-systems.md`, `references/color-tokens.md`, `references/ux-writing.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
+See `references/foundations.md`, `references/craft.md`, `references/adapters.md`, `references/liquid-glass.md`, `references/typography-icons.md`, `references/motion-accessibility.md`, `references/components.md`, `references/ui-polish.md`, `references/motion-systems.md`, `references/color-tokens.md`, `references/ux-writing.md` for detail. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

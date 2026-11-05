@@ -53,4 +53,4 @@ Applies on top of `typography-icons.md` (copy voice section). This file covers t
 - Cover the interface: can the user complete the task from labels and buttons alone?
 - Swap test: replace copy with generic UI text ("Continue", "Submit") — if nothing changes, the writing is slop.
 
-See `typography-icons.md` section 4 (copy voice) and `ui-polish.md` for how copy sits inside components. Routing conflicts: see `docs/ROUTING.md`.
+See `typography-icons.md` section 4 (copy voice) and `ui-polish.md` for how copy sits inside components. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

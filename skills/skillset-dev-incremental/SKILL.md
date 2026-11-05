@@ -1,10 +1,10 @@
 ---
 name: skillset-dev-incremental
-description: Delivers changes incrementally in thin, verifiable slices. Use when implementing any feature or change that touches more than one file, or when picking up the next task from a plan. Use when rolling a change out behind a feature flag, when you're about to write a large amount of code at once, or when a task feels too big to land in one step. Do not use for single-file, single-function changes where the scope is already minimal.
+description: "Delivers changes incrementally in thin, verifiable slices. Use when implementing any feature or change that touches more than one file, or when picking up the next task from a plan. Use when rolling a change out behind a feature flag, when you're about to write a large amount of code at once, or when a task feels too big to land in one step. Do not use for single-file, single-function changes where the scope is already minimal."
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.4.0
+  version: 1.5.0
 ---
 
 # Incremental Implementation
@@ -245,4 +245,4 @@ After completing all increments for a task:
 - [ ] The feature works end-to-end as specified
 - [ ] No uncommitted changes remain
 
-See `docs/ROUTING.md` for routing conflicts.
+Load the `skillset-dev-orchestrator` skill (`references/routing.md`) for routing conflicts.

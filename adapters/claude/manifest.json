@@ -1,0 +1,26 @@
+{
+  "host": "claude",
+  "frontmatter": {
+    "skillset": {
+      "name": "skillset",
+      "tools": "Read, Glob, Grep, Skill, Task, Edit, Write, Bash"
+    },
+    "skillset-spec": {
+      "name": "skillset-spec",
+      "tools": "Read, Glob, Grep, Skill, Edit, Write"
+    },
+    "skillset-code": {
+      "name": "skillset-code",
+      "tools": "Read, Glob, Grep, Skill, Edit, Write, Bash"
+    },
+    "skillset-verify": {
+      "name": "skillset-verify",
+      "tools": "Read, Glob, Grep, Skill, Edit, Write, Bash"
+    },
+    "skillset-ship": {
+      "name": "skillset-ship",
+      "tools": "Read, Glob, Grep, Skill, Edit, Write, Bash"
+    }
+  },
+  "note": "## Host adapter (Claude Code)\n\n- **Load a skill:** invoke the exact ID with the `Skill` tool (or the `/skill-id` slash command when the host exposes one).\n- **Delegate:** call the `Task` tool with `subagent_type: \"skillset-spec\"` and a self-contained prompt.\n- **Enforcement:** the `tools` allowlist limits available capabilities. Path-level read-only is advisory: never edit product files outside the declared write paths.\n- **Nested delegation:** if the host does not allow a subagent to call `Task`, run the phase sequentially under the phase agent's instructions and keep the same handoff and gate.\n- **If a tool or agent is unavailable:** stop and report it; do not implement the phase inline."
+}

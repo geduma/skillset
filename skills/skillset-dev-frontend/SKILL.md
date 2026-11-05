@@ -4,7 +4,7 @@ description: "Use this when building, refactoring, or reviewing frontend applica
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.3.0
+  version: 1.5.0
 ---
 
 # Frontend Engineering
@@ -37,4 +37,4 @@ This skill is framework-agnostic. It detects the current framework and adapts pa
 3. **Harden rendering and access** — performance plus security-compatible patterns per `references/rendering-performance.md` and `references/frontend-security.md`.
 4. **Verify** — run the project's own tests, typecheck, and lint; check a11y and states per `references/a11y-testing.md`. Report what ran and what failed.
 
-See `references/components-state.md`, `references/rendering-performance.md`, `references/forms-data.md`, `references/a11y-testing.md`, `references/frontend-security.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
+See `references/components-state.md`, `references/rendering-performance.md`, `references/forms-data.md`, `references/a11y-testing.md`, `references/frontend-security.md` for detail. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

@@ -72,4 +72,4 @@ components/Card.tsx:28 dramatic drop shadow violates elevation guard
 components/Input.tsx:42 placeholder used as sole label (accessibility blocker)
 ```
 
-See `craft.md` for intent foundations and `motion-systems.md` for motion detail. Routing conflicts: see `docs/ROUTING.md`.
+See `craft.md` for intent foundations and `motion-systems.md` for motion detail. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

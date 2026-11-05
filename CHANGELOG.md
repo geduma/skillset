@@ -2,7 +2,27 @@
 
 All notable changes to this skill pack follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.5.0] - 2026-11-04
+
+### Added
+
+- Host-agnostic agent architecture: `agents/*.md` is now the tool-neutral source of truth, and `adapters/<host>/agents/*.md` is generated from it by `scripts/build-adapters.py`. Supported adapters: `opencode`, `claude`, `codex`, `generic`.
+- `install.sh --tool <host>` and `uninstall.sh --tool <host>`: install or remove one host adapter (`opencode|claude|codex|generic|all`). `--tool all` remains the default.
+- `docs/ADAPTERS.md`: host matrix, invocation syntax, and enforcement differences.
+- Validator gates for canonical agent neutrality, adapter presence, adapter drift, and installer coverage.
+
+### Changed
+
+- Agent bodies no longer reference host-specific APIs (`subagent`, `permissions`, `skill` tool, `mode`). The same workflow, phase map, and planning gate are preserved in every adapter.
+- `install.sh` no longer links the OpenCode agent files into every tool's agent directory; each host receives its own adapter.
+- `skillset-dev-orchestrator` routing and pipeline docs now say "host adapter" instead of a specific tool name.
+
+### Fixed
+
+- The pack no longer breaks when installed into Claude Code, Codex, Cursor, or Copilot: those hosts receive frontmatter and delegation syntax they understand, with a sequential fallback when native subagents are unavailable.
+- OpenCode behavior is unchanged: the same permissions, last-match ordering, and planning gate are preserved in `adapters/opencode/`.
+
+## [1.4.0] - 2026-11-04
 
 ### Added
 
@@ -11,12 +31,23 @@ All notable changes to this skill pack follow [Keep a Changelog](https://keepach
 
 ### Fixed
 
-- SDD spec gate: `agents/skillset.md` requires Phase 1 with `spec.md + plan.md + tasks.md` before any code and forbids approval requests without presented artifacts (paths + summary in chat). `agents/skillset-spec.md` defines a mandatory load → inventory → write → present + gate workflow. Documented in `docs/features/002-sdd-spec-gate/`.
+- SDD spec gate: `agents/skillset.md` requires Phase 1 with `spec.md + plan.md + tasks.md` before any code and forbids approval requests without presented artifacts (paths + summary in chat). `agents/skillset-spec.md` defines a mandatory load → inventory → write → present + gate workflow.
+- Planning gate is now an execution rule, not just prose: `skillset` presents `spec.md + plan.md + tasks.md` and the implementation plan, asks "Approve this plan to start implementation?", and stops. It may not edit product files or call `skillset-code` until the user explicitly approves execution. `skillset-spec` records `Status: approved` in `plan.md`; `skillset-code` refuses to start without it. Trivial changes get a lightweight plan plus approval. Mirrored in `skillset-dev-orchestrator` principles, `references/pipeline.md`, and `docs/ROUTING.md`.
+- Structural planning gate: the primary `skillset` agent can edit only `docs/**` and has no implementation shell. Product edits must run in `skillset-code` after `plan.md` shows `Status: approved`. The gate is enforced by permissions, not only by prose.
+- Permission ordering: `subagent: * deny` and `edit: * deny` were placed after the specific allows. OpenCode uses the last matching rule, so those broad denies blocked every subagent launch and every `docs/**` edit. Broad denies now precede specific allows.
+- Frontmatter validity: quoted all 24 `description` values. `skillset-dev-backend`, `skillset-dev-code-review`, and `skillset-dev-feature` had unquoted `: ` and failed YAML parsing, which can make a skill undiscoverable.
+- Workflow parity: the primary agent pipeline now matches the canonical order — adds `skillset-dev-tdd` (phase 4) and `skillset-dev-code-review` (phase 5). Bug reports route to `skillset-dev-testing` under `skillset-verify`, never to `skillset-dev-feature`.
+- Delegation: all agents now explain how to call the `subagent` tool (target agent ID + complete handoff), require one phase at a time, and stop with a clear report when the tool or a target agent is unavailable (the primary does not implement inline). `skillset-verify` gains `dev-code-review` ownership.
+- Skill loading: agents load skills by exact ID with the `skill` tool instead of reading source-repo paths (`skills/*/SKILL.md`, `docs/ROUTING.md`) that do not exist in target projects.
+- Artifact language: the global language rule is embedded in all five agents — chat in the user's language, every artifact (code, comments, docs, commit messages, PR descriptions) in English only.
+- Permissions: `skillset-code` rules reordered (broad `ask` first, specific allows after) and made stack-agnostic; `git commit/push/merge/rebase` and `gh pr` denied. `skillset-verify` can edit source for security fixes and denies git delivery. `skillset-ship` allows read-only git, asks for delivery, and denies force-push/hard-reset.
 
 ### Changed
 
 - Documentation language rule: every Markdown file skillset generates in any project is always English; chat explanations follow the user's conversation language. Clarified in `README.md`; fixed mixed-language entries in this changelog.
 - Visible per-phase progress: `skillset.md`, `skillset-code/verify/ship.md` and `pipeline.md` require opening with `Phase X/Y · [skill] · Gate: pending/approved · Artifacts:` and closing with evidence + explicit approval.
+- Routing matrix is now bundled at `skills/skillset-dev-orchestrator/references/routing.md` so installed packs can route without the source repo. `docs/ROUTING.md` remains the repo mirror; `scripts/validate-pack.py` fails if the two drift.
+- `scripts/validate-pack.py` now validates `agents/*.md` (frontmatter, permission rules, global rules, routing pointers, subagent IDs, and pipeline coverage) in addition to skills.
 
 ## [1.3.0] - 2026-10-01
 
