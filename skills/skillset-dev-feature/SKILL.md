@@ -1,10 +1,10 @@
 ---
 name: skillset-dev-feature
-description: Turns a feature request into an approved spec, technical plan, and ordered tasks with a mandatory docs-sync task, before any code. Use when the user asks for a new feature, endpoint, flow, or functional change; when requirements are vague, incomplete, or need scoping and use-case coverage; or when an estimate, breakdown, or implementation plan is needed before coding. Follows a four-phase gated workflow: Specify → Plan → Tasks → Implement. Do not use for bug fixes or vague pre-spec idea shaping - use skillset-dev-testing or skillset-docs-discovery. Do not use for recording decided docs - use skillset-docs-project.
+description: "Turns a feature request into an approved spec, technical plan, and ordered tasks with a mandatory docs-sync task, before any code. Use when the user asks for a new feature, endpoint, flow, or functional change; when requirements are vague, incomplete, or need scoping and use-case coverage; or when an estimate, breakdown, or implementation plan is needed before coding. Follows a four-phase gated workflow: Specify → Plan → Tasks → Implement. Do not use for bug fixes or vague pre-spec idea shaping - use skillset-dev-testing or skillset-docs-discovery. Do not use for recording decided docs - use skillset-docs-project."
 license: MIT
 allowed-tools: Read Edit Write Glob Grep
 metadata:
-  version: 1.4.0
+  version: 1.5.0
 ---
 
 # Feature Spec and Plan
@@ -206,4 +206,4 @@ Before proceeding to implementation, confirm:
 - [ ] If the request bundles several independently testable capabilities, a capability map (module ids, dependency direction, build order) was approved before any module spec was written
 - [ ] All planning artifacts are in English (regardless of chat language)
 
-See `references/spec-template.md`, `references/validation-gates.md`, `references/task-breakdown.md`, `references/docs-sync.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
+See `references/spec-template.md`, `references/validation-gates.md`, `references/task-breakdown.md`, `references/docs-sync.md` for detail. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

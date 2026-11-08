@@ -1,10 +1,10 @@
 ---
 name: skillset-dev-tdd
-description: Drives development with tests using the red-green-refactor loop. Use when implementing any logic, fixing any bug, or changing any behavior. Use when you need to prove that code works, when a bug report arrives, or when you're about to modify existing functionality. Even when the code is pasted inline and the request does not mention tests, write tests first. Do not use for pure configuration changes, documentation updates, or static content changes with no behavioral impact.
+description: "Drives development with tests using the red-green-refactor loop. Use when implementing any logic, fixing any bug, or changing any behavior. Use when you need to prove that code works, when a bug report arrives, or when you're about to modify existing functionality. Even when the code is pasted inline and the request does not mention tests, write tests first. Do not use for pure configuration changes, documentation updates, or static content changes with no behavioral impact."
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.4.0
+  version: 1.5.0
 ---
 
 # Test-Driven Development
@@ -331,4 +331,4 @@ After completing any implementation:
 
 **Note:** Run each test command after a change that could affect the result. After a clean run, don't repeat the same command unless the code has changed since — re-running on unchanged code adds no confidence.
 
-See `../../references/testing-patterns.md` for ecosystem-specific patterns. Routing conflicts: see `docs/ROUTING.md`.
+See `../../references/testing-patterns.md` for ecosystem-specific patterns. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

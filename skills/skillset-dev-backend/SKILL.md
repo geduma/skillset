@@ -1,10 +1,10 @@
 ---
 name: skillset-dev-backend
-description: Designs consistent, evolvable backend APIs in any stack: noun-based resources, correct methods, predictable errors, paginated collections, versioning, idempotency, and OpenAPI contracts. Use when designing, building, or reviewing REST resources and URIs, HTTP methods and status codes, error envelopes, pagination filtering sorting, versioning, idempotency, async operations, or OpenAPI contracts. Also use when the user says design this API, review my endpoint, fix my status codes, or version this API. Do not use for auth hardening, secrets, or OWASP checks - use skillset-sec-appsec. Do not use for frontend state or fetching logic - use skillset-dev-frontend.
+description: "Designs consistent, evolvable backend APIs in any stack: noun-based resources, correct methods, predictable errors, paginated collections, versioning, idempotency, and OpenAPI contracts. Use when designing, building, or reviewing REST resources and URIs, HTTP methods and status codes, error envelopes, pagination filtering sorting, versioning, idempotency, async operations, or OpenAPI contracts. Also use when the user says design this API, review my endpoint, fix my status codes, or version this API. Do not use for auth hardening, secrets, or OWASP checks - use skillset-sec-appsec. Do not use for frontend state or fetching logic - use skillset-dev-frontend."
 license: MIT
 allowed-tools: Read Edit Write Glob Grep Shell
 metadata:
-  version: 1.4.0
+  version: 1.5.0
 ---
 
 # Backend API
@@ -40,4 +40,4 @@ This skill is project-agnostic. It adapts examples to the detected language and 
 3. **Shape errors and lists** — envelope plus pagination/filter/sort per `references/errors-pagination.md`.
 4. **Contract and evolve** — OpenAPI, versioning, idempotency, async per `references/versioning-contracts.md` and `references/api-contract.md`.
 
-See `references/resource-design.md`, `references/methods-status.md`, `references/errors-pagination.md`, `references/versioning-contracts.md`, `references/api-contract.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
+See `references/resource-design.md`, `references/methods-status.md`, `references/errors-pagination.md`, `references/versioning-contracts.md`, `references/api-contract.md` for detail. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

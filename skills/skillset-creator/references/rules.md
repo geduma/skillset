@@ -32,7 +32,7 @@ Overwriting existing files, force-pushing, deleting data — a skill's instructi
 
 ## 8. Every skill is versioned, scoped, and routed
 
-Frontmatter must carry `license`, `allowed-tools` (minimum tools the skill needs), and `metadata.version` matching the repo `VERSION` file (semver). Body must link `docs/ROUTING.md` as the conflict tiebreaker. Multi-phase work routes via `skillset-dev-orchestrator`, never by absorbing other skills' jobs.
+Frontmatter must carry `license`, `allowed-tools` (minimum tools the skill needs), and `metadata.version` matching the repo `VERSION` file (semver). Body must link the routing matrix (`skillset-dev-orchestrator/references/routing.md`, mirrored in `docs/ROUTING.md`) as the conflict tiebreaker. Multi-phase work routes via `skillset-dev-orchestrator`, never by absorbing other skills' jobs.
 
 ## 9. Every skill ships trigger evals
 

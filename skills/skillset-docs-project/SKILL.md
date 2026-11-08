@@ -1,10 +1,10 @@
 ---
 name: skillset-docs-project
-description: Use this when writing, reviewing, or fixing project documentation such as README quickstarts, Architecture Decision Records, CHANGELOG entries, CONTRIBUTING guides, or code comments and API docstrings. Also use when the user says document this, write an ADR, update the changelog, or onboard new contributors. Do not use for vague pre-spec idea shaping - use skillset-docs-discovery. Do not use for code style or tests - use skillset-dev-style or skillset-dev-testing. Do not use for commit message format - use skillset-git-workflow.
+description: "Use this when writing, reviewing, or fixing project documentation such as README quickstarts, Architecture Decision Records, CHANGELOG entries, CONTRIBUTING guides, or code comments and API docstrings. Also use when the user says document this, write an ADR, update the changelog, or onboard new contributors. Do not use for vague pre-spec idea shaping - use skillset-docs-discovery. Do not use for code style or tests - use skillset-dev-style or skillset-dev-testing. Do not use for commit message format - use skillset-git-workflow."
 license: MIT
 allowed-tools: Read Write Edit Glob Grep
 metadata:
-  version: 1.3.0
+  version: 1.5.0
 ---
 
 # Project Docs
@@ -37,4 +37,4 @@ This skill is project-agnostic. It adapts to the repo's language and layout and 
 3. **Log changes** — Unreleased section plus release notes per `references/changelog.md`.
 4. **Tidy comments** — why-not-what pass per `references/comments.md`.
 
-See `references/readme.md`, `references/adr.md`, `references/changelog.md`, `references/comments.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
+See `references/readme.md`, `references/adr.md`, `references/changelog.md`, `references/comments.md` for detail. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

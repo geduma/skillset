@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #
-# install.sh — links this repo's skills and agents to the paths searched by
-# Claude Code, Codex CLI, OpenCode, Cursor, and VSCode/Copilot.
+# install.sh — links this repo's skills and host-specific agent adapters to the
+# paths searched by Claude Code, Codex CLI, OpenCode, Cursor, and VSCode/Copilot.
 #
 # Usage:
 #   ./install.sh                 # install into the current project (local repo)
 #   ./install.sh --global        # install globally (~/.claude, ~/.codex, etc.)
+#   ./install.sh --tool claude   # install only one host adapter (opencode|claude|codex|generic|all)
 #   ./install.sh --copy          # copy instead of symlink (useful on Windows/WSL with symlink issues)
 #   ./install.sh --prune         # also remove LEGOS symlinks whose source no longer exists (opt-in)
 #   ./install.sh --copy --force  # in --copy mode, replace real files/dirs with fresh copies (explicit, may overwrite manual edits)
@@ -14,25 +15,34 @@
 #   ./install.sh skillset-legal-license  # install just that item (skill or agent)
 #
 # Philosophy: skills/ and agents/ in this repo are the SINGLE source of truth.
-# This script only creates links to them — never duplicate content by hand.
+# agents/ is host-neutral; adapters/<host>/ is generated from it by
+# scripts/build-adapters.py. This script only creates links to those files.
 
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_SRC="$REPO_DIR/skills"
 AGENTS_SRC="$REPO_DIR/agents"
+ADAPTERS_DIR="$REPO_DIR/adapters"
 
 MODE="project"
 LINK_MODE="symlink"
+TOOL="all"
 PRUNE=0
 FORCE=0
 INSTALL_GROUPS=()
 SELECTED_ITEMS=()
 
-for arg in "$@"; do
-  case "$arg" in
+while [ $# -gt 0 ]; do
+  case "$1" in
     --global) MODE="global" ;;
     --copy) LINK_MODE="copy" ;;
+    --tool)
+      shift
+      [ $# -gt 0 ] || { echo "❌ --tool requires a value: opencode|claude|codex|generic|all" >&2; exit 2; }
+      TOOL="$1"
+      ;;
+    --tool=*) TOOL="${1#*=}" ;;
     --prune) PRUNE=1 ;;
     --force) FORCE=1 ;;
     --skills-only) INSTALL_GROUPS=("skills") ;;
@@ -41,63 +51,109 @@ for arg in "$@"; do
       grep '^#' "$0" | sed 's/^# \{0,1\}//'
       exit 0
       ;;
-    *) SELECTED_ITEMS+=("$arg") ;;
+    *) SELECTED_ITEMS+=("$1") ;;
   esac
+  shift
 done
+
+case "$TOOL" in
+  opencode|claude|codex|generic|all) ;;
+  *) echo "❌ Unknown --tool '$TOOL' (use opencode|claude|codex|generic|all)" >&2; exit 2 ;;
+esac
 
 if [ ${#INSTALL_GROUPS[@]} -eq 0 ]; then
   INSTALL_GROUPS=("skills" "agents")
 fi
 
-if [ ${#SELECTED_ITEMS[@]} -eq 0 ]; then
-  SELECTED_ITEMS=()
-  if [[ " ${INSTALL_GROUPS[*]} " == *"skills"* ]]; then
-    for d in "$SKILLS_SRC"/*/; do
-      [ -d "$d" ] && SELECTED_ITEMS+=("$(basename "$d")")
-    done
-  fi
-  if [[ " ${INSTALL_GROUPS[*]} " == *"agents"* ]] && [ -d "$AGENTS_SRC" ]; then
-    for f in "$AGENTS_SRC"/*.md; do
-      [ -e "$f" ] || continue
-      SELECTED_ITEMS+=("$(basename "$f" .md)")
-    done
-  fi
+ALL_SKILLS=()
+for d in "$SKILLS_SRC"/*/; do
+  [ -d "$d" ] && ALL_SKILLS+=("$(basename "$d")")
+done
+
+ALL_AGENTS=()
+if [ -d "$AGENTS_SRC" ]; then
+  for f in "$AGENTS_SRC"/*.md; do
+    [ -e "$f" ] || continue
+    ALL_AGENTS+=("$(basename "$f" .md)")
+  done
 fi
 
-if [ "$MODE" = "global" ]; then
-  SKILL_TARGETS=(
-    "$HOME/.claude/skills"
-    "$HOME/.codex/skills"
-    "$HOME/.config/opencode/skills"
-    "$HOME/.agents/skills"
-    "$HOME/.cursor/skills"
-  )
-  AGENT_TARGETS=(
-    "$HOME/.claude/agents"
-    "$HOME/.codex/agents"
-    "$HOME/.config/opencode/agents"
-    "$HOME/.agents/agents"
-    "$HOME/.cursor/agents"
-  )
+SELECTED_SKILLS=()
+SELECTED_AGENTS=()
+if [ ${#SELECTED_ITEMS[@]} -eq 0 ]; then
+  if [[ " ${INSTALL_GROUPS[*]} " == *"skills"* ]]; then
+    SELECTED_SKILLS=("${ALL_SKILLS[@]}")
+  fi
+  if [[ " ${INSTALL_GROUPS[*]} " == *"agents"* ]]; then
+    SELECTED_AGENTS=("${ALL_AGENTS[@]}")
+  fi
 else
-  TARGET_DIR="$(pwd)"
-  SKILL_TARGETS=(
-    "$TARGET_DIR/.claude/skills"
-    "$TARGET_DIR/.codex/skills"
-    "$TARGET_DIR/.opencode/skills"
-    "$TARGET_DIR/.agents/skills"
-    "$TARGET_DIR/.cursor/skills"
-    "$TARGET_DIR/.github/skills"
-  )
-  AGENT_TARGETS=(
-    "$TARGET_DIR/.claude/agents"
-    "$TARGET_DIR/.codex/agents"
-    "$TARGET_DIR/.opencode/agents"
-    "$TARGET_DIR/.agents/agents"
-    "$TARGET_DIR/.cursor/agents"
-    "$TARGET_DIR/.github/agents"
-  )
+  for item in "${SELECTED_ITEMS[@]}"; do
+    if [ -d "$SKILLS_SRC/$item" ]; then
+      SELECTED_SKILLS+=("$item")
+    elif [ -f "$AGENTS_SRC/$item.md" ]; then
+      SELECTED_AGENTS+=("$item")
+    else
+      echo "⚠️  Item '$item' not found in $SKILLS_SRC or $AGENTS_SRC, skipping."
+    fi
+  done
 fi
+
+if [ ${#SELECTED_AGENTS[@]} -gt 0 ] && [ ! -d "$ADAPTERS_DIR" ]; then
+  echo "❌ agents/ exists but adapters/ is missing. Run: python3 scripts/build-adapters.py" >&2
+  exit 2
+fi
+
+if [ "$TOOL" = "all" ]; then
+  HOSTS=(opencode claude codex generic)
+else
+  HOSTS=("$TOOL")
+fi
+
+set_targets_for_host() {
+  local host="$1"
+  if [ "$MODE" = "global" ]; then
+    case "$host" in
+      opencode)
+        CURRENT_SKILL_TARGETS=("$HOME/.config/opencode/skills")
+        CURRENT_AGENT_TARGETS=("$HOME/.config/opencode/agents")
+        ;;
+      claude)
+        CURRENT_SKILL_TARGETS=("$HOME/.claude/skills")
+        CURRENT_AGENT_TARGETS=("$HOME/.claude/agents")
+        ;;
+      codex)
+        CURRENT_SKILL_TARGETS=("$HOME/.codex/skills")
+        CURRENT_AGENT_TARGETS=("$HOME/.codex/agents")
+        ;;
+      generic)
+        CURRENT_SKILL_TARGETS=("$HOME/.agents/skills" "$HOME/.cursor/skills")
+        CURRENT_AGENT_TARGETS=("$HOME/.agents/agents" "$HOME/.cursor/agents")
+        ;;
+    esac
+  else
+    local target_dir
+    target_dir="$(pwd)"
+    case "$host" in
+      opencode)
+        CURRENT_SKILL_TARGETS=("$target_dir/.opencode/skills")
+        CURRENT_AGENT_TARGETS=("$target_dir/.opencode/agents")
+        ;;
+      claude)
+        CURRENT_SKILL_TARGETS=("$target_dir/.claude/skills")
+        CURRENT_AGENT_TARGETS=("$target_dir/.claude/agents")
+        ;;
+      codex)
+        CURRENT_SKILL_TARGETS=("$target_dir/.codex/skills")
+        CURRENT_AGENT_TARGETS=("$target_dir/.codex/agents")
+        ;;
+      generic)
+        CURRENT_SKILL_TARGETS=("$target_dir/.agents/skills" "$target_dir/.cursor/skills" "$target_dir/.github/skills")
+        CURRENT_AGENT_TARGETS=("$target_dir/.agents/agents" "$target_dir/.cursor/agents" "$target_dir/.github/agents")
+        ;;
+    esac
+  fi
+}
 
 link_item() {
   local src="$1"
@@ -142,10 +198,6 @@ link_item() {
   done
 }
 
-echo "📦 Installing from: $SKILLS_SRC + $AGENTS_SRC"
-echo "🎯 Mode: $MODE ($LINK_MODE) [${INSTALL_GROUPS[*]}] prune=$PRUNE force=$FORCE"
-echo ""
-
 prune_stale_links() {
   for target_base in "$@"; do
     [ -d "$target_base" ] || continue
@@ -154,7 +206,7 @@ prune_stale_links() {
       [ -L "$dest" ] || continue
       link="$(readlink "$dest")"
       case "$link" in
-        "$REPO_DIR/skills/"*|"$REPO_DIR/agents/"*)
+        "$REPO_DIR/skills/"*|"$REPO_DIR/adapters/"*)
           if [ ! -e "$dest" ]; then
             rm "$dest"
             echo "🗑️  Pruned stale link: $dest -> $link"
@@ -165,21 +217,39 @@ prune_stale_links() {
   done
 }
 
-for item in "${SELECTED_ITEMS[@]}"; do
-  if [ -d "$SKILLS_SRC/$item" ]; then
-    link_item "$SKILLS_SRC/$item" dir "${SKILL_TARGETS[@]}"
-  elif [ -f "$AGENTS_SRC/$item.md" ]; then
-    link_item "$AGENTS_SRC/$item.md" file "${AGENT_TARGETS[@]}"
-  else
-    echo "⚠️  Item '$item' not found in $SKILLS_SRC or $AGENTS_SRC, skipping."
-    continue
+echo "📦 Installing from: $SKILLS_SRC + $ADAPTERS_DIR"
+echo "🎯 Mode: $MODE ($LINK_MODE) [${INSTALL_GROUPS[*]}] tool=$TOOL prune=$PRUNE force=$FORCE"
+echo ""
+
+for host in "${HOSTS[@]}"; do
+  set_targets_for_host "$host"
+  echo "🧩 Host: $host"
+
+  if [ ${#SELECTED_SKILLS[@]} -gt 0 ]; then
+    for item in "${SELECTED_SKILLS[@]}"; do
+      link_item "$SKILLS_SRC/$item" dir "${CURRENT_SKILL_TARGETS[@]}"
+    done
   fi
+
+  if [ ${#SELECTED_AGENTS[@]} -gt 0 ]; then
+    for item in "${SELECTED_AGENTS[@]}"; do
+      adapter="$ADAPTERS_DIR/$host/agents/$item.md"
+      if [ ! -f "$adapter" ]; then
+        echo "⚠️  Missing adapter for '$item' on host '$host' (expected $adapter). Run scripts/build-adapters.py."
+        continue
+      fi
+      link_item "$adapter" file "${CURRENT_AGENT_TARGETS[@]}"
+    done
+  fi
+  echo ""
 done
 
-echo ""
 if [ "$PRUNE" = "1" ]; then
   echo "🧹 Pruning stale LEGOS links..."
-  prune_stale_links "${SKILL_TARGETS[@]}" "${AGENT_TARGETS[@]}"
+  for host in "${HOSTS[@]}"; do
+    set_targets_for_host "$host"
+    prune_stale_links "${CURRENT_SKILL_TARGETS[@]}" "${CURRENT_AGENT_TARGETS[@]}"
+  done
   echo ""
 fi
-echo "✅ Done. Always edit content in skills/<name>/ and agents/<name>.md — links update automatically."
+echo "✅ Done. Edit skills/ and agents/, then run scripts/build-adapters.py to refresh adapters/."

@@ -53,6 +53,28 @@ Read this when two skills could match. The orchestrator (`skillset-dev-orchestra
 
 `docs-discovery` → `dev-feature` → `dev-style` + `dev-backend`/`dev-frontend`/`design-system` → `dev-tdd` → `dev-code-review` → `sec-appsec` (`sec-audit` only on request) → `docs-project` → `git-workflow`. Conditional auto-add (not explicit-only): `legal-license` on public release, `seo-*` on web-facing changes. `skillset-creator` is excluded from this workflow. `skillset-dev-incremental` runs inside code phases as the implementation discipline (not a standalone pipeline phase).
 
+## Agent delegation map
+
+The primary `skillset` agent routes each phase to one phase agent. The phase agent loads the owning skill by ID through the host adapter (see `docs/ADAPTERS.md`).
+
+| Phase | Phase agent | Owning skills |
+|---|---|---|
+| Discovery | `skillset-spec` | `skillset-docs-discovery` |
+| Spec | `skillset-spec` | `skillset-dev-feature` |
+| Style | `skillset-code` | `skillset-dev-style` |
+| Backend / Frontend / Visual | `skillset-code` | `skillset-dev-backend` / `skillset-dev-frontend` / `skillset-design-system` |
+| Tests (TDD) | `skillset-code` | `skillset-dev-tdd` (+ `skillset-dev-incremental` inside slices) |
+| Review | `skillset-verify` | `skillset-dev-code-review` |
+| Security | `skillset-verify` | `skillset-sec-appsec` (`skillset-sec-audit` only on explicit request) |
+| Docs | `skillset-ship` | `skillset-docs-project` |
+| Ship | `skillset-ship` | `skillset-git-workflow` (explicit request only) |
+
+Bug reports route to `skillset-dev-testing` under `skillset-verify`, never to `skillset-dev-feature`. Conditional phases stay with `skillset-ship`: `seo-*` for web-facing changes, `legal-license` for public releases.
+
+## Host adapters
+
+`agents/*.md` is the tool-neutral source of truth. `adapters/<host>/agents/*.md` is generated from it by `scripts/build-adapters.py` and carries the host-specific frontmatter and invocation syntax. Supported adapters: `opencode`, `claude`, `codex`, `generic`. Install one with `./install.sh --tool <host>` or all with `./install.sh --tool all`. The workflow, phase map, and planning gate are identical across adapters; only the invocation mechanism and enforcement strength differ. See `docs/ADAPTERS.md`.
+
 ## Incidental guards (no auto-trigger)
 
 Vague acknowledgements never activate a skill on their own:
@@ -76,6 +98,9 @@ Vague acknowledgements never activate a skill on their own:
 
 | Rule | Requirement |
 |------|-------------|
+| Planning gate | Every feature, change, endpoint, or story starts with planning. Present `spec.md + plan.md + tasks.md` and the implementation plan in chat, then stop for explicit approval to execute. Do not edit product files or start a code phase before that approval. Incidental acknowledgements ("proceed", "go on", "continue", "go ahead", "looks good") do not count as approval. |
+| Skill loading | Load the owning skill by exact ID through the host adapter before acting. Never read `skills/*/SKILL.md` or `docs/ROUTING.md` from a target project; those paths only exist in the source repo. The installed copy of this matrix is `skillset-dev-orchestrator/references/routing.md`. |
+| Host adapters | Canonical agents live in `agents/`; host-specific files are generated into `adapters/<host>/` and installed with `./install.sh --tool <host>`. The planning gate and phase map are identical across adapters. |
 | Chat language | Respond to the user in the same language they write (Spanish, English, etc.). |
 | Artifact language | All created artifacts — source code, inline comments, docs, commit messages, PR descriptions — must be in English only. Never write code comments or documentation in the user's chat language. Never mix languages inside a deliverable. |
 | No git without permission | No commit, branch, push, or PR without an explicit user request. Incidental acknowledgments ("proceed", "go on", "continue", "go ahead") never authorize git actions. |

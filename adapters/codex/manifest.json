@@ -1,0 +1,11 @@
+{
+  "host": "codex",
+  "frontmatter": {
+    "skillset": { "name": "skillset" },
+    "skillset-spec": { "name": "skillset-spec" },
+    "skillset-code": { "name": "skillset-code" },
+    "skillset-verify": { "name": "skillset-verify" },
+    "skillset-ship": { "name": "skillset-ship" }
+  },
+  "note": "## Host adapter (Codex)\n\n- **Load a skill:** read the installed `SKILL.md` for the exact ID under the Codex skills directory, or use the native skill loader if available.\n- **Delegate:** invoke the phase prompt (for example `/skillset-spec`) or start a new `codex` run with the phase agent file as instructions. If neither exists, run the phase sequentially in this session and keep the same handoff and gate.\n- **Enforcement:** use a read-only sandbox for planning/spec and workspace-write only for code after approval. Never auto-approve git.\n- **If a prompt or agent is unavailable:** run the phase sequentially; do not skip it."
+}

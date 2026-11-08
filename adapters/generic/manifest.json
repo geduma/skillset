@@ -1,0 +1,11 @@
+{
+  "host": "generic",
+  "frontmatter": {
+    "skillset": { "name": "skillset" },
+    "skillset-spec": { "name": "skillset-spec" },
+    "skillset-code": { "name": "skillset-code" },
+    "skillset-verify": { "name": "skillset-verify" },
+    "skillset-ship": { "name": "skillset-ship" }
+  },
+  "note": "## Host adapter (generic)\n\n- **Load a skill:** read the installed `SKILL.md` for the exact ID under the host's skills directory (for example `.agents/skills/<id>/SKILL.md`).\n- **Delegate:** switch the active role to the phase agent file. If the host supports subagents, use that mechanism.\n- **Enforcement:** prompt-only. The planning gate and write-path limits are mandatory instructions, not runtime guarantees.\n- **If a phase agent is unavailable:** run the phase sequentially; do not skip it."
+}

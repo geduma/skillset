@@ -1,10 +1,10 @@
 ---
 name: skillset-legal-license
-description: Use this skill whenever the user wants to add, choose, or fix a LICENSE file, protect their code/project from being exploited commercially without credit, set up copyright notices, or asks things like "protect my project", "I want to add a license", "I don't want anyone profiting off my code", "make this repo like [another project]", "add a LICENSE", or wants a repo prepared for public release/open-sourcing. Also trigger when the user references replicating licensing/legal setup done on a previous or sibling project. Always ask the user for the copyright holder name and the specific license before writing anything — never assume either.
+description: "Use this skill whenever the user wants to add, choose, or fix a LICENSE file, protect their code/project from being exploited commercially without credit, set up copyright notices, or asks things like \"protect my project\", \"I want to add a license\", \"I don't want anyone profiting off my code\", \"make this repo like [another project]\", \"add a LICENSE\", or wants a repo prepared for public release/open-sourcing. Also trigger when the user references replicating licensing/legal setup done on a previous or sibling project. Always ask the user for the copyright holder name and the specific license before writing anything — never assume either."
 license: MIT
 allowed-tools: Read Write Edit Glob WebFetch
 metadata:
-  version: 1.3.0
+  version: 1.5.0
 ---
 
 # License Guardian
@@ -30,4 +30,4 @@ Prepares any repository with a proper license, copyright notice, and minimal doc
 3. **Generate** — `LICENSE` verbatim, README notice and section, manifest field per `references/workflow.md` section 3.
 4. **Confirm before writing** when a prior license exists or many files change; otherwise proceed after choice.
 
-See `references/license-menu.md`, `references/workflow.md`, `references/licenses.md` for detail. Routing conflicts: see `docs/ROUTING.md`.
+See `references/license-menu.md`, `references/workflow.md`, `references/licenses.md` for detail. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

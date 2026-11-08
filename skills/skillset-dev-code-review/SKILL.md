@@ -1,10 +1,10 @@
 ---
 name: skillset-dev-code-review
-description: Conducts multi-axis code review before any merge. Use before merging any PR or change, after completing a feature implementation, when another agent or model produced code you need to evaluate, after refactoring, or after any bug fix (review both the fix and the regression test). Reviews across five axes: correctness, readability, architecture, security, and performance. Do not use for code style, lint, or formatting gates inside files - use skillset-dev-style. Do not use for security audits or formal pentests - use skillset-sec-appsec or skillset-sec-audit.
+description: "Conducts multi-axis code review before any merge. Use before merging any PR or change, after completing a feature implementation, when another agent or model produced code you need to evaluate, after refactoring, or after any bug fix (review both the fix and the regression test). Reviews across five axes: correctness, readability, architecture, security, and performance. Do not use for code style, lint, or formatting gates inside files - use skillset-dev-style. Do not use for security audits or formal pentests - use skillset-sec-appsec or skillset-sec-audit."
 license: MIT
 allowed-tools: Read Glob Grep Shell
 metadata:
-  version: 1.4.0
+  version: 1.5.0
 ---
 
 # Code Review and Quality
@@ -381,4 +381,4 @@ After review is complete:
 
 **Presumptive blockers:** surface and propose the simpler design for each of these; escalate to Required only when the change actively makes structure worse: a refactor that relocates complexity instead of reducing it; a change that pushes a file past the size boundary with no decomposition; feature logic added to a shared module; a near-duplicate of an existing canonical helper; a silent fallback that hides an unclear invariant.
 
-See `docs/ROUTING.md` for routing conflicts.
+Load the `skillset-dev-orchestrator` skill (`references/routing.md`) for routing conflicts.

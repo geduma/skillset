@@ -56,4 +56,4 @@ component:    --color-button-primary-bg, --color-button-primary-hover, --color-i
 - Squint test: blur eyes. Is the accent doing meaningful work, or just decoration?
 - Grayscale test: convert to grayscale. Does hierarchy still work without color?
 
-See `craft.md` for color world intent and `ui-polish.md` for how color interacts with shadows/borders. Routing conflicts: see `docs/ROUTING.md`.
+See `craft.md` for color world intent and `ui-polish.md` for how color interacts with shadows/borders. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

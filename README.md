@@ -2,7 +2,7 @@
 
 Personal collection of *skills* (`SKILL.md`) and *agents* (`agents/*.md`) for AI coding agents — Claude Code, Codex CLI, OpenCode, Cursor, VSCode/Copilot, and any other tool that supports these open formats.
 
-Version `1.3.0` (see `VERSION` and `CHANGELOG.md`). Every skill carries `metadata.version`, `allowed-tools`, trigger evals in `evals/`, and a routing pointer to `docs/ROUTING.md`. Validate with `python3 scripts/validate-pack.py`.
+Version `1.5.0` (see `VERSION` and `CHANGELOG.md`). Every skill carries `metadata.version`, `allowed-tools`, trigger evals in `evals/`, and a routing pointer to the bundled matrix (`skillset-dev-orchestrator/references/routing.md`, mirrored in `docs/ROUTING.md`). Validate with `python3 scripts/validate-pack.py`.
 
 ## Why this repo exists
 
@@ -17,18 +17,21 @@ skillset/
 │   │   ├── references/
 │   │   └── assets/
 │   └── <future skills>/
-├── agents/               (tool-agnostic source of truth: skillset, skillset-spec/code/verify/ship)
+├── agents/               (tool-neutral source of truth: skillset, skillset-spec/code/verify/ship)
+├── adapters/             (generated host adapters: opencode, claude, codex, generic)
 ├── docs/
+│   ├── ADAPTERS.md       (host adapter matrix and enforcement differences)
 │   └── ROUTING.md        (canonical routing matrix for all skills and agents)
 ├── scripts/
+│   ├── build-adapters.py (generates adapters/<host>/ from agents/)
 │   └── package_skill.sh
 ├── dist/              (generated — packaged .skill files, git-ignored)
-├── install.sh         (links skills/ + agents/ into every tool's discovery paths)
+├── install.sh         (links skills/ + the matching adapter into each tool's discovery paths)
 ├── uninstall.sh
 └── README.md
 ```
 
-`agents/` mirrors the `skills/` philosophy: one tool-agnostic source of truth, symlinked by `install.sh` into each tool's agent discovery path. `skillset-creator` is excluded from the multiagent workflow — it builds skills, never runs inside product delivery.
+`agents/` is the tool-neutral source of truth; `adapters/` is generated from it so each host gets the frontmatter and invocation syntax it understands. `install.sh --tool <host>` installs the matching adapter. `skillset-creator` is excluded from the multiagent workflow — it builds skills, never runs inside product delivery.
 
 All skill content (SKILL.md, references, assets) is written in **English**, regardless of the language used to develop this repo or talk to the agent day to day — this keeps skills portable across agents and consistent if this repo is ever shared. The same rule applies to every Markdown file skillset generates in any project (`docs/features/*/spec.md`, `plan.md`, `tasks.md`, `README.md`, `CHANGELOG.md`, ADRs, comments): file content is always English. Chat explanations, summaries, and questions follow the user's conversation language (e.g. Spanish) — files never do. Individual skills may of course produce project-specific output in another language when that's literally their job (e.g. a skill whose purpose is generating Spanish-language documentation) — but the skill's own instructions stay in English.
 
@@ -42,21 +45,24 @@ cd ~/skillset
 ./install.sh --global
 ```
 
-`install.sh` creates symlinks from `skills/<name>/` and `agents/<name>.md` into every coding agent's discovery path:
+`install.sh` creates symlinks from `skills/<name>/` and the matching `adapters/<host>/agents/<name>.md` into every coding agent's discovery path. Use `--tool <host>` to install one host, or `--tool all` (default) for every host:
 
-| Agent | Project skills | Global skills | Project agents | Global agents |
+| Host | Project skills | Global skills | Project agents | Global agents |
 |---|---|---|---|---|
-| Claude Code | `.claude/skills/` | `~/.claude/skills/` | `.claude/agents/` | `~/.claude/agents/` |
-| Codex CLI | `.codex/skills/` | `~/.codex/skills/` | `.codex/agents/` | `~/.codex/agents/` |
-| OpenCode | `.opencode/skills/` | `~/.config/opencode/skills/` | `.opencode/agents/` | `~/.config/opencode/agents/` |
-| Shared standard (also read by Codex and OpenCode) | `.agents/skills/` | `~/.agents/skills/` | `.agents/agents/` | `~/.agents/agents/` |
-| Cursor | `.cursor/skills/` | `~/.cursor/skills/` | `.cursor/agents/` | `~/.cursor/agents/` |
-| VSCode/Copilot | `.github/skills/` | *(no global support)* | `.github/agents/` | *(no global support)* |
+| Claude Code (`--tool claude`) | `.claude/skills/` | `~/.claude/skills/` | `.claude/agents/` | `~/.claude/agents/` |
+| Codex CLI (`--tool codex`) | `.codex/skills/` | `~/.codex/skills/` | `.codex/agents/` | `~/.codex/agents/` |
+| OpenCode (`--tool opencode`) | `.opencode/skills/` | `~/.config/opencode/skills/` | `.opencode/agents/` | `~/.config/opencode/agents/` |
+| Shared/generic (`--tool generic`) | `.agents/skills/` | `~/.agents/skills/` | `.agents/agents/` | `~/.agents/agents/` |
+| Cursor (generic) | `.cursor/skills/` | `~/.cursor/skills/` | `.cursor/agents/` | `~/.cursor/agents/` |
+| VSCode/Copilot (generic) | `.github/skills/` | *(no global support)* | `.github/agents/` | *(no global support)* |
+
+The workflow is identical in every adapter: plan → present → explicit approval → phase agents → gates. Only the invocation syntax and the enforcement strength differ; see `docs/ADAPTERS.md`.
 
 Other useful variants:
 
 ```bash
-./install.sh                        # project-only skills + agents, for the repo you're currently in
+./install.sh                        # project-only skills + all host adapters
+./install.sh --global --tool claude # global install for one host
 ./install.sh --global skillset-legal-license   # install just one skill
 ./install.sh --global skillset      # install just one agent
 ./install.sh --global --skills-only # only skills
@@ -68,7 +74,9 @@ Other useful variants:
 
 Run this once per machine. After that, every project you open with any of these agents sees all your skills without any per-project setup.
 
-To work a feature end to end, select the `skillset` agent and say `implement feature X` — it classifies the request per `docs/ROUTING.md` and delegates each pipeline phase to `skillset-spec`, `skillset-code`, `skillset-verify` and `skillset-ship` (see "Agents included" below).
+To work a feature end to end, select the `skillset` agent and say `implement feature X` — it classifies the request against the bundled routing matrix and delegates each pipeline phase to `skillset-spec`, `skillset-code`, `skillset-verify` and `skillset-ship` (see "Agents included" below).
+
+**Planning gate:** every change starts with planning. The agent writes `docs/features/NNN-slug/spec.md + plan.md + tasks.md`, presents the plan in chat, and stops until you explicitly approve execution. It does not edit product files before that approval. Trivial changes get a lightweight plan and the same approval. Incidental replies like "continue" or "looks good" do not count as approval to implement.
 
 ## 2. Updating skills when you update the repo
 
@@ -148,19 +156,30 @@ The script validates before packaging (no dependency on any Anthropic-internal t
 | `skillset-docs-project` | Project docs: runnable README, Nygard ADRs, Keep a Changelog + SemVer, why-not-what comments. |
 | `skillset-docs-discovery` | Discovery interview: turns vague ideas into committable decisions via rounds before any spec or docs. |
 | `skillset-dev-feature` | Feature spec and plan: light SDD spec, validated plan, ordered tasks under docs/features, mandatory docs-sync task. |
-| `skillset-dev-orchestrator` | Pipeline router: classifies multi-phase work, sequences discovery → feature → code → tests → security → docs → ship per `docs/ROUTING.md`. |
+| `skillset-dev-orchestrator` | Pipeline router: classifies multi-phase work, sequences discovery → feature → code → tests → review → security → docs → ship, and ships its routing matrix at `references/routing.md`. |
 
 ## Agents included
 
-Tool-agnostic source of truth under `agents/`, linked by `install.sh` into each tool's agent path. One primary + four subagents; every agent sees the full skill library via `docs/ROUTING.md` (affinity is not exclusivity — out-of-phase work escalates to `skillset`). `skillset-creator` is excluded from this workflow.
+Tool-neutral source of truth under `agents/`; host-specific files are generated into `adapters/<host>/agents/` and installed with `install.sh --tool <host>`. One primary + four phase agents. Each agent loads its owning skill by exact ID through the host adapter and routes via the bundled matrix (`skillset-dev-orchestrator/references/routing.md`); affinity is not exclusivity — out-of-phase work escalates to `skillset`. Every agent embeds the global rules: chat in the user's language, every artifact in English, no git without an explicit request. `skillset-creator` is excluded from this workflow.
 
-| Agent | Mode | Affinity |
+| Agent | Role | Affinity |
 |---|---|---|
-| `skillset` | primary | Entry point: `implement feature X` → classify, sequence, delegate, verify gates. |
-| `skillset-spec` | subagent | `docs-discovery` + `dev-feature`. Read-only except `docs/**`, no shell. |
-| `skillset-code` | subagent | `dev-style` + `dev-backend`/`dev-frontend` + `design-system`. No `git push`. |
-| `skillset-verify` | subagent | `dev-testing` + `sec-appsec` (+ `sec-audit` only on explicit audit request). |
-| `skillset-ship` | subagent | `docs-project` + conditional `seo-*`/`legal-license` + `git-workflow` (explicit `commit/push/PR` only). |
+| `skillset` | primary | Plan-first entry point: `implement feature X` → plan, present, gate, delegate to the phase agent, verify gates. Read-only for product files; may edit `docs/**` only. |
+| `skillset-spec` | phase | `docs-discovery` + `dev-feature`. Read-only except `docs/**`, no shell, no code. |
+| `skillset-code` | phase | `dev-style` + `dev-backend`/`dev-frontend` + `design-system` + `dev-tdd`/`dev-incremental`. No commit/push. |
+| `skillset-verify` | phase | `dev-testing` + `dev-code-review` + `sec-appsec` (+ `sec-audit` only on explicit audit request). |
+| `skillset-ship` | phase | `docs-project` + conditional `seo-*`/`legal-license` + `git-workflow` (explicit `commit/push/PR` only). |
+
+### Host adapters
+
+| Host | Adapter | Skill loading | Delegation | Gate enforcement |
+|---|---|---|---|---|
+| OpenCode | `adapters/opencode/` | `skill` tool | `subagent` tool | `permissions` by path (strongest) |
+| Claude Code | `adapters/claude/` | `Skill` tool | `Task` tool | `tools` allowlist + prompt |
+| Codex CLI | `adapters/codex/` | installed `SKILL.md` | phase prompt / sequential | sandbox + approval + prompt |
+| Generic (Cursor, Copilot, others) | `adapters/generic/` | installed `SKILL.md` | sequential role switch | prompt only |
+
+The canonical files never mention a host. If a host lacks native delegation, the adapter runs the phase sequentially and keeps the same handoff and gate. Regenerate adapters after editing `agents/` with `python3 scripts/build-adapters.py`; the validator fails on drift.
 
 ## Personal roadmap
 

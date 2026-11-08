@@ -74,4 +74,4 @@ Audit for high-conviction motion:
 
 Reject: noise animation, repeated loops on routine UI, entrance-from-scale-zero, anything that slows the user down.
 
-See `motion-accessibility.md` for accessibility baseline and WCAG rules. Routing conflicts: see `docs/ROUTING.md`.
+See `motion-accessibility.md` for accessibility baseline and WCAG rules. Routing conflicts: load the `skillset-dev-orchestrator` skill (`references/routing.md`).

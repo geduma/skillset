@@ -1,0 +1,132 @@
+{
+  "host": "opencode",
+  "frontmatter": {
+    "skillset": {
+      "mode": "primary",
+      "permissions": [
+        { "action": "skill", "resource": "*", "effect": "allow" },
+        { "action": "subagent", "resource": "*", "effect": "deny" },
+        { "action": "subagent", "resource": "skillset-spec", "effect": "allow" },
+        { "action": "subagent", "resource": "skillset-code", "effect": "allow" },
+        { "action": "subagent", "resource": "skillset-verify", "effect": "allow" },
+        { "action": "subagent", "resource": "skillset-ship", "effect": "allow" },
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "edit", "resource": "docs/**", "effect": "allow" },
+        { "action": "shell", "resource": "*", "effect": "deny" },
+        { "action": "shell", "resource": "git status *", "effect": "allow" },
+        { "action": "shell", "resource": "git diff *", "effect": "allow" },
+        { "action": "shell", "resource": "git log *", "effect": "allow" },
+        { "action": "shell", "resource": "python3 scripts/validate-pack.py", "effect": "allow" },
+        { "action": "shell", "resource": "git commit *", "effect": "ask" },
+        { "action": "shell", "resource": "git push *", "effect": "ask" }
+      ]
+    },
+    "skillset-spec": {
+      "mode": "subagent",
+      "permissions": [
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "skill", "resource": "*", "effect": "allow" },
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "edit", "resource": "docs/**", "effect": "allow" },
+        { "action": "shell", "resource": "*", "effect": "deny" }
+      ]
+    },
+    "skillset-code": {
+      "mode": "subagent",
+      "permissions": [
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "skill", "resource": "*", "effect": "allow" },
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "shell", "resource": "*", "effect": "ask" },
+        { "action": "shell", "resource": "npm run *", "effect": "allow" },
+        { "action": "shell", "resource": "npm test *", "effect": "allow" },
+        { "action": "shell", "resource": "pnpm run *", "effect": "allow" },
+        { "action": "shell", "resource": "pnpm test *", "effect": "allow" },
+        { "action": "shell", "resource": "yarn run *", "effect": "allow" },
+        { "action": "shell", "resource": "yarn test *", "effect": "allow" },
+        { "action": "shell", "resource": "bun run *", "effect": "allow" },
+        { "action": "shell", "resource": "bun test *", "effect": "allow" },
+        { "action": "shell", "resource": "pytest *", "effect": "allow" },
+        { "action": "shell", "resource": "python -m pytest *", "effect": "allow" },
+        { "action": "shell", "resource": "go test *", "effect": "allow" },
+        { "action": "shell", "resource": "cargo test *", "effect": "allow" },
+        { "action": "shell", "resource": "cargo check *", "effect": "allow" },
+        { "action": "shell", "resource": "mvn *", "effect": "allow" },
+        { "action": "shell", "resource": "gradle *", "effect": "allow" },
+        { "action": "shell", "resource": "make *", "effect": "allow" },
+        { "action": "shell", "resource": "dotnet test *", "effect": "allow" },
+        { "action": "shell", "resource": "dotnet build *", "effect": "allow" },
+        { "action": "shell", "resource": "git status *", "effect": "allow" },
+        { "action": "shell", "resource": "git diff *", "effect": "allow" },
+        { "action": "shell", "resource": "git log *", "effect": "allow" },
+        { "action": "shell", "resource": "git commit *", "effect": "deny" },
+        { "action": "shell", "resource": "git push *", "effect": "deny" },
+        { "action": "shell", "resource": "git merge *", "effect": "deny" },
+        { "action": "shell", "resource": "git rebase *", "effect": "deny" },
+        { "action": "shell", "resource": "gh pr *", "effect": "deny" }
+      ]
+    },
+    "skillset-verify": {
+      "mode": "subagent",
+      "permissions": [
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "skill", "resource": "*", "effect": "allow" },
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "shell", "resource": "*", "effect": "ask" },
+        { "action": "shell", "resource": "npm run *", "effect": "allow" },
+        { "action": "shell", "resource": "npm test *", "effect": "allow" },
+        { "action": "shell", "resource": "pnpm run *", "effect": "allow" },
+        { "action": "shell", "resource": "pnpm test *", "effect": "allow" },
+        { "action": "shell", "resource": "yarn run *", "effect": "allow" },
+        { "action": "shell", "resource": "yarn test *", "effect": "allow" },
+        { "action": "shell", "resource": "bun run *", "effect": "allow" },
+        { "action": "shell", "resource": "bun test *", "effect": "allow" },
+        { "action": "shell", "resource": "pytest *", "effect": "allow" },
+        { "action": "shell", "resource": "python -m pytest *", "effect": "allow" },
+        { "action": "shell", "resource": "go test *", "effect": "allow" },
+        { "action": "shell", "resource": "cargo test *", "effect": "allow" },
+        { "action": "shell", "resource": "cargo check *", "effect": "allow" },
+        { "action": "shell", "resource": "mvn *", "effect": "allow" },
+        { "action": "shell", "resource": "gradle *", "effect": "allow" },
+        { "action": "shell", "resource": "make *", "effect": "allow" },
+        { "action": "shell", "resource": "dotnet test *", "effect": "allow" },
+        { "action": "shell", "resource": "dotnet build *", "effect": "allow" },
+        { "action": "shell", "resource": "git status *", "effect": "allow" },
+        { "action": "shell", "resource": "git diff *", "effect": "allow" },
+        { "action": "shell", "resource": "git log *", "effect": "allow" },
+        { "action": "shell", "resource": "git commit *", "effect": "deny" },
+        { "action": "shell", "resource": "git push *", "effect": "deny" },
+        { "action": "shell", "resource": "git merge *", "effect": "deny" },
+        { "action": "shell", "resource": "git rebase *", "effect": "deny" },
+        { "action": "shell", "resource": "gh pr *", "effect": "deny" }
+      ]
+    },
+    "skillset-ship": {
+      "mode": "subagent",
+      "permissions": [
+        { "action": "read", "resource": "*", "effect": "allow" },
+        { "action": "glob", "resource": "*", "effect": "allow" },
+        { "action": "grep", "resource": "*", "effect": "allow" },
+        { "action": "skill", "resource": "*", "effect": "allow" },
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "shell", "resource": "*", "effect": "ask" },
+        { "action": "shell", "resource": "git status *", "effect": "allow" },
+        { "action": "shell", "resource": "git diff *", "effect": "allow" },
+        { "action": "shell", "resource": "git log *", "effect": "allow" },
+        { "action": "shell", "resource": "git branch *", "effect": "allow" },
+        { "action": "shell", "resource": "git commit *", "effect": "ask" },
+        { "action": "shell", "resource": "git push *", "effect": "ask" },
+        { "action": "shell", "resource": "gh pr *", "effect": "ask" },
+        { "action": "shell", "resource": "git push --force *", "effect": "deny" },
+        { "action": "shell", "resource": "git reset --hard *", "effect": "deny" }
+      ]
+    }
+  },
+  "note": "## Host adapter (OpenCode)\n\n- **Load a skill:** call the `skill` tool with the exact ID, e.g. `skill({ id: \"skillset-dev-feature\" })`.\n- **Delegate:** call the `subagent` tool with the target agent ID and a self-contained prompt, e.g. `subagent({ agent: \"skillset-spec\", prompt: \"...\" })`.\n- **Enforcement:** the `permissions` frontmatter enforces path-level write and shell limits. OpenCode applies the **last matching rule**, so broad rules come before specific allows.\n- **If a tool or agent is unavailable:** stop and report it; do not implement the phase inline."
+}

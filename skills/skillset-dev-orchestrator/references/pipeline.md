@@ -16,14 +16,26 @@
 | 7 | Docs | `skillset-docs-project` | code + decisions | README/ADR/changelog/comments | entry point verified |
 | 8 | Ship | `skillset-git-workflow` (explicit request only, never on incidental "proceed") | everything above | branch + Conventional Commits + PR | `check-conventional-commit.sh` passes |
 
-Off-pipeline: `skillset-legal-license` (conditional — auto-add on public release), `skillset-seo-content` / `skillset-seo-technical` (conditional — auto-add on web-facing changes). `skillset-creator` is excluded from this workflow (meta-skill for building skills, never runs inside product delivery). `skillset-dev-incremental` runs inside code phases as the implementation discipline (implement → test → verify → commit per slice), not a standalone pipeline phase. Reserved P1: `skillset-dev-debugging`, `skillset-ops-deploy` (see `docs/ROUTING.md`).
+Off-pipeline: `skillset-legal-license` (conditional — auto-add on public release), `skillset-seo-content` / `skillset-seo-technical` (conditional — auto-add on web-facing changes). `skillset-creator` is excluded from this workflow (meta-skill for building skills, never runs inside product delivery). `skillset-dev-incremental` runs inside code phases as the implementation discipline (implement → test → verify → commit per slice), not a standalone pipeline phase. Reserved P1: `skillset-dev-debugging`, `skillset-ops-deploy` (see `references/routing.md`).
+
+## 1b. Phase agent map
+
+| Phase agent | Phases |
+|---|---|
+| `skillset-spec` | Discovery, Spec |
+| `skillset-code` | Style, Backend, Frontend, Visual, Tests (TDD) |
+| `skillset-verify` | Review, Security (bug reports route here through `skillset-dev-testing`) |
+| `skillset-ship` | Docs, conditional SEO/License, Ship |
+
+The primary `skillset` agent delegates through the host adapter (see `docs/ADAPTERS.md`) with the target agent ID and a complete handoff. Each phase agent loads its owning skill by exact ID through the same host adapter.
 
 ## 2. Rules
 
+- **Planning gate (hard stop).** Every feature, change, endpoint, or story starts with planning. Present `spec.md + plan.md + tasks.md` and the implementation plan in chat, then stop. Do not edit product files or start a code phase until the user explicitly approves execution. Incidental acknowledgements ("proceed", "go on", "continue", "go ahead", "looks good") do not count as approval.
 - Run at most one phase skill at a time; carry only handoff outputs forward.
 - Every phase message opens with `Phase X/Y · [<skill>] · Gate: pending/approved · Artifacts: <paths>`; an approval request without presented artifacts is invalid.
 - Never skip phase 1 (Spec) for features, phase 4 before 5, or 6 before 7, without explicit user approval.
-- Single-phase requests bypass the pipeline: route directly per `docs/ROUTING.md`.
+- Single-phase requests bypass the pipeline: route directly per `references/routing.md`.
 - Trivial changes (typo, one-line copy) use at most two phases; do not force the full loop.
 - **No git without explicit permission.** No agent may commit, create a branch, push, open a PR, or merge without an explicit user request. Incidental acknowledgments ("proceed", "go on", "continue", "go ahead") never authorize git actions.
 - **Language rule.** Respond to the user in their chat language. All created artifacts — source code, inline comments, docs, commit messages, PR descriptions — must be in English only.
